@@ -43,15 +43,18 @@ class DashboardService
      */
     public function getAdminData(): array
     {
-        $projects = Project::all();
+        $projects = Project::with('client')->latest()->get();
         $usersCount = User::count();
         $revenue = Payment::where('status', 'approved')->sum('amount');
+        $requests = \App\Models\ProjectRequest::with(['client', 'service', 'package'])->latest()->take(5)->get();
 
         return [
             'total_projects' => $projects->count(),
             'active_projects' => $projects->whereIn('status', ['pending', 'in_progress', 'review'])->count(),
             'total_users' => $usersCount,
             'total_revenue' => $revenue,
+            'recent_projects' => $projects->take(5),
+            'recent_requests' => $requests,
         ];
     }
 }

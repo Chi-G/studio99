@@ -44,7 +44,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/team/projects/{project}/files', [App\Http\Controllers\Team\FileController::class, 'store'])->name('team.projects.files.store');
     });
 
-    Route::middleware(['role:admin'])->group(function () {
+    Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
+        
+        Route::get('/admin/requests', [App\Http\Controllers\Admin\AdminRequestController::class, 'index'])->name('admin.requests.index');
+        Route::get('/admin/requests/{projectRequest}', [App\Http\Controllers\Admin\AdminRequestController::class, 'show'])->name('admin.requests.show');
+        Route::post('/admin/requests/{projectRequest}/convert', [App\Http\Controllers\Admin\AdminRequestController::class, 'convertToProject'])->name('admin.requests.convert');
+        
+        Route::get('/admin/projects', [App\Http\Controllers\Admin\AdminProjectController::class, 'index'])->name('admin.projects.index');
+        Route::get('/admin/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users.index');
     });
 });
