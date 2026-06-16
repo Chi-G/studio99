@@ -37,7 +37,6 @@ COPY --from=node-builder /app/public/build /var/www/html/public/build
 # Setup environment
 ENV APP_ENV=production
 ENV APP_DEBUG=false
-ENV FRANKENPHP_CONFIG="worker ./public/index.php"
 
 # Render deployment fixes
 ENV SERVER_NAME=":${PORT:-8000}"
