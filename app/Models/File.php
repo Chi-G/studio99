@@ -5,9 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['project_id', 'uploader_id', 'file_url', 'type'])]
 class File extends Model
 {
+    protected $fillable = [
+        'project_id',
+        'uploader_id',
+        'file_url',
+        'type',
+    ];
+
     public function project()
     {
         return $this->belongsTo(Project::class);

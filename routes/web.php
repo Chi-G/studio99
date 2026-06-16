@@ -34,8 +34,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/client/invoices/{invoice}/bank-transfer', [App\Http\Controllers\Client\PaymentController::class, 'submitBankTransfer'])->name('client.payments.bank_transfer');
 });
 
-    Route::middleware(['role:team'])->group(function () {
+    Route::middleware(['auth', 'role:team'])->group(function () {
         Route::get('/dashboard/team', [DashboardController::class, 'teamDashboard'])->name('team.dashboard');
+        
+        // Team Workspace Routes
+        Route::get('/team/projects/{project}', [App\Http\Controllers\Team\ProjectController::class, 'show'])->name('team.projects.show');
+        Route::patch('/team/projects/{project}/status', [App\Http\Controllers\Team\ProjectController::class, 'updateStatus'])->name('team.projects.updateStatus');
+        Route::post('/team/projects/{project}/updates', [App\Http\Controllers\Team\ProjectUpdateController::class, 'store'])->name('team.projects.updates.store');
+        Route::post('/team/projects/{project}/files', [App\Http\Controllers\Team\FileController::class, 'store'])->name('team.projects.files.store');
     });
 
     Route::middleware(['role:admin'])->group(function () {

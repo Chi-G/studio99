@@ -34,7 +34,7 @@ class DashboardService
     public function getTeamData(User $user): array
     {
         return [
-            'assignedProjects' => Project::where('assigned_staff_id', $user->id)->get(),
+            'assignedProjects' => Project::where('assigned_to', $user->id)->with('client')->latest()->get(),
         ];
     }
 
