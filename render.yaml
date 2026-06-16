@@ -41,4 +41,5 @@ databases:
   - name: studio99-db
     databaseName: studio99
     user: studio99_user
+    region: ohio
     plan: free # Change to starter/pro for production
