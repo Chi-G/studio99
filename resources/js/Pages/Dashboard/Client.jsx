@@ -1,6 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 
-export default function Dashboard({ auth, projects, projectRequests }) {
+export default function Dashboard({ auth, projects, projectRequests, invoices }) {
     const user = auth.user;
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
