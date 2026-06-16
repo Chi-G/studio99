@@ -37,11 +37,21 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/client/invoices/{invoice}/bank-transfer', [App\Http\Controllers\Client\PaymentController::class, 'submitBankTransfer'])->name('client.payments.bank_transfer');
 
         // Client Project Workspace
+        Route::get('/client/projects', [App\Http\Controllers\Client\ProjectController::class, 'index'])->name('client.projects.index');
         Route::get('/client/projects/{project}', [App\Http\Controllers\Client\ProjectController::class, 'show'])->name('client.projects.show');
 
         // Client Subscriptions
         Route::get('/client/subscriptions', [App\Http\Controllers\Client\SubscriptionController::class, 'index'])->name('client.subscriptions.index');
         Route::post('/client/subscriptions/verify', [App\Http\Controllers\Client\SubscriptionController::class, 'verifyPaystack'])->name('client.subscriptions.verify');
+
+        // File Center & Support (UI Mocks for Dashboard Aesthetic)
+        Route::get('/client/files', function () {
+            return Inertia::render('Client/Files/Index');
+        })->name('client.files.index');
+
+        Route::get('/client/support', function () {
+            return Inertia::render('Client/Support/Index');
+        })->name('client.support.index');
     });
 
     // Chat endpoints (shared for all authenticated users; authorization happens in controller)

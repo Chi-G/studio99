@@ -9,6 +9,17 @@ use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
+    public function index()
+    {
+        $projects = Project::where('client_id', auth()->id())
+            ->with(['assignedStaff', 'request.service'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return Inertia::render('Client/Projects/Index', [
+            'projects' => $projects,
+        ]);
+    }
     public function show(Project $project)
     {
         // Ensure client owns the project
