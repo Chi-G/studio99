@@ -15,7 +15,7 @@ COPY . .
 RUN composer dump-autoload --optimize --no-dev
 
 # Stage 3: Final Production Image
-FROM dunglas/frankenphp:latest-php8.4-alpine AS final
+FROM dunglas/frankenphp:1-php8.4 AS final
 
 # Install required PHP extensions
 RUN install-php-extensions \
