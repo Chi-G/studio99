@@ -17,6 +17,9 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 });
 
+// Paystack Webhook (Unauthenticated)
+Route::post('/api/v1/billing/webhook', [App\Http\Controllers\Webhook\PaystackWebhookController::class, 'handle'])->name('webhook.paystack');
+
 use App\Http\Controllers\DashboardController;
 
 Route::middleware(['auth'])->group(function () {
@@ -35,6 +38,10 @@ Route::middleware(['auth'])->group(function () {
 
         // Client Project Workspace
         Route::get('/client/projects/{project}', [App\Http\Controllers\Client\ProjectController::class, 'show'])->name('client.projects.show');
+
+        // Client Subscriptions
+        Route::get('/client/subscriptions', [App\Http\Controllers\Client\SubscriptionController::class, 'index'])->name('client.subscriptions.index');
+        Route::post('/client/subscriptions/verify', [App\Http\Controllers\Client\SubscriptionController::class, 'verifyPaystack'])->name('client.subscriptions.verify');
     });
 
     // Chat endpoints (shared for all authenticated users; authorization happens in controller)

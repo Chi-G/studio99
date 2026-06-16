@@ -33,12 +33,20 @@ export default function Dashboard({ auth, projects, projectRequests, invoices })
                     {/* Header Action */}
                     <div className="mb-8 flex items-center justify-between">
                         <h2 className="text-2xl font-bold text-gray-900">Your Dashboard</h2>
-                        <Link
-                            href="/client/requests/create"
-                            className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
-                        >
-                            Start New Project
-                        </Link>
+                        <div className="space-x-4">
+                            <Link
+                                href="/client/subscriptions"
+                                className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+                            >
+                                Manage Subscriptions
+                            </Link>
+                            <Link
+                                href="/client/requests/create"
+                                className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
+                            >
+                                Start New Project
+                            </Link>
+                        </div>
                     </div>
 
                     {/* Pending Requests Section */}
