@@ -39,11 +39,14 @@ ENV APP_ENV=production
 ENV APP_DEBUG=false
 ENV FRANKENPHP_CONFIG="worker ./public/index.php"
 
+# Render deployment fixes
+ENV SERVER_NAME=":${PORT:-8000}"
+
+# Remove capabilities that block execution in restricted environments like Render
+RUN setcap -r /usr/local/bin/frankenphp
+
 # Fix permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-
-# Expose port
-EXPOSE 80 443
 
 # Startup Hook
 COPY docker-entrypoint.sh /docker-entrypoint.d/99-laravel-setup.sh
