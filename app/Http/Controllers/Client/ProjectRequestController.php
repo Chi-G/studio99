@@ -35,8 +35,20 @@ class ProjectRequestController extends Controller
         }
         $data['reference_files'] = count($referenceFiles) > 0 ? $referenceFiles : null;
 
-        ProjectRequest::create($data);
+        $projectRequest = ProjectRequest::create($data);
 
-        return redirect()->route('client.dashboard')->with('success', 'Project request submitted successfully!');
+        // Fetch the package to get the price
+        $package = \App\Models\Package::find($data['package_id']);
+
+        // Auto-generate Invoice
+        $invoice = \App\Models\Invoice::create([
+            'client_id' => auth()->id(),
+            'amount' => $package->price,
+            'description' => 'Payment for: ' . $data['title'],
+            'status' => 'unpaid',
+            'due_date' => now()->addDays(7),
+        ]);
+
+        return redirect()->route('client.invoices.show', $invoice->id)->with('success', 'Project request submitted! Please complete payment to start work.');
     }
 }

@@ -21,6 +21,7 @@ class DashboardService
         return [
             'projects' => Project::where('client_id', $user->id)->get(),
             'projectRequests' => \App\Models\ProjectRequest::where('client_id', $user->id)->with(['service', 'package'])->latest()->get(),
+            'invoices' => \App\Models\Invoice::where('client_id', $user->id)->latest()->get(),
             'payments' => Payment::where('user_id', $user->id)->get(),
         ];
     }

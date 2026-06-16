@@ -23,6 +23,7 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard/Client', [
             'projects' => ProjectResource::collection($data['projects']),
             'projectRequests' => $data['projectRequests'],
+            'invoices' => $data['invoices'],
             'payments' => PaymentResource::collection($data['payments']),
         ]);
     }

@@ -70,6 +70,45 @@ export default function Dashboard({ auth, projects, projectRequests }) {
                         </div>
                     </div>
                     
+                    {/* Invoices Section */}
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-8">
+                        <div className="p-6">
+                            <h3 className="text-lg font-medium text-gray-900 mb-4">Your Invoices</h3>
+                            
+                            {invoices && invoices.length > 0 ? (
+                                <ul className="divide-y divide-gray-200">
+                                    {invoices.map((invoice) => (
+                                        <li key={invoice.id} className="py-4 flex justify-between items-center">
+                                            <div>
+                                                <p className="text-sm font-medium text-gray-900">{invoice.description}</p>
+                                                <p className="text-sm text-gray-500">Amount: ${parseFloat(invoice.amount).toFixed(2)} | Due: {invoice.due_date ? new Date(invoice.due_date).toLocaleDateString() : 'N/A'}</p>
+                                            </div>
+                                            <div className="flex items-center space-x-4">
+                                                <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                                                    invoice.status === 'paid' ? 'bg-green-100 text-green-800' :
+                                                    invoice.status === 'pending_confirmation' ? 'bg-yellow-100 text-yellow-800' :
+                                                    'bg-red-100 text-red-800'
+                                                }`}>
+                                                    {invoice.status.replace('_', ' ').toUpperCase()}
+                                                </span>
+                                                {invoice.status === 'unpaid' && (
+                                                    <Link
+                                                        href={route('client.invoices.show', invoice.id)}
+                                                        className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-indigo-700"
+                                                    >
+                                                        Pay Now
+                                                    </Link>
+                                                )}
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p className="text-sm text-gray-500">You have no invoices.</p>
+                            )}
+                        </div>
+                    </div>
+
                     {/* Active Projects Section (Placeholder for now) */}
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6">
