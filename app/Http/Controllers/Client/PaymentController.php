@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class PaymentController extends Controller
 {
@@ -15,17 +16,18 @@ class PaymentController extends Controller
             'reference' => 'required|string'
         ]);
 
-        // In a real application, you would make an HTTP request to Paystack's API
-        // to verify the reference before marking it as paid:
-        // Http::withToken(env('PAYSTACK_SECRET_KEY'))->get("https://api.paystack.co/transaction/verify/{$request->reference}");
+        // Verify transaction with Paystack API
+        $response = Http::withToken(env('PAYSTACK_SECRET_KEY'))->get("https://api.paystack.co/transaction/verify/{$request->reference}");
 
-        // For this implementation, we assume the frontend already completed the transaction
+        if (!$response->successful() || $response->json('data.status') !== 'success') {
+            return redirect()->back()->withErrors(['payment' => 'Payment verification failed. Please contact support.']);
+        }
         Payment::create([
             'user_id' => auth()->id(),
             'invoice_id' => $invoice->id,
             'amount' => $invoice->amount,
             'payment_method' => 'paystack',
-            'reference' => $request->reference,
+            'reference' => $request->reference, 
             'status' => 'approved',
         ]);
 
