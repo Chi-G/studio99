@@ -209,4 +209,18 @@ This project has domain-specific skills available. You MUST activate the relevan
 - **PWA**: Must support offline caching and installability using `vite-plugin-pwa`.
 - **Database Architecture**: PostgreSQL with specific schema mapping Users, Projects, Files, Payments, Subscriptions, and Notifications.
 
+=== studio99-architecture rules ===
+
+# Studio99 Architectural Rules & Conventions
+
+This project strictly adheres to a decoupled architecture to avoid "Fat Controllers". You MUST follow these rules when writing PHP code for this project:
+
+1. **Strict Typing**: All PHP files must declare `strict_types=1` (`declare(strict_types=1);`). Use PHP 8.2+ features (readonly properties, named arguments, enums) where appropriate. Every method MUST have return types.
+2. **Service Layer**: Business logic (creating users, querying dashboards, processing payments) MUST live in `app/Services/`. Controllers should only handle HTTP validation and return responses.
+3. **Form Requests**: All validation must be done via Form Requests (`app/Http/Requests/`). NEVER use inline `$request->validate()` inside a controller.
+4. **Data Transformation (Resources)**: When sending data to the frontend (Inertia React components), DO NOT pass raw Eloquent Models or Collections. You MUST transform them using Eloquent API Resources (`app/Http/Resources/`) to avoid leaking sensitive fields and control data shape.
+5. **Background Jobs**: Any heavy synchronous operation (like sending emails after registration, processing large files) must be dispatched as a Job (`app/Jobs/`).
+6. **Eager Loading**: Prevent N+1 queries. Always use `with()` or `load()` when accessing relationships in loops or collections. Use `withCount()` if you only need the count.
+7. **Skills**: Reference `.agents/skills/laravel-best-practices/` for modular best practice snippets.
+
 </laravel-boost-guidelines>

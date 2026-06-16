@@ -1,58 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Studio99 Digital – Agency Operating System & Client Portal
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Studio99 Digital is a robust, centralized Agency Operating System designed exclusively for service providers. It serves as an all-in-one platform for managing agency operations, team collaboration, and client interactions. This is a closed-ecosystem client portal, **not** a decentralized marketplace.
 
-## About Laravel
+## Tech Stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Backend:** Laravel 11 (PHP 8.3)
+- **Frontend:** React 18, Inertia.js v2, Tailwind CSS v3
+- **Database:** PostgreSQL
+- **Architecture:** Service-Oriented MVC Architecture (Decoupled Services)
+- **Deployment:** Docker (FrankenPHP) ready, 1-click deployment via Render
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Core Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The platform is strictly structured around three role-based dashboards:
+1. ** Admin Dashboard:** Full oversight of agency operations, user management, and subscription management.
+2. ** Team Dashboard:** Internal workspace for agency employees to handle projects and communicate.
+3. ** Client Dashboard:** A secure, dedicated portal for clients to track their projects, view files, and make payments.
 
-## Learning Laravel
+### Data Models
+- **Users:** Role-based access control (Admin, Team, Client).
+- **Projects:** Centralized tracking for ongoing agency work.
+- **Files:** Secure document and asset sharing.
+- **Payments:** Integrated payment and invoicing tracking.
+- **Subscriptions:** Recurring billing management.
+- **Notifications:** Real-time event broadcasting and system alerts.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Local Development Setup
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Prerequisites
+- PHP 8.3+
+- Node.js 20+
+- Composer
+- PostgreSQL
+- Docker & Docker Compose (Optional, for Sail)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Installation
 
-## Agentic Development
+1. **Clone the repository and install dependencies:**
+   ```bash
+   git clone <repository-url>
+   cd studio99
+   composer install
+   npm install
+   ```
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+2. **Environment Configuration:**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+   *Note: Update your `.env` file with your database credentials. If using Docker Sail, ensure `DB_PORT` and `FORWARD_DB_PORT` are configured to avoid host conflicts.*
 
-```bash
-composer require laravel/boost --dev
+3. **Database Migration & Seeding:**
+   ```bash
+   php artisan migrate:fresh --seed
+   ```
+   *This will seed the database with test accounts for Admin, Team, and Client roles.*
 
-php artisan boost:install
-```
+4. **Start the Application:**
+   ```bash
+   # Start the Laravel backend
+   php artisan serve
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+   # Start the Vite development server (required for React/Inertia)
+   npm run dev
+   ```
 
-## Contributing
+## Test Accounts
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+After running the database seeder, you can log in with the following default accounts (Password for all: `password`):
 
-## Code of Conduct
+- **Admin:** `admin@example.com`
+- **Team:** `team@example.com`
+- **Client:** `test@example.com`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Deployment (Render)
 
-## Security Vulnerabilities
+This project is fully containerized and production-ready. A highly-optimized `Dockerfile` (using FrankenPHP) and a `render.yaml` blueprint are included.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Connect your repository to [Render.com](https://render.com).
+2. Create a new **Blueprint** and select your repository.
+3. Render will automatically provision the PostgreSQL database and deploy the Dockerized web service based on the `render.yaml` configuration.
 
-## License
+## Architectural Rules (For Contributors)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project strictly adheres to a decoupled architecture to prevent "Fat Controllers":
+- **Strict Typing:** All PHP files must declare `strict_types=1`. Every method MUST have return types.
+- **Service Layer:** Business logic MUST live in `app/Services/`. Controllers only handle HTTP validation and return responses.
+- **Form Requests:** All validation is done via Form Requests (`app/Http/Requests/`).
+- **Data Transformation:** Data sent to the Inertia frontend must be transformed using Eloquent API Resources (`app/Http/Resources/`).
+- **Background Jobs:** Heavy synchronous operations must be dispatched as Jobs (`app/Jobs/`).
+
+---
+*Built with ❤️ for the Studio99 Digital Team.*
