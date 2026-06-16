@@ -1,6 +1,7 @@
 import { Head, Link } from '@inertiajs/react';
 
-export default function AdminDashboard({ user }) {
+export default function AdminDashboard({ auth }) {
+    const user = auth.user;
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
             <Head title="Admin Dashboard" />
