@@ -23,16 +23,25 @@ Route::middleware(['auth'])->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
     Route::middleware(['auth', 'role:client'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'clientDashboard'])->name('client.dashboard');
-    Route::get('/client/requests/create', [App\Http\Controllers\Client\ProjectRequestController::class, 'create'])->name('client.requests.create');
-    Route::post('/client/requests', [App\Http\Controllers\Client\ProjectRequestController::class, 'store'])->name('client.requests.store');
-    
-    // Invoices and Payments
-    Route::get('/client/invoices', [App\Http\Controllers\Client\InvoiceController::class, 'index'])->name('client.invoices.index');
-    Route::get('/client/invoices/{invoice}', [App\Http\Controllers\Client\InvoiceController::class, 'show'])->name('client.invoices.show');
-    Route::post('/client/invoices/{invoice}/paystack', [App\Http\Controllers\Client\PaymentController::class, 'verifyPaystack'])->name('client.payments.paystack');
-    Route::post('/client/invoices/{invoice}/bank-transfer', [App\Http\Controllers\Client\PaymentController::class, 'submitBankTransfer'])->name('client.payments.bank_transfer');
-});
+        Route::get('/dashboard', [DashboardController::class, 'clientDashboard'])->name('client.dashboard');
+        Route::get('/client/requests/create', [App\Http\Controllers\Client\ProjectRequestController::class, 'create'])->name('client.requests.create');
+        Route::post('/client/requests', [App\Http\Controllers\Client\ProjectRequestController::class, 'store'])->name('client.requests.store');
+        
+        // Invoices and Payments
+        Route::get('/client/invoices', [App\Http\Controllers\Client\InvoiceController::class, 'index'])->name('client.invoices.index');
+        Route::get('/client/invoices/{invoice}', [App\Http\Controllers\Client\InvoiceController::class, 'show'])->name('client.invoices.show');
+        Route::post('/client/invoices/{invoice}/paystack', [App\Http\Controllers\Client\PaymentController::class, 'verifyPaystack'])->name('client.payments.paystack');
+        Route::post('/client/invoices/{invoice}/bank-transfer', [App\Http\Controllers\Client\PaymentController::class, 'submitBankTransfer'])->name('client.payments.bank_transfer');
+
+        // Client Project Workspace
+        Route::get('/client/projects/{project}', [App\Http\Controllers\Client\ProjectController::class, 'show'])->name('client.projects.show');
+    });
+
+    // Chat endpoints (shared for all authenticated users; authorization happens in controller)
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/api/v1/projects/{project}/messages', [App\Http\Controllers\ChatController::class, 'index'])->name('chat.index');
+        Route::post('/api/v1/projects/{project}/messages', [App\Http\Controllers\ChatController::class, 'store'])->name('chat.store');
+    });
 
     Route::middleware(['auth', 'role:team'])->group(function () {
         Route::get('/dashboard/team', [DashboardController::class, 'teamDashboard'])->name('team.dashboard');

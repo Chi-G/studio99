@@ -58,6 +58,12 @@ class AdminRequestController extends Controller
             'status' => 'assigned'
         ]);
 
+        // Notify the assigned team member
+        $assignedUser = User::find($request->assigned_to);
+        if ($assignedUser) {
+            $assignedUser->notify(new \App\Notifications\ProjectAssigned($project));
+        }
+
         return redirect()->route('admin.dashboard')->with('success', 'Project created and assigned successfully.');
     }
 }

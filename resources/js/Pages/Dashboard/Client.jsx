@@ -109,12 +109,33 @@ export default function Dashboard({ auth, projects, projectRequests, invoices })
                         </div>
                     </div>
 
-                    {/* Active Projects Section (Placeholder for now) */}
+                    {/* Active Projects Section */}
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6">
                             <h3 className="text-lg font-medium text-gray-900 mb-4">Active Projects</h3>
                             {projects && projects.length > 0 ? (
-                                <p className="text-sm text-gray-500">Projects will be listed here.</p>
+                                <ul className="divide-y divide-gray-200">
+                                    {projects.map((project) => (
+                                        <li key={project.id} className="py-4 flex justify-between items-center">
+                                            <div>
+                                                <Link href={`/client/projects/${project.id}`} className="text-sm font-bold text-indigo-600 hover:text-indigo-900">
+                                                    {project.name}
+                                                </Link>
+                                                <p className="text-sm text-gray-500">Assigned Deadline: {project.deadline ? new Date(project.deadline).toLocaleDateString() : 'TBD'}</p>
+                                            </div>
+                                            <div>
+                                                <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase ${
+                                                    project.status === 'completed' ? 'bg-green-100 text-green-800' :
+                                                    project.status === 'review' ? 'bg-purple-100 text-purple-800' :
+                                                    project.status === 'in_progress' ? 'bg-blue-100 text-blue-800' :
+                                                    'bg-yellow-100 text-yellow-800'
+                                                }`}>
+                                                    {project.status.replace('_', ' ')}
+                                                </span>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
                             ) : (
                                 <p className="text-sm text-gray-500">No active projects yet.</p>
                             )}
