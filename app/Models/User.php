@@ -30,6 +30,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function projectRequests()
+    {
+        return $this->hasMany(ProjectRequest::class, 'client_id');
+    }
+
     public function projects()
     {
         return $this->hasMany(Project::class, 'client_id');

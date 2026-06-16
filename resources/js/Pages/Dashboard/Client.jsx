@@ -1,10 +1,10 @@
 import { Head, Link } from '@inertiajs/react';
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ auth, projects, projectRequests }) {
     const user = auth.user;
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
-            <Head title="Dashboard" />
+            <Head title="Client Dashboard" />
 
             <nav className="bg-white border-b border-gray-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,11 +29,59 @@ export default function Dashboard({ auth }) {
 
             <main className="flex-1 py-10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            You are logged into the Client Dashboard. Here you can view your Projects, submit Files, and manage Payments.
+                    
+                    {/* Header Action */}
+                    <div className="mb-8 flex items-center justify-between">
+                        <h2 className="text-2xl font-bold text-gray-900">Your Dashboard</h2>
+                        <Link
+                            href={route('client.requests.create')}
+                            className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
+                        >
+                            Start New Project
+                        </Link>
+                    </div>
+
+                    {/* Pending Requests Section */}
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-8">
+                        <div className="p-6">
+                            <h3 className="text-lg font-medium text-gray-900 mb-4">Pending Requests</h3>
+                            
+                            {projectRequests && projectRequests.length > 0 ? (
+                                <ul className="divide-y divide-gray-200">
+                                    {projectRequests.map((request) => (
+                                        <li key={request.id} className="py-4 flex justify-between items-center">
+                                            <div>
+                                                <p className="text-sm font-medium text-gray-900">{request.title}</p>
+                                                <p className="text-sm text-gray-500">Service: {request.service?.name} | Package: {request.package?.name}</p>
+                                            </div>
+                                            <div>
+                                                <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                                                    request.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'
+                                                }`}>
+                                                    {request.status.replace('_', ' ').toUpperCase()}
+                                                </span>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p className="text-sm text-gray-500">You have no pending requests. Click "Start New Project" to get started.</p>
+                            )}
                         </div>
                     </div>
+                    
+                    {/* Active Projects Section (Placeholder for now) */}
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="p-6">
+                            <h3 className="text-lg font-medium text-gray-900 mb-4">Active Projects</h3>
+                            {projects && projects.length > 0 ? (
+                                <p className="text-sm text-gray-500">Projects will be listed here.</p>
+                            ) : (
+                                <p className="text-sm text-gray-500">No active projects yet.</p>
+                            )}
+                        </div>
+                    </div>
+
                 </div>
             </main>
         </div>

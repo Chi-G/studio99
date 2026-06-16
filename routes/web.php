@@ -22,9 +22,11 @@ use App\Http\Controllers\DashboardController;
 Route::middleware(['auth'])->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-    Route::middleware(['role:client'])->group(function () {
-        Route::get('/dashboard/client', [DashboardController::class, 'clientDashboard'])->name('client.dashboard');
-    });
+    Route::middleware(['auth', 'role:client'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'clientDashboard'])->name('client.dashboard');
+    Route::get('/client/requests/create', [App\Http\Controllers\Client\ProjectRequestController::class, 'create'])->name('client.requests.create');
+    Route::post('/client/requests', [App\Http\Controllers\Client\ProjectRequestController::class, 'store'])->name('client.requests.store');
+});
 
     Route::middleware(['role:team'])->group(function () {
         Route::get('/dashboard/team', [DashboardController::class, 'teamDashboard'])->name('team.dashboard');

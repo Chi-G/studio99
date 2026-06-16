@@ -43,3 +43,11 @@ AGENTS.md
 Gemini.md
 Claude.md
 Agents.md
+
+# Agent and System Folders
+.agents/
+.claude/
+.gemini/
+
+# Docs
+*.docx
