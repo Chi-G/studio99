@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('support_tickets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('assigned_staff_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->string('name');
-            $table->string('service_type');
-            $table->enum('status', ['pending', 'in_progress', 'review', 'completed'])->default('pending');
-            $table->date('deadline')->nullable();
+            $table->string('subject');
+            $table->enum('status', ['open', 'in_progress', 'resolved', 'closed'])->default('open');
+            $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('support_tickets');
     }
 };
