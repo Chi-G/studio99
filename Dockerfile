@@ -45,10 +45,8 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Expose port
 EXPOSE 80 443
 
-# Entrypoint
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-RUN chmod +x /usr/local/bin/docker-entrypoint
-ENTRYPOINT ["docker-entrypoint"]
-
+# Startup Hook
+COPY docker-entrypoint.sh /docker-entrypoint.d/99-laravel-setup.sh
+RUN chmod +x /docker-entrypoint.d/99-laravel-setup.sh
 # Run FrankenPHP
 CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]

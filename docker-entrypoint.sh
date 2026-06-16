@@ -16,4 +16,4 @@ echo "Running migrations..."
 php artisan migrate --force
 
 # Start the main process
-exec "$@"
+
