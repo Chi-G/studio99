@@ -26,7 +26,7 @@ export default function Create({ auth, services }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('client.requests.store'));
+        post('/client/requests');
     };
 
     return (

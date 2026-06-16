@@ -34,7 +34,7 @@ export default function Dashboard({ auth, projects, projectRequests }) {
                     <div className="mb-8 flex items-center justify-between">
                         <h2 className="text-2xl font-bold text-gray-900">Your Dashboard</h2>
                         <Link
-                            href={route('client.requests.create')}
+                            href="/client/requests/create"
                             className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
                             Start New Project
@@ -93,7 +93,7 @@ export default function Dashboard({ auth, projects, projectRequests }) {
                                                 </span>
                                                 {invoice.status === 'unpaid' && (
                                                     <Link
-                                                        href={route('client.invoices.show', invoice.id)}
+                                                        href={`/client/invoices/${invoice.id}`}
                                                         className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-indigo-700"
                                                     >
                                                         Pay Now

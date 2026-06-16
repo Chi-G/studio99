@@ -11,13 +11,13 @@ export default function Checkout({ auth, invoice, paystackPublicKey }) {
 
     const handleBankTransfer = (e) => {
         e.preventDefault();
-        post(route('client.payments.bank_transfer', invoice.id));
+        post(`/client/invoices/${invoice.id}/bank-transfer`);
     };
 
     // Note: In a real implementation, you would use react-paystack.
     // For this boilerplate, we'll simulate a successful Paystack callback.
     const simulatePaystackSuccess = () => {
-        router.post(route('client.payments.paystack', invoice.id), {
+        router.post(`/client/invoices/${invoice.id}/paystack`, {
             reference: 'SIMULATED_REF_' + Math.floor(Math.random() * 1000000)
         });
     };
