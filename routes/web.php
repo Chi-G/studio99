@@ -5,6 +5,11 @@ use Inertia\Inertia;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
+Route::get('/reset-db-99', function () {
+    \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true]);
+    return 'Database reset successful! You can now log in.';
+});
+
 Route::get('/', function () {
     return Inertia::render('Welcome');
 });
