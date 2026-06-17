@@ -88,7 +88,7 @@ export default function SubscriptionsIndex({ auth, subscription, plans = [] }) {
           <p className="text-[#94A3B8]">Save money and get priority turnaround times with a monthly retainer.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {availablePlans.map((plan) => (
             <div
               key={plan.id}
