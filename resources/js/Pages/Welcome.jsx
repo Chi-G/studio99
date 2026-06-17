@@ -16,9 +16,21 @@ import {
 
 import { Spotlight } from '@/Components/ui/spotlight';
 import { TextGenerateEffect } from '@/Components/ui/text-generate-effect';
+import { LoginModal } from '@/Components/Modals/LoginModal';
+import { RegisterModal } from '@/Components/Modals/RegisterModal';
 
-export default function Welcome({ auth }) {
+export default function Welcome({ auth, showLogin = false, showRegister = false }) {
   const [isAnnual, setIsAnnual] = useState(false);
+  
+  // Modal States
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(showLogin);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(showRegister);
+
+  // Sync props to state if they change via Inertia navigation
+  useEffect(() => {
+    if (showLogin) setIsLoginModalOpen(true);
+    if (showRegister) setIsRegisterModalOpen(true);
+  }, [showLogin, showRegister]);
 
   // Embla Carousels
   const [emblaRefPortfolio, emblaApiPortfolio] = useEmblaCarousel({ loop: true, align: "start" });
@@ -55,8 +67,8 @@ export default function Welcome({ auth }) {
               <Link href="/dashboard" className="text-xs md:text-sm font-medium hover:text-white transition-colors">Dashboard</Link>
             ) : (
               <>
-                <Link href="/login" className="text-xs md:text-sm font-medium text-[#94A3B8] hover:text-white transition-colors">Log in</Link>
-                <Link href="/register" className="text-xs md:text-sm font-medium bg-white text-black px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-gray-200 transition-colors">Get Started</Link>
+                <button onClick={() => setIsLoginModalOpen(true)} className="text-xs md:text-sm font-medium text-[#94A3B8] hover:text-white transition-colors">Log in</button>
+                <button onClick={() => setIsRegisterModalOpen(true)} className="text-xs md:text-sm font-medium bg-white text-black px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-gray-200 transition-colors">Get Started</button>
               </>
             )}
           </div>
@@ -83,9 +95,9 @@ export default function Welcome({ auth }) {
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <Link href="/register" className="w-full sm:w-auto inline-flex items-center justify-center h-12 px-8 rounded-full bg-gradient-to-r from-[#6C3CE1] to-[#EC4899] text-white font-medium hover:opacity-90 transition-opacity">
+              <button onClick={() => setIsRegisterModalOpen(true)} className="w-full sm:w-auto inline-flex items-center justify-center h-12 px-8 rounded-full bg-gradient-to-r from-[#6C3CE1] to-[#EC4899] text-white font-medium hover:opacity-90 transition-opacity">
                 Start Your Project
-              </Link>
+              </button>
               <a href="#work" className="w-full sm:w-auto inline-flex items-center justify-center h-12 px-8 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors font-medium">
                 View Portfolio
               </a>
@@ -216,9 +228,9 @@ export default function Welcome({ auth }) {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-3 md:mb-4">Selected Work</h2>
             <p className="text-[#94A3B8] text-base md:text-lg">A glimpse into what we can build together.</p>
           </div>
-          <Link href="/register" className="inline-flex text-[#6C3CE1] font-medium hover:text-white transition-colors items-center gap-2">
+          <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex text-[#6C3CE1] font-medium hover:text-white transition-colors items-center gap-2">
             View All Work <ArrowRight className="w-4 h-4" />
-          </Link>
+          </button>
         </div>
 
         <div className="pl-6 md:pl-[max(1.5rem,calc((100vw-80rem)/2))] cursor-grab active:cursor-grabbing" ref={emblaRefPortfolio}>
@@ -271,7 +283,7 @@ export default function Welcome({ auth }) {
                   </li>
                 ))}
               </ul>
-              <Link href="/register" className="block w-full py-3 text-center rounded-xl bg-[#1A1A28] border border-[#2A2A3A] hover:bg-[#2A2A3A] transition-colors font-medium">Get Started</Link>
+              <button onClick={() => setIsRegisterModalOpen(true)} className="block w-full py-3 text-center rounded-xl bg-[#1A1A28] border border-[#2A2A3A] hover:bg-[#2A2A3A] transition-colors font-medium">Get Started</button>
             </div>
 
             {/* Pro Plan (Highlighted) */}
@@ -289,7 +301,7 @@ export default function Welcome({ auth }) {
                   </li>
                 ))}
               </ul>
-              <Link href="/register" className="block w-full py-3 text-center rounded-xl bg-gradient-to-r from-[#6C3CE1] to-[#EC4899] text-white hover:opacity-90 transition-opacity font-medium">Get Pro</Link>
+              <button onClick={() => setIsRegisterModalOpen(true)} className="block w-full py-3 text-center rounded-xl bg-gradient-to-r from-[#6C3CE1] to-[#EC4899] text-white hover:opacity-90 transition-opacity font-medium">Get Pro</button>
             </div>
 
             {/* Enterprise Plan */}
@@ -305,7 +317,7 @@ export default function Welcome({ auth }) {
                   </li>
                 ))}
               </ul>
-              <Link href="/register" className="block w-full py-3 text-center rounded-xl bg-[#1A1A28] border border-[#2A2A3A] hover:bg-[#2A2A3A] transition-colors font-medium">Contact Us</Link>
+              <button onClick={() => setIsRegisterModalOpen(true)} className="block w-full py-3 text-center rounded-xl bg-[#1A1A28] border border-[#2A2A3A] hover:bg-[#2A2A3A] transition-colors font-medium">Contact Us</button>
             </div>
           </div>
         </div>
@@ -358,9 +370,9 @@ export default function Welcome({ auth }) {
         <div className="relative max-w-4xl mx-auto px-4 md:px-6 text-center z-10">
           <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-bold text-white mb-6 md:mb-8 tracking-tight">Ready to Elevate Your Brand?</h2>
           <p className="text-lg md:text-xl text-white/80 mb-8 md:mb-10 max-w-2xl mx-auto px-4">Join dozens of visionary companies scaling their creatives with Studio99.</p>
-          <Link href="/register" className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 rounded-full bg-white text-black font-bold text-base md:text-lg hover:scale-105 transition-transform">
+          <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 rounded-full bg-white text-black font-bold text-base md:text-lg hover:scale-105 transition-transform">
             Start Your Project Today
-          </Link>
+          </button>
         </div>
       </section>
 
@@ -404,6 +416,18 @@ export default function Welcome({ auth }) {
           </div>
         </div>
       </footer>
+
+      <LoginModal 
+        open={isLoginModalOpen} 
+        onClose={() => setIsLoginModalOpen(false)} 
+        onSwitchToRegister={() => { setIsLoginModalOpen(false); setIsRegisterModalOpen(true); }}
+      />
+      
+      <RegisterModal 
+        open={isRegisterModalOpen} 
+        onClose={() => setIsRegisterModalOpen(false)} 
+        onSwitchToLogin={() => { setIsRegisterModalOpen(false); setIsLoginModalOpen(true); }}
+      />
     </div>
   );
 }
