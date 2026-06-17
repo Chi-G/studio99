@@ -354,7 +354,7 @@ export default function Welcome({ auth }) {
 
       {/* SECTION 7: CTA BANNER */}
       <section className="relative py-20 md:py-32 bg-gradient-to-br from-[#6C3CE1] to-[#EC4899] overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')] opacity-20 mix-blend-overlay"></div>
         <div className="relative max-w-4xl mx-auto px-4 md:px-6 text-center z-10">
           <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-bold text-white mb-6 md:mb-8 tracking-tight">Ready to Elevate Your Brand?</h2>
           <p className="text-lg md:text-xl text-white/80 mb-8 md:mb-10 max-w-2xl mx-auto px-4">Join dozens of visionary companies scaling their creatives with Studio99.</p>

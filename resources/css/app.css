@@ -47,6 +47,22 @@
     background-color: var(--bg-base);
     color: var(--text-primary);
   }
+
+  /* Custom Thin Purple Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg-base); 
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--bg-border); 
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-purple); 
+  }
 }
 
 @layer utilities {

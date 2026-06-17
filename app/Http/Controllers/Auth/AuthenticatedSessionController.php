@@ -30,12 +30,12 @@ class AuthenticatedSessionController extends Controller
 
             $user = Auth::user();
             if ($user->role === 'admin') {
-                return redirect()->intended(route('admin.dashboard', absolute: false));
+                return redirect()->route('admin.dashboard');
             } elseif ($user->role === 'team') {
-                return redirect()->intended(route('team.dashboard', absolute: false));
+                return redirect()->route('team.dashboard');
             }
             
-            return redirect()->intended(route('client.dashboard', absolute: false));
+            return redirect()->route('client.dashboard');
         }
 
         return back()->withErrors([
