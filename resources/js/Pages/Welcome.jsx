@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
+import studioDarkImg from '../../../public/studio99-dark.jpeg';
 import {
   ArrowRight, Play, Globe, PenTool,
   Video, Share2, Layers, Briefcase, Clock, ShieldCheck, Mail, MapPin,
@@ -147,7 +148,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
 
             {/* Center Logo */}
             <div className="relative z-10 w-[200px] h-[200px] lg:w-[250px] lg:h-[250px] rounded-full bg-black border-2 border-brand-red/30 shadow-[0_0_50px_rgba(227,30,36,0.2)] flex items-center justify-center p-4">
-              <img src="/studio99-dark.jpeg" alt="Studio99" className="w-full h-full object-contain rounded-full" />
+              <img src={studioDarkImg} alt="Studio99" className="w-full h-full object-contain rounded-full" />
             </div>
           </div>
         </div>
