@@ -51,3 +51,8 @@ Agents.md
 
 # Docs
 *.docx
+
+# Reference Images
+/public/studio99-landing.png
+/public/studio99-dark.jpeg
+/public/studio99-white.jpeg

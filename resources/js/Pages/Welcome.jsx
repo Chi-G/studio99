@@ -1,431 +1,519 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import useEmblaCarousel from 'embla-carousel-react';
-import { 
-  ArrowRight, 
-  Code, 
-  Video, 
-  PenTool, 
-  Share2, 
-  Star, 
-  ChevronLeft, 
-  ChevronRight, 
-  CheckCircle2 
+import {
+  ArrowRight, Play, Globe, PenTool,
+  Video, Share2, Layers, Briefcase, Clock, ShieldCheck, Mail, MapPin,
+  Zap, Headphones, TrendingUp, MonitorSmartphone
 } from 'lucide-react';
 
-import { Spotlight } from '@/Components/ui/spotlight';
-import { TextGenerateEffect } from '@/Components/ui/text-generate-effect';
 import { LoginModal } from '@/Components/Modals/LoginModal';
 import { RegisterModal } from '@/Components/Modals/RegisterModal';
 
+// Shared Components
+const RedLabel = ({ children }) => (
+  <div className="inline-flex items-center gap-2 mb-4">
+    <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
+    <span className="text-[10px] md:text-xs font-black text-brand-red tracking-widest uppercase">{children}</span>
+  </div>
+);
+
+const SectionHeading = ({ children }) => (
+  <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight leading-tight">
+    {children}
+  </h2>
+);
+
 export default function Welcome({ auth, showLogin = false, showRegister = false }) {
-  const [isAnnual, setIsAnnual] = useState(false);
-  
-  // Modal States
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(showLogin);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(showRegister);
+  const [scrolled, setScrolled] = useState(false);
 
-  // Sync props to state if they change via Inertia navigation
   useEffect(() => {
     if (showLogin) setIsLoginModalOpen(true);
     if (showRegister) setIsRegisterModalOpen(true);
   }, [showLogin, showRegister]);
 
-  // Embla Carousels
-  const [emblaRefPortfolio, emblaApiPortfolio] = useEmblaCarousel({ loop: true, align: "start" });
-  const [emblaRefTestimonial, emblaApiTestimonial] = useEmblaCarousel({ loop: true });
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-  const scrollPrevTestimonial = useCallback(() => {
-    if (emblaApiTestimonial) emblaApiTestimonial.scrollPrev();
-  }, [emblaApiTestimonial]);
+  const fadeUpVariant = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  };
 
-  const scrollNextTestimonial = useCallback(() => {
-    if (emblaApiTestimonial) emblaApiTestimonial.scrollNext();
-  }, [emblaApiTestimonial]);
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0F] text-[#F8FAFC] font-sans selection:bg-[#6C3CE1]/30 overflow-hidden">
-      <Head title="Nigeria's #1 Creative Studio" />
+    <div className="min-h-screen bg-bg-base text-text-primary font-sans selection:bg-brand-red/30">
+      <Head title="Design • Create • Grow | Studio99 Digital" />
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 w-full z-50 bg-[#0A0A0F]/80 backdrop-blur-md border-b border-[#2A2A3A]">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
+      {/* 1. NAVBAR */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#0A0A0A]/90 backdrop-blur-md border-b border-bg-border py-4' : 'bg-transparent py-6'}`}>
+        <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#6C3CE1] to-[#EC4899] flex items-center justify-center font-display font-bold text-white">
-              S
-            </div>
-            <span className="font-display font-bold text-lg md:text-xl tracking-tight hidden sm:block">Studio99</span>
+            <div className="w-8 h-8 rounded bg-brand-red flex items-center justify-center font-black text-white text-xs">S</div>
+            <span className="font-black text-lg tracking-tight hidden sm:block">studio99 <span className="text-[10px] uppercase text-text-secondary tracking-widest ml-1 font-sans">Digital</span></span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-[#94A3B8]">
-            <a href="#services" className="hover:text-white transition-colors">Services</a>
-            <a href="#work" className="hover:text-white transition-colors">Work</a>
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-text-secondary">
+            <a href="#services" className="hover:text-white transition-colors">Request a Service</a>
+            <a href="#work" className="hover:text-white transition-colors">View Portfolio</a>
+            <a href="#about" className="hover:text-white transition-colors">About</a>
             <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
+            <a href="#contact" className="hover:text-white transition-colors">Contact Us</a>
           </div>
-          <div className="flex items-center gap-3 md:gap-4">
+          <div className="flex items-center gap-4">
             {auth.user ? (
-              <Link href="/dashboard" className="text-xs md:text-sm font-medium hover:text-white transition-colors">Dashboard</Link>
+              <Link href="/dashboard" className="text-sm font-medium text-white hover:text-brand-red transition-colors">Dashboard</Link>
             ) : (
               <>
-                <button onClick={() => setIsLoginModalOpen(true)} className="text-xs md:text-sm font-medium text-[#94A3B8] hover:text-white transition-colors">Log in</button>
-                <button onClick={() => setIsRegisterModalOpen(true)} className="text-xs md:text-sm font-medium bg-white text-black px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-gray-200 transition-colors">Get Started</button>
+                <button onClick={() => setIsLoginModalOpen(true)} className="text-sm font-medium text-text-secondary hover:text-white transition-colors">Login</button>
+                <button onClick={() => setIsRegisterModalOpen(true)} className="text-sm font-medium bg-brand-red text-white px-5 py-2 rounded-full hover:bg-red-700 transition-colors">Get Started</button>
               </>
             )}
           </div>
         </div>
       </nav>
 
-      {/* SECTION 1: HERO */}
-      <section className="relative min-h-screen flex items-center pt-24 md:pt-20 pb-20 md:pb-32 overflow-hidden">
-        <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="rgba(108, 60, 225, 0.5)" />
-        
-        <div className="max-w-7xl mx-auto px-4 md:px-6 grid lg:grid-cols-2 gap-10 md:gap-12 items-center w-full z-10 pb-8 md:pb-10 mt-8 md:mt-0">
-          <div className="text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1A1A28] border border-[#2A2A3A] mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#EC4899] animate-pulse"></span>
-              <span className="text-[10px] md:text-xs font-mono text-[#94A3B8]">Nigeria's #1 Creative Studio</span>
-            </div>
-            
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-[1.1] tracking-tight mb-4 md:mb-6">
-              <TextGenerateEffect words="We Build Digital Experiences That Convert" />
-            </h1>
-            
-            <p className="text-base sm:text-lg md:text-xl text-[#94A3B8] mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-              Elevate your brand with world-class design, web development, and video production. Your all-in-one creative partner.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <button onClick={() => setIsRegisterModalOpen(true)} className="w-full sm:w-auto inline-flex items-center justify-center h-12 px-8 rounded-full bg-gradient-to-r from-[#6C3CE1] to-[#EC4899] text-white font-medium hover:opacity-90 transition-opacity">
-                Start Your Project
-              </button>
-              <a href="#work" className="w-full sm:w-auto inline-flex items-center justify-center h-12 px-8 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors font-medium">
-                View Portfolio
-              </a>
-            </div>
-          </div>
+      {/* 2. HERO SECTION */}
+      <section className="relative min-h-screen pt-32 pb-20 flex flex-col justify-center overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full z-10 grid lg:grid-cols-2 gap-12 items-center">
 
-          <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] flex items-center justify-center perspective-1000 mt-8 lg:mt-0">
-            <motion.div 
-              initial={{ rotateY: 15, rotateX: 5, opacity: 0, y: 50 }}
-              animate={{ rotateY: -5, rotateX: 5, opacity: 1, y: 0 }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
-              className="relative w-full max-w-[320px] sm:max-w-md aspect-[4/5] bg-[#111118] rounded-2xl border border-[#2A2A3A] p-2 shadow-2xl shadow-[#6C3CE1]/20 overflow-hidden group"
+          {/* Left Text */}
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-bg-border bg-bg-card mb-8">
+              <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
+              <span className="text-[10px] font-black tracking-widest text-text-secondary uppercase">Premium Digital Agency</span>
+            </div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="font-black leading-[1.1] tracking-tighter text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] mb-6 max-w-3xl"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#6C3CE1]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="w-full h-full rounded-xl overflow-hidden relative">
-                <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&q=80" alt="Hero Mockup" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] to-transparent"></div>
-                <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6">
-                  <div className="text-[10px] sm:text-xs font-mono text-[#F59E0B] mb-1 sm:mb-2">FEATURED WORK</div>
-                  <div className="text-xl sm:text-2xl font-display font-bold">Fintech Dashboard OS</div>
-                </div>
-              </div>
+              Transform Ideas Into <br className="hidden md:block" /> <span className="text-brand-red">Exceptional Experiences</span>
+            </motion.h1>
+
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 1 }} className="text-text-secondary text-base sm:text-lg max-w-lg leading-relaxed mb-10 font-sans space-y-4">
+              <p>
+                Premium design, video, web development, and social media services, all in one place. We make digital collaboration simple, seamless, and results-driven.
+              </p>
             </motion.div>
+
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 1 }} className="flex flex-col sm:flex-row items-center gap-4">
+              <button onClick={() => setIsRegisterModalOpen(true)} className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
+                Get Started <ArrowRight className="w-5 h-5" />
+              </button>
+              <a href="#work" className="w-full sm:w-auto px-8 py-4 rounded-full border border-bg-border text-white font-bold hover:bg-bg-card transition-colors flex items-center justify-center gap-2">
+                <Play className="w-4 h-4" /> View Portfolio
+              </a>
+            </motion.div>
+          </div>
+
+          {/* Right Circular Graphic */}
+          <div className="relative h-[400px] lg:h-[600px] flex items-center justify-center hidden sm:flex">
+            {/* Outer Ring */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              className="absolute w-[350px] h-[350px] lg:w-[450px] lg:h-[450px] rounded-full border border-bg-border flex items-center justify-center"
+            >
+              {/* Red Dots on ring */}
+              <div className="absolute -top-1.5 w-3 h-3 bg-brand-red rounded-full"></div>
+              <div className="absolute -bottom-1.5 w-3 h-3 bg-brand-red rounded-full"></div>
+
+              {/* Orbiting Badges */}
+              <motion.div animate={{ rotate: -360 }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }} className="absolute -left-10 top-20 px-4 py-2 bg-bg-card border border-bg-border rounded-full text-xs font-bold whitespace-nowrap shadow-xl">
+                • Brand Identity
+              </motion.div>
+              <motion.div animate={{ rotate: -360 }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }} className="absolute -right-10 bottom-20 px-4 py-2 bg-bg-card border border-bg-border rounded-full text-xs font-bold whitespace-nowrap shadow-xl">
+                100+ Projects
+              </motion.div>
+            </motion.div>
+
+            {/* Center Logo */}
+            <div className="relative z-10 w-[200px] h-[200px] lg:w-[250px] lg:h-[250px] rounded-full bg-black border-2 border-brand-red/30 shadow-[0_0_50px_rgba(227,30,36,0.2)] flex items-center justify-center p-4">
+              <img src="/studio99-dark.jpeg" alt="Studio99" className="w-full h-full object-contain rounded-full" />
+            </div>
           </div>
         </div>
 
-        {/* Client Logos Strip */}
-        <div className="absolute bottom-0 w-full border-t border-[#2A2A3A] bg-[#0A0A0F]/50 backdrop-blur-sm overflow-hidden py-6">
-          <div className="flex gap-12 animate-scroll whitespace-nowrap opacity-50 px-6 max-w-7xl mx-auto">
-            {['Acme Corp', 'GlobalTech', 'Nexus', 'Stark Ind.', 'Wayne Ent.', 'Acme Corp', 'GlobalTech', 'Nexus'].map((logo, i) => (
-              <span key={i} className="text-xl font-display font-bold text-[#475569]">{logo}</span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 2: SERVICES (Bento Grid) */}
-      <section id="services" className="py-20 md:py-32 relative">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="mb-12 md:mb-16 text-center md:text-left">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4">Our Expertise</h2>
-            <p className="text-[#94A3B8] text-base md:text-lg max-w-2xl mx-auto md:mx-0">Everything you need to launch and scale your brand, all under one roof.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-[600px]">
-            {/* Graphics - Tall Left */}
-            <motion.div whileHover={{ y: -5 }} className="md:col-span-2 md:row-span-2 bg-[#111118] border border-[#2A2A3A] rounded-3xl p-8 group relative overflow-hidden flex flex-col justify-between min-h-[300px]">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#6C3CE1]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div>
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#6C3CE1] to-[#EC4899] flex items-center justify-center mb-6">
-                  <PenTool className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-3xl font-display font-bold mb-3">Graphics Design</h3>
-                <p className="text-[#94A3B8] leading-relaxed">Brand identities, pitch decks, marketing assets, and stunning visuals that tell your story.</p>
-              </div>
-              <ArrowRight className="w-6 h-6 text-[#EC4899] opacity-0 group-hover:opacity-100 transform -translate-x-4 group-hover:translate-x-0 transition-all mt-8" />
-            </motion.div>
-
-            {/* Video - Top Right */}
-            <motion.div whileHover={{ y: -5 }} className="md:col-span-2 md:row-span-1 bg-[#111118] border border-[#2A2A3A] rounded-3xl p-8 group relative overflow-hidden flex flex-col justify-between min-h-[250px]">
-              <div className="flex justify-between items-start">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#F59E0B] to-[#EF4444] flex items-center justify-center mb-4">
-                    <Video className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-display font-bold mb-2">Video Editing</h3>
-                  <p className="text-[#94A3B8] text-sm max-w-sm">Cinematic promos, reels, and YouTube edits that hold attention.</p>
-                </div>
-                <ArrowRight className="w-6 h-6 text-[#F59E0B] opacity-0 group-hover:opacity-100 transform -translate-x-4 group-hover:translate-x-0 transition-all" />
-              </div>
-            </motion.div>
-
-            {/* Web - Bottom Right Split 1 */}
-            <motion.div whileHover={{ y: -5 }} className="md:col-span-1 md:row-span-1 bg-[#111118] border border-[#2A2A3A] rounded-3xl p-6 group relative overflow-hidden flex flex-col justify-between min-h-[250px]">
-              <div>
-                <div className="w-10 h-10 rounded-lg bg-[#2A2A3A] flex items-center justify-center mb-4 text-white">
-                  <Code className="w-5 h-5" />
-                </div>
-                <h3 className="text-xl font-display font-bold mb-2">Web Dev</h3>
-                <p className="text-[#475569] text-sm leading-tight">High-performance React & Laravel apps.</p>
-              </div>
-            </motion.div>
-
-            {/* Social - Bottom Right Split 2 */}
-            <motion.div whileHover={{ y: -5 }} className="md:col-span-1 md:row-span-1 bg-[#1A1A28] border border-[#2A2A3A] rounded-3xl p-6 group relative overflow-hidden flex flex-col justify-between min-h-[250px]">
-              <div>
-                <div className="w-10 h-10 rounded-lg bg-[#6C3CE1]/20 flex items-center justify-center mb-4 text-[#6C3CE1]">
-                  <Share2 className="w-5 h-5" />
-                </div>
-                <h3 className="text-xl font-display font-bold mb-2">Social Media</h3>
-                <p className="text-[#94A3B8] text-sm leading-tight">Growth-focused content management.</p>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 3: WHY CHOOSE US */}
-      <section className="py-16 md:py-20 border-y border-[#2A2A3A] bg-[#0A0A0F]/50">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="grid md:grid-cols-3 gap-10 md:gap-12">
+        {/* Hero Service Preview Cards */}
+        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full mt-20 relative z-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { num: "01", title: "Top 1% Talent", desc: "We hire only the best creative minds across Africa to guarantee world-class output." },
-              { num: "02", title: "Lightning Fast", desc: "Say goodbye to missed deadlines. We deliver exceptional work at unprecedented speeds." },
-              { num: "03", title: "One Dashboard", desc: "Manage projects, chat with your team, and pay invoices all from our custom OS." }
-            ].map((feature, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.2 }}
-                className="relative pl-6 md:pl-8 border-l-2 border-[#1A1A28] hover:border-[#6C3CE1] transition-colors"
-              >
-                <div className="text-4xl md:text-5xl font-mono font-bold text-[#1A1A28] absolute -left-[2px] top-0 -translate-x-full pr-3 md:pr-4">{feature.num}</div>
-                <h3 className="text-xl md:text-2xl font-display font-bold mb-2">{feature.title}</h3>
-                <p className="text-[#94A3B8] text-sm md:text-base leading-relaxed">{feature.desc}</p>
+              { title: "Graphics Design", icon: PenTool, img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop" },
+              { title: "Website Development", icon: MonitorSmartphone, img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&auto=format&fit=crop" },
+              { title: "Video Editing", icon: Video, img: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=600&auto=format&fit=crop" },
+              { title: "Social Media", icon: Share2, img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=600&auto=format&fit=crop" }
+            ].map((s, i) => (
+              <motion.div key={i} whileHover={{ y: -5 }} className="relative h-32 md:h-40 rounded-xl overflow-hidden group cursor-pointer hover-glow border border-bg-border">
+                <img src={s.img} alt={s.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/70 to-transparent"></div>
+                <div className="absolute inset-0 p-4 flex flex-col justify-end">
+                  <s.icon className="w-5 h-5 text-brand-red mb-2" />
+                  <h4 className="font-bold text-sm md:text-base">{s.title}</h4>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 4: PORTFOLIO PREVIEW */}
-      <section id="work" className="py-20 md:py-32 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 mb-10 md:mb-12 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 sm:gap-0">
-          <div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-3 md:mb-4">Selected Work</h2>
-            <p className="text-[#94A3B8] text-base md:text-lg">A glimpse into what we can build together.</p>
-          </div>
-          <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex text-[#6C3CE1] font-medium hover:text-white transition-colors items-center gap-2">
-            View All Work <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
-
-        <div className="pl-6 md:pl-[max(1.5rem,calc((100vw-80rem)/2))] cursor-grab active:cursor-grabbing" ref={emblaRefPortfolio}>
-          <div className="flex gap-6 pb-8">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="relative flex-[0_0_85%] md:flex-[0_0_400px] aspect-[4/3] rounded-2xl overflow-hidden group">
-                <img src={`https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&q=80&sig=${i}`} alt="Project" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-[#0A0A0F]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-6">
-                  <div className="flex justify-end">
-                    <span className="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono uppercase tracking-wider">Web Design</span>
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-display font-bold mb-2 translate-y-4 group-hover:translate-y-0 transition-transform">Fintech Dashboard</h3>
-                    <button className="bg-white text-black px-4 py-2 rounded-full text-sm font-medium opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all delay-100 hover:bg-gray-200">View Project</button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 5: PRICING */}
-      <section id="pricing" className="py-20 md:py-32 bg-[#0A0A0F] border-t border-[#2A2A3A]">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-6">Simple, Transparent Pricing</h2>
-            
-            {/* Toggle */}
-            <div className="inline-flex items-center p-1 bg-[#1A1A28] rounded-full border border-[#2A2A3A] flex-wrap justify-center mx-auto">
-              <button onClick={() => setIsAnnual(false)} className={`px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-medium transition-all ${!isAnnual ? 'bg-[#2A2A3A] text-white shadow-sm' : 'text-[#94A3B8] hover:text-white'}`}>Monthly</button>
-              <button onClick={() => setIsAnnual(true)} className={`px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-medium transition-all ${isAnnual ? 'bg-[#2A2A3A] text-white shadow-sm' : 'text-[#94A3B8] hover:text-white'}`}>
-                Annually <span className="text-[#EC4899] ml-1 text-[10px] sm:text-xs">-20%</span>
-              </button>
-            </div>
+      {/* 3. TRUST/STATS SECTION */}
+      <section className="py-24 border-y border-bg-border bg-bg-surface">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="text-center mb-16">
+            <RedLabel>TRUSTED BY BRANDS</RedLabel>
+            <SectionHeading>Your Digital <span className="text-brand-red">Growth Partner</span></SectionHeading>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Basic Plan */}
-            <div className="bg-[#111118] border border-[#2A2A3A] rounded-3xl p-8 flex flex-col">
-              <h3 className="text-xl font-medium text-[#94A3B8] mb-2">Basic</h3>
-              <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-4xl font-display font-bold">₦{isAnnual ? '40k' : '50k'}</span>
-                <span className="text-[#475569]">/mo</span>
-              </div>
-              <ul className="space-y-4 mb-8 flex-1">
-                {['2 active requests at a time', '48-hour delivery', 'Standard support', 'Unlimited revisions', 'Source files included'].map((f, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-[#94A3B8]">
-                    <CheckCircle2 className="w-5 h-5 text-[#475569] shrink-0" /> {f}
-                  </li>
-                ))}
-              </ul>
-              <button onClick={() => setIsRegisterModalOpen(true)} className="block w-full py-3 text-center rounded-xl bg-[#1A1A28] border border-[#2A2A3A] hover:bg-[#2A2A3A] transition-colors font-medium">Get Started</button>
-            </div>
-
-            {/* Pro Plan (Highlighted) */}
-            <div className="bg-[#111118] border border-[#6C3CE1] rounded-3xl p-8 flex flex-col relative transform md:-translate-y-4 shadow-2xl shadow-[#6C3CE1]/10">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-gradient-to-r from-[#6C3CE1] to-[#EC4899] rounded-full text-xs font-bold tracking-wider">MOST POPULAR</div>
-              <h3 className="text-xl font-medium text-white mb-2">Pro</h3>
-              <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-4xl font-display font-bold">₦{isAnnual ? '120k' : '150k'}</span>
-                <span className="text-[#94A3B8]">/mo</span>
-              </div>
-              <ul className="space-y-4 mb-8 flex-1">
-                {['Double request bandwidth', '24-hour delivery', 'Priority support', 'Dedicated project manager', 'Custom React development'].map((f, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-[#F8FAFC]">
-                    <CheckCircle2 className="w-5 h-5 text-[#6C3CE1] shrink-0" /> {f}
-                  </li>
-                ))}
-              </ul>
-              <button onClick={() => setIsRegisterModalOpen(true)} className="block w-full py-3 text-center rounded-xl bg-gradient-to-r from-[#6C3CE1] to-[#EC4899] text-white hover:opacity-90 transition-opacity font-medium">Get Pro</button>
-            </div>
-
-            {/* Enterprise Plan */}
-            <div className="bg-[#111118] border border-[#2A2A3A] rounded-3xl p-8 flex flex-col">
-              <h3 className="text-xl font-medium text-[#94A3B8] mb-2">Enterprise</h3>
-              <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-4xl font-display font-bold">Custom</span>
-              </div>
-              <ul className="space-y-4 mb-8 flex-1">
-                {['Unlimited bandwidth', 'Same-day delivery', '24/7 Slack support', 'Full team access', 'White-labeling options'].map((f, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-[#94A3B8]">
-                    <CheckCircle2 className="w-5 h-5 text-[#475569] shrink-0" /> {f}
-                  </li>
-                ))}
-              </ul>
-              <button onClick={() => setIsRegisterModalOpen(true)} className="block w-full py-3 text-center rounded-xl bg-[#1A1A28] border border-[#2A2A3A] hover:bg-[#2A2A3A] transition-colors font-medium">Contact Us</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 6: TESTIMONIALS */}
-      <section className="py-20 md:py-24 bg-[#0A0A0F] border-t border-[#2A2A3A] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 mb-10 md:mb-12 flex justify-between items-end">
-          <h2 className="text-3xl md:text-4xl font-display font-bold">Client Love</h2>
-          <div className="flex gap-2">
-            <button onClick={scrollPrevTestimonial} className="w-10 h-10 rounded-full border border-[#2A2A3A] flex items-center justify-center hover:bg-[#1A1A28] transition-colors">
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button onClick={scrollNextTestimonial} className="w-10 h-10 rounded-full border border-[#2A2A3A] flex items-center justify-center hover:bg-[#1A1A28] transition-colors">
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-
-        <div className="pl-4 md:pl-[max(1.5rem,calc((100vw-80rem)/2))]" ref={emblaRefTestimonial}>
-          <div className="flex gap-4 md:gap-6">
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { name: "Sarah J.", company: "TechFlow", quote: "Studio99 totally revamped our brand. The speed and quality is unmatched." },
-              { name: "Michael B.", company: "Elevate Co", quote: "Their custom OS makes managing projects a breeze. Highly recommended." },
-              { name: "David O.", company: "Nexus", quote: "The best creative agency we've ever partnered with in Nigeria." }
-            ].map((t, i) => (
-              <div key={i} className="relative flex-[0_0_85%] md:flex-[0_0_400px] bg-[#111118] border border-[#2A2A3A] rounded-2xl p-6 md:p-8">
-                <div className="flex text-[#F59E0B] mb-4 md:mb-6">
-                  {[1,2,3,4,5].map(s => <Star key={s} className="w-4 h-4 fill-current" />)}
+              { num: "100+", label: "Projects Completed", icon: Briefcase },
+              { num: "50+", label: "Brands Served", icon: Globe },
+              { num: "4+", label: "Core Services", icon: Layers },
+              { num: "24/7", label: "Support Available", icon: Clock }
+            ].map((stat, i) => (
+              <motion.div key={i} variants={fadeUpVariant} className="bg-bg-card border border-bg-border rounded-2xl p-6 md:p-8 text-center hover-glow">
+                <div className="w-12 h-12 mx-auto rounded-full bg-brand-red/10 flex items-center justify-center mb-6">
+                  <stat.icon className="w-6 h-6 text-brand-red" />
                 </div>
-                <p className="text-base md:text-lg leading-relaxed text-[#F8FAFC] mb-6 md:mb-8">"{t.quote}"</p>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#2A2A3A] rounded-full overflow-hidden shrink-0">
-                     <img src={`https://i.pravatar.cc/150?img=${i+10}`} alt={t.name} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-sm md:text-base">{t.name}</h4>
-                    <p className="text-xs md:text-sm text-[#94A3B8]">{t.company}</p>
-                  </div>
+                <div className="text-4xl md:text-5xl font-black mb-2">{stat.num}</div>
+                <div className="text-text-secondary text-sm md:text-base font-medium">{stat.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 4. ABOUT SECTION */}
+      <section id="about" className="py-32">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-16 items-center">
+          <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
+            <div className="aspect-[4/5] rounded-3xl overflow-hidden border border-bg-border">
+              <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1000&auto=format&fit=crop" alt="Office Workspace" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-[#0A0A0A]/40 mix-blend-overlay"></div>
+            </div>
+            {/* Floating Badge */}
+            <div className="absolute -bottom-8 -right-8 bg-brand-red text-white p-6 rounded-2xl shadow-2xl">
+              <div className="text-4xl font-black mb-1">4+</div>
+              <div className="text-sm font-bold uppercase tracking-widest">Years of<br />Excellence</div>
+            </div>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+            <RedLabel>WHO WE ARE</RedLabel>
+            <SectionHeading>Create.Design.<span className="text-brand-red">Grow.</span></SectionHeading>
+            <p className="text-text-secondary text-lg mb-8 leading-relaxed font-sans">
+              Studio99 Digital provides businesses with an all-in-one digital service platform where clients can request services, track projects, communicate with teams, make payments, and receive completed work seamlessly.
+            </p>
+
+            <div className="grid grid-cols-2 gap-6 mb-10">
+              <div className="bg-bg-card p-6 rounded-2xl border border-bg-border">
+                <div className="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center mb-4 text-brand-red"><TrendingUp className="w-5 h-5" /></div>
+                <h4 className="font-bold mb-2">Our Mission</h4>
+                <p className="text-sm text-text-secondary leading-relaxed font-sans">To empower businesses, organizations, professionals, and content creators with innovative digital solutions that drive growth, engagement, and long-term success.</p>
+              </div>
+              <div className="bg-bg-card p-6 rounded-2xl border border-bg-border">
+                <div className="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center mb-4 text-brand-red"><Globe className="w-5 h-5" /></div>
+                <h4 className="font-bold mb-2">Our Vision</h4>
+                <p className="text-sm text-text-secondary leading-relaxed font-sans">To become a leading digital services platform recognized for creativity, excellence, and client satisfaction across Africa and beyond.</p>
+              </div>
+            </div>
+
+            <a href="#services" className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors">
+              Learn More About Us <ArrowRight className="w-4 h-4" />
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 5. SERVICES GRID SECTION */}
+      <section id="services" className="py-32 bg-bg-surface border-y border-bg-border">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div className="max-w-2xl">
+              <RedLabel>WHAT WE OFFER</RedLabel>
+              <SectionHeading>All The Digital Solutions <span className="text-brand-red">You Need</span></SectionHeading>
+            </div>
+            <p className="text-text-secondary text-right max-w-sm mb-2">One agency. Every digital service you need to build and scale your brand.</p>
+          </div>
+
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
+            {/* Graphics Design (Large left) */}
+            <motion.div variants={fadeUpVariant} className="md:col-span-2 md:row-span-2 relative rounded-3xl overflow-hidden group hover-glow border border-bg-border">
+              <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1200&auto=format&fit=crop" alt="Graphics" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-[#0A0A0A]/20"></div>
+              <div className="absolute inset-0 p-8 flex flex-col justify-between">
+                <span className="text-brand-red font-black text-2xl">01</span>
+                <div>
+                  <h3 className="text-3xl font-black mb-3">Graphics Design</h3>
+                  <p className="text-text-secondary max-w-md mb-6">Bring your brand to life with visually compelling designs that capture attention, communicate value, and leave a lasting impression. From social media creatives to branding materials, we design with purpose and impact.</p>
+                  <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors mt-2">
+                    Get Started <ArrowRight className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
+            </motion.div>
+
+            {/* Video Editing (Top right) */}
+            <motion.div variants={fadeUpVariant} className="relative rounded-3xl overflow-hidden group hover-glow border border-bg-border">
+              <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=600&auto=format&fit=crop" alt="Video" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-[#0A0A0A]/20"></div>
+              <div className="absolute inset-0 p-8 flex flex-col justify-between">
+                <span className="text-brand-red font-black text-xl">02</span>
+                <div>
+                  <h3 className="text-xl font-black mb-2">Video Editing</h3>
+                  <p className="text-text-secondary text-sm mb-4">Transform raw footage into engaging stories that drive views, engagement, and conversions. Whether for marketing, social media, or business presentations, our edits are crafted to deliver results.</p>
+                  <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors text-sm">
+                    Request Video Editing <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Web Dev (Middle right) */}
+            <motion.div variants={fadeUpVariant} className="relative rounded-3xl overflow-hidden group hover-glow border border-bg-border">
+              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&auto=format&fit=crop" alt="Web" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-[#0A0A0A]/20"></div>
+              <div className="absolute inset-0 p-8 flex flex-col justify-between">
+                <span className="text-brand-red font-black text-xl">03</span>
+                <div>
+                  <h3 className="text-xl font-black mb-2">Website Development</h3>
+                  <p className="text-text-secondary text-sm mb-4">Build modern, responsive, and high-performing websites designed to elevate your online presence and convert visitors into customers.</p>
+                  <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors text-sm">
+                    💻 Build My Website <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Social Media (Bottom right) */}
+            <motion.div variants={fadeUpVariant} className="md:col-span-3 relative rounded-3xl overflow-hidden group hover-glow border border-bg-border h-[250px] md:h-auto">
+              <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1200&auto=format&fit=crop" alt="Social" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-[#0A0A0A]/20"></div>
+              <div className="absolute inset-0 p-8 flex flex-col justify-between">
+                <span className="text-brand-red font-black text-xl">04</span>
+                <div>
+                  <h3 className="text-xl font-black mb-2">Social Media Management</h3>
+                  <p className="text-text-secondary text-sm mb-4">Grow your audience and strengthen your brand with strategic content creation, publishing, engagement, and performance tracking tailored to your business goals.</p>
+                  <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors text-sm">
+                    📈 Manage My Social Media <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 6. WHY CHOOSE US */}
+      <section className="py-32">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="text-center mb-16">
+            <RedLabel>WHY STUDIO99</RedLabel>
+            <SectionHeading>Your Success. <span className="text-brand-red">Our Priority.</span></SectionHeading>
+          </div>
+
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { icon: Zap, title: "Affordable", desc: "Premium quality at prices that won't drain your budget. We make great design accessible." },
+              { icon: MonitorSmartphone, title: "Convenient", desc: "Seamless communication and delivery. Everything handled online, on your schedule." },
+              { icon: TrendingUp, title: "Scalable", desc: "Our solutions grow with you. Start small, scale big without changing agencies." },
+              { icon: ShieldCheck, title: "Subscription Model", desc: "Flexible monthly plans so you always have a creative team ready without surprise costs." },
+              { icon: Clock, title: "Fast Delivery", desc: "We respect deadlines. Rapid turnarounds without compromising on quality." },
+              { icon: Headphones, title: "Dedicated Support", desc: "A real team behind every project. Responsive, proactive, and always in your corner." }
+            ].map((feature, i) => (
+              <motion.div key={i} variants={fadeUpVariant} whileHover={{ y: -5 }} className="bg-bg-card border border-bg-border rounded-2xl p-8 hover-glow transition-all cursor-pointer">
+                <div className="w-10 h-10 rounded bg-brand-red/10 flex items-center justify-center mb-6 border border-brand-red/20">
+                  <feature.icon className="w-5 h-5 text-brand-red" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 7. PORTFOLIO / RECENT PROJECTS */}
+      <section id="work" className="py-32 bg-bg-surface border-y border-bg-border">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <RedLabel>OUR WORK</RedLabel>
+              <SectionHeading>Recent <span className="text-brand-red">Projects</span></SectionHeading>
+            </div>
+            <a href="#" className="hidden sm:inline-flex items-center gap-2 text-sm font-bold border border-bg-border px-6 py-3 rounded-full hover:bg-bg-card transition-colors">
+              View All Projects <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {[
+              { title: "Luxury Brand Identity", tag: "Branding", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" },
+              { title: "Restaurant Flyer Campaign", tag: "Graphics Design", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800&auto=format&fit=crop" },
+              { title: "Corporate Website", tag: "Web Development", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" },
+              { title: "Product Advertisement", tag: "Video Production", img: "https://images.unsplash.com/photo-1601506521937-0121a7fc2a6b?q=80&w=800&auto=format&fit=crop" },
+              { title: "Company Profile Design", tag: "Print & Branding", img: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?q=80&w=800&auto=format&fit=crop" },
+              { title: "Mobile App Interface", tag: "UI/UX Design", img: "https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=800&auto=format&fit=crop" }
+            ].map((p, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="group cursor-pointer">
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4 border border-bg-border hover-glow">
+                  <img src={p.img} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-[#0A0A0A]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute bottom-4 left-4">
+                    <span className="px-3 py-1 bg-brand-red text-white text-[10px] font-bold uppercase tracking-wider rounded-full">{p.tag}</span>
+                  </div>
+                </div>
+                <h4 className="font-bold text-lg group-hover:text-brand-red transition-colors">{p.title}</h4>
+              </motion.div>
             ))}
           </div>
+          <div className="mt-8 text-center sm:hidden">
+            <a href="#" className="inline-flex items-center gap-2 text-sm font-bold border border-bg-border px-6 py-3 rounded-full hover:bg-bg-card transition-colors w-full justify-center">
+              View All Projects <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* SECTION 7: CTA BANNER */}
-      <section className="relative py-20 md:py-32 bg-gradient-to-br from-[#6C3CE1] to-[#EC4899] overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')] opacity-20 mix-blend-overlay"></div>
-        <div className="relative max-w-4xl mx-auto px-4 md:px-6 text-center z-10">
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-bold text-white mb-6 md:mb-8 tracking-tight">Ready to Elevate Your Brand?</h2>
-          <p className="text-lg md:text-xl text-white/80 mb-8 md:mb-10 max-w-2xl mx-auto px-4">Join dozens of visionary companies scaling their creatives with Studio99.</p>
-          <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 rounded-full bg-white text-black font-bold text-base md:text-lg hover:scale-105 transition-transform">
-            Start Your Project Today
-          </button>
+      {/* 8. CTA BANNER SECTION */}
+      <section className="relative py-32 overflow-hidden border-b border-bg-border bg-bg-base">
+        {/* Subtle dot grid background */}
+        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(#2A2A2A 1px, transparent 1px)', backgroundSize: '32px 32px', opacity: 0.5 }}></div>
+
+        <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-8 text-center">
+          <RedLabel>LET'S WORK TOGETHER</RedLabel>
+          <SectionHeading>Ready to take your brand to the <span className="text-brand-red">next level?</span></SectionHeading>
+
+          <p className="text-text-secondary text-lg md:text-xl max-w-2xl mx-auto mb-10">
+            Partner with Studio99 Digital and experience creativity, innovation, and results—all in one platform.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+            <button onClick={() => setIsRegisterModalOpen(true)} className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
+              🚀 Start Your Project Today
+            </button>
+            <a href="#contact" className="w-full sm:w-auto px-8 py-4 rounded-full border border-bg-border bg-bg-card hover:bg-[#2A2A2A] transition-colors font-bold flex items-center justify-center gap-2">
+              Contact Us
+            </a>
+          </div>
+
+          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm font-medium text-text-secondary">
+            <span>100+ Projects</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-bg-border"></span>
+            <span>50+ Brands</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-bg-border"></span>
+            <span>4+ Years</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-bg-border"></span>
+            <span>24/7 Support</span>
+          </div>
         </div>
       </section>
 
-      {/* SECTION 8: FOOTER */}
-      <footer className="bg-[#0A0A0F] py-12 md:py-16 border-t border-[#2A2A3A]">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12 mb-12 md:mb-16">
-          <div className="col-span-1 sm:col-span-2">
-            <div className="flex items-center gap-2 mb-4 md:mb-6">
-              <div className="w-6 h-6 rounded bg-gradient-to-br from-[#6C3CE1] to-[#EC4899] flex items-center justify-center font-display font-bold text-white text-xs">
-                S
+      {/* 9. FOOTER */}
+      <footer className="bg-bg-base pt-20 pb-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div className="md:col-span-1">
+              <div className="flex items-center gap-2 mb-6">
+                <div className="w-8 h-8 rounded bg-brand-red flex items-center justify-center font-black text-white text-xs">S</div>
+                <span className="font-black text-lg tracking-tight">studio99</span>
               </div>
-              <span className="font-display font-bold tracking-tight text-lg">Studio99</span>
+              <p className="text-text-secondary text-sm mb-8 leading-relaxed">
+                Premium digital solutions for businesses ready to build stronger brands and grow online.
+              </p>
+              <div className="flex gap-3">
+                <a href="#" className="w-10 h-10 rounded-full bg-bg-card border border-bg-border flex items-center justify-center text-text-secondary hover:text-white hover:bg-brand-red hover:border-brand-red transition-all">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-bg-card border border-bg-border flex items-center justify-center text-text-secondary hover:text-white hover:bg-brand-red hover:border-brand-red transition-all">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" /></svg>
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-bg-card border border-bg-border flex items-center justify-center text-text-secondary hover:text-white hover:bg-brand-red hover:border-brand-red transition-all">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-bg-card border border-bg-border flex items-center justify-center text-text-secondary hover:text-white hover:bg-brand-red hover:border-brand-red transition-all">
+                  <Briefcase className="w-4 h-4" />
+                </a>
+              </div>
             </div>
-            <p className="text-[#94A3B8] max-w-sm mb-6 text-sm leading-relaxed">We build digital experiences that convert. Your premium creative partner.</p>
+
+            <div>
+              <h4 className="font-bold text-white mb-6">Services</h4>
+              <ul className="space-y-4 text-sm text-text-secondary">
+                <li><a href="#" className="hover:text-white transition-colors">Graphics Design</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Video Editing</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Website Development</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Printing & Branding</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Social Media Management</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-bold text-white mb-6">Company</h4>
+              <ul className="space-y-4 text-sm text-text-secondary">
+                <li><a href="#" className="hover:text-white transition-colors">Portfolio</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
+                <li><a href="#pricing" className="hover:text-white transition-colors">Pricing</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-bold text-white mb-6">Contact</h4>
+              <ul className="space-y-4 text-sm text-text-secondary">
+                <li className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded bg-bg-card flex items-center justify-center border border-bg-border"><Mail className="w-3 h-3 text-brand-red" /></div>
+                  <a href="mailto:hello@studio99.digital" className="hover:text-white transition-colors">hello@studio99.digital</a>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded bg-bg-card flex items-center justify-center border border-bg-border"><MapPin className="w-3 h-3 text-brand-red" /></div>
+                  <span className="hover:text-white transition-colors">Available Worldwide</span>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div>
-            <h4 className="font-bold mb-6">Services</h4>
-            <ul className="space-y-4 text-sm text-[#94A3B8]">
-              <li><a href="#" className="hover:text-white transition-colors">Graphics Design</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Video Editing</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Web Development</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Social Media</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold mb-6">Company</h4>
-            <ul className="space-y-4 text-sm text-[#94A3B8]">
-              <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-              <li><a href="#work" className="hover:text-white transition-colors">Portfolio</a></li>
-              <li><a href="#pricing" className="hover:text-white transition-colors">Pricing</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
-            </ul>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row justify-between items-center pt-8 border-t border-[#1A1A28] text-sm text-[#475569] gap-4 md:gap-0">
-          <p className="text-center md:text-left">&copy; {new Date().getFullYear()} Studio99. All rights reserved.</p>
-          <div className="flex gap-4 md:gap-6">
-            <a href="#" className="hover:text-white transition-colors">Twitter</a>
-            <a href="#" className="hover:text-white transition-colors">Instagram</a>
-            <a href="#" className="hover:text-white transition-colors">Dribbble</a>
+
+          <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-bg-border text-sm text-text-secondary gap-4">
+            <p>&copy; {new Date().getFullYear()} Studio99 Digital. All rights reserved.</p>
+            <div className="flex items-center gap-2 font-bold tracking-widest text-[10px] uppercase">
+              <span>Design</span>
+              <span className="text-brand-red">•</span>
+              <span>Create</span>
+              <span className="text-brand-red">•</span>
+              <span>Grow</span>
+            </div>
           </div>
         </div>
       </footer>
 
-      <LoginModal 
-        open={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)} 
+      <LoginModal
+        open={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
         onSwitchToRegister={() => { setIsLoginModalOpen(false); setIsRegisterModalOpen(true); }}
       />
-      
-      <RegisterModal 
-        open={isRegisterModalOpen} 
-        onClose={() => setIsRegisterModalOpen(false)} 
+
+      <RegisterModal
+        open={isRegisterModalOpen}
+        onClose={() => setIsRegisterModalOpen(false)}
         onSwitchToLogin={() => { setIsRegisterModalOpen(false); setIsLoginModalOpen(true); }}
       />
     </div>

@@ -37,85 +37,85 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }) {
     >
       <form onSubmit={submit} className="mt-6 space-y-4">
         <div className="space-y-2">
-          <label className="text-sm font-medium text-[#E2E8F0]">Full Name</label>
+          <label className="text-sm font-medium text-white">Full Name</label>
           <input
             type="text"
             value={data.name}
             onChange={(e) => setData('name', e.target.value)}
-            className="w-full bg-[#1A1A28] border border-[#2A2A3A] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#6C3CE1] transition-colors"
+            className="w-full bg-bg-base border border-bg-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-red transition-colors"
             placeholder="Jane Doe"
             autoComplete="name"
           />
-          {errors.name && <span className="text-red-500 text-xs">{errors.name}</span>}
+          {errors.name && <span className="text-brand-red text-xs">{errors.name}</span>}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#E2E8F0]">Email</label>
+            <label className="text-sm font-medium text-white">Email</label>
             <input
               type="email"
               value={data.email}
               onChange={(e) => setData('email', e.target.value)}
-              className="w-full bg-[#1A1A28] border border-[#2A2A3A] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#6C3CE1] transition-colors"
+              className="w-full bg-bg-base border border-bg-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-red transition-colors"
               placeholder="jane@company.com"
               autoComplete="username"
             />
-            {errors.email && <span className="text-red-500 text-xs">{errors.email}</span>}
+            {errors.email && <span className="text-brand-red text-xs">{errors.email}</span>}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#E2E8F0]">Phone (Optional)</label>
+            <label className="text-sm font-medium text-white">Phone (Optional)</label>
             <input
               type="tel"
               value={data.phone}
               onChange={(e) => setData('phone', e.target.value)}
-              className="w-full bg-[#1A1A28] border border-[#2A2A3A] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#6C3CE1] transition-colors"
+              className="w-full bg-bg-base border border-bg-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-red transition-colors"
               placeholder="+234..."
               autoComplete="tel"
             />
-            {errors.phone && <span className="text-red-500 text-xs">{errors.phone}</span>}
+            {errors.phone && <span className="text-brand-red text-xs">{errors.phone}</span>}
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#E2E8F0]">Password</label>
+            <label className="text-sm font-medium text-white">Password</label>
             <input
               type="password"
               value={data.password}
               onChange={(e) => setData('password', e.target.value)}
-              className="w-full bg-[#1A1A28] border border-[#2A2A3A] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#6C3CE1] transition-colors"
+              className="w-full bg-bg-base border border-bg-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-red transition-colors"
               placeholder="••••••••"
               autoComplete="new-password"
             />
-            {errors.password && <span className="text-red-500 text-xs">{errors.password}</span>}
+            {errors.password && <span className="text-brand-red text-xs">{errors.password}</span>}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#E2E8F0]">Confirm Password</label>
+            <label className="text-sm font-medium text-white">Confirm Password</label>
             <input
               type="password"
               value={data.password_confirmation}
               onChange={(e) => setData('password_confirmation', e.target.value)}
-              className="w-full bg-[#1A1A28] border border-[#2A2A3A] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#6C3CE1] transition-colors"
+              className="w-full bg-bg-base border border-bg-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-red transition-colors"
               placeholder="••••••••"
               autoComplete="new-password"
             />
-            {errors.password_confirmation && <span className="text-red-500 text-xs">{errors.password_confirmation}</span>}
+            {errors.password_confirmation && <span className="text-brand-red text-xs">{errors.password_confirmation}</span>}
           </div>
         </div>
 
         <button 
           type="submit" 
           disabled={processing}
-          className="w-full bg-gradient-to-r from-[#6C3CE1] to-[#EC4899] text-white py-3 rounded-xl font-bold hover:opacity-90 transition-opacity flex items-center justify-center mt-6 disabled:opacity-50"
+          className="w-full bg-brand-red text-white py-3 rounded-xl font-bold hover:bg-red-700 transition-colors flex items-center justify-center mt-6 disabled:opacity-50"
         >
           {processing ? <Loader2 className="w-5 h-5 animate-spin" /> : "Create Account"}
         </button>
 
-        <p className="text-center text-sm text-[#94A3B8] mt-4">
+        <p className="text-center text-sm text-text-secondary mt-4">
           Already have an account?{' '}
-          <button type="button" onClick={onSwitchToLogin} className="text-white hover:text-[#6C3CE1] transition-colors font-medium">
+          <button type="button" onClick={onSwitchToLogin} className="text-white hover:text-brand-red transition-colors font-bold">
             Log In
           </button>
         </p>

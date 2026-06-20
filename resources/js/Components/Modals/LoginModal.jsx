@@ -35,32 +35,32 @@ export function LoginModal({ open, onClose, onSwitchToRegister }) {
     >
       <form onSubmit={submit} className="mt-6 space-y-5">
         <div className="space-y-2">
-          <label className="text-sm font-medium text-[#E2E8F0]">Email</label>
+          <label className="text-sm font-medium text-white">Email</label>
           <input
             type="email"
             value={data.email}
             onChange={(e) => setData('email', e.target.value)}
-            className="w-full bg-[#1A1A28] border border-[#2A2A3A] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#6C3CE1] transition-colors"
+            className="w-full bg-bg-base border border-bg-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-red transition-colors"
             placeholder="name@company.com"
             autoComplete="username"
           />
-          {errors.email && <span className="text-red-500 text-xs">{errors.email}</span>}
+          {errors.email && <span className="text-brand-red text-xs">{errors.email}</span>}
         </div>
 
         <div className="space-y-2">
           <div className="flex justify-between">
-            <label className="text-sm font-medium text-[#E2E8F0]">Password</label>
-            <a href="#" className="text-xs text-[#6C3CE1] hover:text-[#E2E8F0] transition-colors">Forgot password?</a>
+            <label className="text-sm font-medium text-white">Password</label>
+            <a href="#" className="text-xs text-brand-red hover:text-red-400 transition-colors">Forgot password?</a>
           </div>
           <input
             type="password"
             value={data.password}
             onChange={(e) => setData('password', e.target.value)}
-            className="w-full bg-[#1A1A28] border border-[#2A2A3A] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#6C3CE1] transition-colors"
+            className="w-full bg-bg-base border border-bg-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-red transition-colors"
             placeholder="••••••••"
             autoComplete="current-password"
           />
-          {errors.password && <span className="text-red-500 text-xs">{errors.password}</span>}
+          {errors.password && <span className="text-brand-red text-xs">{errors.password}</span>}
         </div>
 
         <div className="flex items-center gap-2">
@@ -69,22 +69,22 @@ export function LoginModal({ open, onClose, onSwitchToRegister }) {
             id="remember"
             checked={data.remember}
             onChange={(e) => setData('remember', e.target.checked)}
-            className="rounded border-[#2A2A3A] bg-[#1A1A28] text-[#6C3CE1] focus:ring-[#6C3CE1]"
+            className="rounded border-bg-border bg-bg-base text-brand-red focus:ring-brand-red"
           />
-          <label htmlFor="remember" className="text-sm text-[#94A3B8]">Remember me for 30 days</label>
+          <label htmlFor="remember" className="text-sm text-text-secondary">Remember me for 30 days</label>
         </div>
 
         <button 
           type="submit" 
           disabled={processing}
-          className="w-full bg-gradient-to-r from-[#6C3CE1] to-[#EC4899] text-white py-3 rounded-xl font-bold hover:opacity-90 transition-opacity flex items-center justify-center disabled:opacity-50"
+          className="w-full bg-brand-red text-white py-3 rounded-xl font-bold hover:bg-red-700 transition-colors flex items-center justify-center disabled:opacity-50 mt-2"
         >
           {processing ? <Loader2 className="w-5 h-5 animate-spin" /> : "Log In"}
         </button>
 
-        <p className="text-center text-sm text-[#94A3B8] mt-4">
+        <p className="text-center text-sm text-text-secondary mt-4">
           Don't have an account?{' '}
-          <button type="button" onClick={onSwitchToRegister} className="text-white hover:text-[#6C3CE1] transition-colors font-medium">
+          <button type="button" onClick={onSwitchToRegister} className="text-white hover:text-brand-red transition-colors font-bold">
             Get Started
           </button>
         </p>

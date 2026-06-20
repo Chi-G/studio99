@@ -1,46 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter+Tight:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-display: 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+  --font-black: 'Archivo Black', ui-sans-serif, system-ui, sans-serif;
 
   /* Studio99 Brand Colors mapped directly to Tailwind v4 @theme */
-  --color-brand-purple: #6C3CE1;
-  --color-brand-amber: #F59E0B;
-  --color-brand-pink: #EC4899;
+  --color-brand-red: #E31E24;
 
-  --color-bg-base: #0A0A0F;
-  --color-bg-surface: #111118;
-  --color-bg-elevated: #1A1A28;
-  --color-bg-border: #2A2A3A;
+  --color-bg-base: #0A0A0A;
+  --color-bg-surface: #111111;
+  --color-bg-card: #1A1A1A;
+  --color-bg-card-hover: #242424;
+  --color-bg-border: #2A2A2A;
 
-  --color-text-primary: #F8FAFC;
-  --color-text-secondary: #94A3B8;
-  --color-text-muted: #475569;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #9CA3AF;
 }
 
 /* Custom Styles & Base Variables */
 
 @layer base {
   :root {
-    --brand-purple: #6C3CE1;
-    --brand-amber: #F59E0B;
-    --brand-pink: #EC4899;
+    --brand-red: #E31E24;
 
-    --bg-base: #0A0A0F;
-    --bg-surface: #111118;
-    --bg-elevated: #1A1A28;
-    --bg-border: #2A2A3A;
+    --bg-base: #0A0A0A;
+    --bg-surface: #111111;
+    --bg-card: #1A1A1A;
+    --bg-card-hover: #242424;
+    --bg-border: #2A2A2A;
 
-    --text-primary: #F8FAFC;
-    --text-secondary: #94A3B8;
-    --text-muted: #475569;
+    --text-primary: #FFFFFF;
+    --text-secondary: #9CA3AF;
 
-    --gradient-primary: linear-gradient(135deg, #6C3CE1, #EC4899);
-    --gradient-amber: linear-gradient(135deg, #F59E0B, #EF4444);
-    --gradient-subtle: linear-gradient(135deg, rgba(108,60,225,0.15), rgba(236,72,153,0.15));
+    --red-glow: rgba(227, 30, 36, 0.4);
   }
 
   body {
@@ -48,7 +42,7 @@
     color: var(--text-primary);
   }
 
-  /* Custom Thin Purple Scrollbar */
+  /* Custom Thin Red Scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -61,30 +55,24 @@
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--brand-purple); 
+    background: var(--brand-red); 
   }
 }
 
 @layer utilities {
   .bg-glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--bg-border);
   }
 
-  @keyframes spotlight {
-    0% {
-      opacity: 0;
-      transform: translate(-72%, -62%) scale(0.5);
-    }
-    100% {
-      opacity: 1;
-      transform: translate(-50%,-40%) scale(1);
-    }
+  /* Red glow for card hovers */
+  .hover-glow {
+    transition: all 0.3s ease;
   }
-
-  .animate-spotlight {
-    animation: spotlight 2s ease .75s 1 forwards;
+  .hover-glow:hover {
+    box-shadow: 0 0 30px rgba(227, 30, 36, 0.15);
+    border-color: rgba(227, 30, 36, 0.3);
   }
 }

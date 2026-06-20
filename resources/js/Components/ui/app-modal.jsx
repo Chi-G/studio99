@@ -27,17 +27,17 @@ export function AppModal({
       <DialogContent 
         className={`
           ${sizeMap[size]} 
-          bg-[#111118] 
-          border border-[#2A2A3A] 
+          bg-bg-card 
+          border border-bg-border 
           text-white
         `}
       >
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold font-display text-white">
+          <DialogTitle className="text-xl font-black font-sans text-white">
             {title}
           </DialogTitle>
           {description && (
-            <DialogDescription className="text-[#94A3B8]">
+            <DialogDescription className="text-text-secondary">
               {description}
             </DialogDescription>
           )}
