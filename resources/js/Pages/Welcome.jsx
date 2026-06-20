@@ -64,7 +64,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
       <Head title="Design • Create • Grow | Studio99 Digital" />
 
       {/* 1. NAVBAR */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#0A0A0A]/90 backdrop-blur-md border-b border-bg-border py-4' : 'bg-transparent py-6'}`}>
+      <nav className="fixed top-0 w-full z-50 bg-[#0A0A0A] border-b border-bg-border py-4">
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
             <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
@@ -84,13 +84,13 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
             <a href="#contact" className="hover:text-white transition-colors">Contact Us</a>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             {auth.user ? (
-              <Link href="/dashboard" className="text-sm font-medium text-white hover:text-brand-red transition-colors">Dashboard</Link>
+              <Link href="/dashboard" className="text-xs sm:text-sm font-medium text-white hover:text-brand-red transition-colors">Dashboard</Link>
             ) : (
               <>
-                <button onClick={() => setIsLoginModalOpen(true)} className="text-sm font-medium text-text-secondary hover:text-white transition-colors">Login</button>
-                <button onClick={() => setIsRegisterModalOpen(true)} className="text-sm font-medium bg-brand-red text-white px-5 py-2 rounded-full hover:bg-red-700 transition-colors">Get Started</button>
+                <button onClick={() => setIsLoginModalOpen(true)} className="text-xs sm:text-sm font-medium text-text-secondary hover:text-white transition-colors">Login</button>
+                <button onClick={() => setIsRegisterModalOpen(true)} className="text-xs sm:text-sm font-medium bg-brand-red text-white px-4 sm:px-5 py-2 rounded-full hover:bg-red-700 transition-colors whitespace-nowrap">Get Started</button>
               </>
             )}
           </div>
@@ -219,9 +219,9 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
               <div className="absolute inset-0 bg-[#0A0A0A]/40 mix-blend-overlay"></div>
             </div>
             {/* Floating Badge */}
-            <div className="absolute -bottom-8 -right-8 bg-brand-red text-white p-6 rounded-2xl shadow-2xl">
-              <div className="text-4xl font-black mb-1">4+</div>
-              <div className="text-sm font-bold uppercase tracking-widest">Years of<br />Excellence</div>
+            <div className="absolute -bottom-6 right-0 md:-bottom-8 md:-right-8 bg-brand-red text-white p-4 sm:p-6 rounded-2xl shadow-2xl z-10">
+              <div className="text-3xl sm:text-4xl font-black mb-1">4+</div>
+              <div className="text-xs sm:text-sm font-bold uppercase tracking-widest">Years of<br />Excellence</div>
             </div>
           </motion.div>
 
