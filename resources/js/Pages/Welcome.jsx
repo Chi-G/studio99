@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import studioDarkImg from '../../../public/studio99-dark.jpeg';
+import studioDarkImg from '../../images/studio99-dark.jpeg';
 import {
   ArrowRight, Play, Globe, PenTool,
   Video, Share2, Layers, Briefcase, Clock, ShieldCheck, Mail, MapPin,
