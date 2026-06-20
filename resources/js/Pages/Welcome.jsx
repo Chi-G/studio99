@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import studioDarkImg from '../../images/studio99-dark.jpeg';
+import headerLogo from '../../images/logo.jpeg';
 import {
   ArrowRight, Play, Globe, PenTool,
   Video, Share2, Layers, Briefcase, Clock, ShieldCheck, Mail, MapPin,
@@ -65,10 +66,17 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
       {/* 1. NAVBAR */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#0A0A0A]/90 backdrop-blur-md border-b border-bg-border py-4' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded bg-brand-red flex items-center justify-center font-black text-white text-xs">S</div>
-            <span className="font-black text-lg tracking-tight hidden sm:block">studio99 <span className="text-[10px] uppercase text-text-secondary tracking-widest ml-1 font-sans">Digital</span></span>
-          </div>
+          <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+            <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
+            <div className="hidden sm:flex flex-col justify-center leading-none mt-0.5">
+              <span className="font-black text-lg tracking-tight">
+                studio<span className="text-brand-red">99</span>
+              </span>
+              <span className="text-[10px] uppercase text-text-secondary tracking-widest font-sans font-bold -mt-1">
+                Digital
+              </span>
+            </div>
+          </Link>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-text-secondary">
             <a href="#services" className="hover:text-white transition-colors">Request a Service</a>
             <a href="#work" className="hover:text-white transition-colors">View Portfolio</a>

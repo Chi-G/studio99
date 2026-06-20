@@ -7,8 +7,8 @@
         <title inertia>{{ config('app.name', 'Studio99 Digital') }}</title>
         
         <!-- Favicon -->
-        <link rel="icon" type="image/jpeg" href="/studio99-dark.jpeg" />
-        <link rel="apple-touch-icon" href="/studio99-dark.jpeg" />
+        <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
+        <link rel="apple-touch-icon" href="/logo.jpeg" />
         
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
