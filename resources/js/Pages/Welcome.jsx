@@ -78,7 +78,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
               </span>
             </div>
           </Link>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-text-secondary">
+          <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-text-secondary">
             <a href="#services" className="hover:text-white transition-colors">Request a Service</a>
             <a href="#work" className="hover:text-white transition-colors">View Portfolio</a>
             <a href="#about" className="hover:text-white transition-colors">About</a>
@@ -87,7 +87,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
           </div>
 
           {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4">
             {auth.user ? (
               <Link href="/dashboard" className="text-sm font-medium text-white hover:text-brand-red transition-colors">Dashboard</Link>
             ) : (
@@ -100,7 +100,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
 
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden text-text-secondary hover:text-white"
+            className="lg:hidden text-text-secondary hover:text-white"
             onClick={() => setIsMobileMenuOpen(true)}
           >
             <Menu className="w-6 h-6" />
@@ -208,7 +208,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
 
         {/* Hero Service Preview Cards */}
         <div className="max-w-7xl mx-auto px-4 md:px-8 w-full mt-20 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { title: "Graphics Design", icon: PenTool, img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop" },
               { title: "Website Development", icon: MonitorSmartphone, img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&auto=format&fit=crop" },
@@ -236,7 +236,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             <SectionHeading>Your Digital <span className="text-brand-red">Growth Partner</span></SectionHeading>
           </div>
 
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { num: "100+", label: "Projects Completed", icon: Briefcase },
               { num: "50+", label: "Brands Served", icon: Globe },
@@ -257,14 +257,14 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
 
       {/* 4. ABOUT SECTION */}
       <section id="about" className="py-32">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 grid lg:grid-cols-2 gap-16 items-center">
           <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
             <div className="aspect-[4/5] rounded-3xl overflow-hidden border border-bg-border">
               <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1000&auto=format&fit=crop" alt="Office Workspace" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-[#0A0A0A]/40 mix-blend-overlay"></div>
             </div>
             {/* Floating Badge */}
-            <div className="absolute -bottom-6 right-0 md:-bottom-8 md:-right-8 bg-brand-red text-white p-4 sm:p-6 rounded-2xl shadow-2xl z-10">
+            <div className="absolute -bottom-6 right-0 md:-bottom-8 lg:-right-8 bg-brand-red text-white p-4 sm:p-6 rounded-2xl shadow-2xl z-10">
               <div className="text-3xl sm:text-4xl font-black mb-1">4+</div>
               <div className="text-xs sm:text-sm font-bold uppercase tracking-widest">Years of<br />Excellence</div>
             </div>
@@ -384,7 +384,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             <SectionHeading>Your Success. <span className="text-brand-red">Our Priority.</span></SectionHeading>
           </div>
 
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { icon: Zap, title: "Affordable", desc: "Premium quality at prices that won't drain your budget. We make great design accessible." },
               { icon: MonitorSmartphone, title: "Convenient", desc: "Seamless communication and delivery. Everything handled online, on your schedule." },
@@ -418,7 +418,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             </a>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { title: "Luxury Brand Identity", tag: "Branding", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" },
               { title: "Restaurant Flyer Campaign", tag: "Graphics Design", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800&auto=format&fit=crop" },
@@ -484,7 +484,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
       {/* 9. FOOTER */}
       <footer className="bg-bg-base pt-20 pb-10">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div className="md:col-span-1">
               <div className="flex items-center gap-2 mb-6">
                 <div className="w-8 h-8 rounded bg-brand-red flex items-center justify-center font-black text-white text-xs">S</div>
