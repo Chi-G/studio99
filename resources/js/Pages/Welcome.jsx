@@ -6,7 +6,7 @@ import headerLogo from '../../images/logo.jpeg';
 import {
   ArrowRight, Play, Globe, PenTool,
   Video, Share2, Layers, Briefcase, Clock, ShieldCheck, Mail, MapPin,
-  Zap, Headphones, TrendingUp, MonitorSmartphone
+  Zap, Headphones, TrendingUp, MonitorSmartphone, Menu, X
 } from 'lucide-react';
 
 import { LoginModal } from '@/Components/Modals/LoginModal';
@@ -29,6 +29,7 @@ const SectionHeading = ({ children }) => (
 export default function Welcome({ auth, showLogin = false, showRegister = false }) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(showLogin);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(showRegister);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -60,7 +61,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
   };
 
   return (
-    <div className="min-h-screen bg-bg-base text-text-primary font-sans selection:bg-brand-red/30">
+    <div className="min-h-screen bg-bg-base text-text-primary font-sans selection:bg-brand-red/30 overflow-x-hidden">
       <Head title="Design • Create • Grow | Studio99 Digital" />
 
       {/* 1. NAVBAR */}
@@ -84,18 +85,62 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
             <a href="#contact" className="hover:text-white transition-colors">Contact Us</a>
           </div>
-          <div className="flex items-center gap-2 sm:gap-4">
+
+          {/* Desktop Auth Buttons */}
+          <div className="hidden md:flex items-center gap-4">
             {auth.user ? (
-              <Link href="/dashboard" className="text-xs sm:text-sm font-medium text-white hover:text-brand-red transition-colors">Dashboard</Link>
+              <Link href="/dashboard" className="text-sm font-medium text-white hover:text-brand-red transition-colors">Dashboard</Link>
             ) : (
               <>
-                <button onClick={() => setIsLoginModalOpen(true)} className="text-xs sm:text-sm font-medium text-text-secondary hover:text-white transition-colors">Login</button>
-                <button onClick={() => setIsRegisterModalOpen(true)} className="text-xs sm:text-sm font-medium bg-brand-red text-white px-4 sm:px-5 py-2 rounded-full hover:bg-red-700 transition-colors whitespace-nowrap">Get Started</button>
+                <button onClick={() => setIsLoginModalOpen(true)} className="text-sm font-medium text-text-secondary hover:text-white transition-colors">Login</button>
+                <button onClick={() => setIsRegisterModalOpen(true)} className="text-sm font-medium bg-brand-red text-white px-5 py-2 rounded-full hover:bg-red-700 transition-colors whitespace-nowrap">Get Started</button>
+              </>
+            )}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            className="md:hidden text-text-secondary hover:text-white"
+            onClick={() => setIsMobileMenuOpen(true)}
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-[60] bg-[#0A0A0A] flex flex-col px-6 py-8">
+          <div className="flex items-center justify-between mb-12">
+            <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
+            <button 
+              className="text-text-secondary hover:text-white"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <X className="w-8 h-8" />
+            </button>
+          </div>
+          
+          <div className="flex flex-col gap-6 text-xl font-medium text-text-secondary flex-1">
+            <a href="#services" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Request a Service</a>
+            <a href="#work" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">View Portfolio</a>
+            <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">About</a>
+            <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Pricing</a>
+            <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Contact Us</a>
+          </div>
+
+          <div className="flex flex-col gap-4 mt-auto">
+            {auth.user ? (
+              <Link href="/dashboard" className="w-full text-center py-4 rounded-full bg-bg-card border border-bg-border text-white font-bold">Go to Dashboard</Link>
+            ) : (
+              <>
+                <button onClick={() => { setIsMobileMenuOpen(false); setIsLoginModalOpen(true); }} className="w-full py-4 rounded-full border border-bg-border text-white font-bold hover:bg-bg-card">Login</button>
+                <button onClick={() => { setIsMobileMenuOpen(false); setIsRegisterModalOpen(true); }} className="w-full py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700">Get Started</button>
               </>
             )}
           </div>
         </div>
-      </nav>
+      )}
 
       {/* 2. HERO SECTION */}
       <section className="relative min-h-screen pt-32 pb-20 flex flex-col justify-center overflow-hidden">
