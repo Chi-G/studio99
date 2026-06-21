@@ -14,6 +14,12 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
+// TEMPORARY: Route to manually run migrations on Render free tier
+Route::get('/run-migrations-secret-99', function () {
+    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    return 'Database migrated successfully! You can now log in as the Admin.';
+});
+
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
     Route::post('register', [RegisteredUserController::class, 'store']);
