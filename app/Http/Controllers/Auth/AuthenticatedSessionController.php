@@ -25,22 +25,30 @@ class AuthenticatedSessionController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
+        $user = \App\Models\User::where('email', $credentials['email'])->first();
 
-            $user = Auth::user();
-            if ($user->role === 'admin') {
-                return redirect()->route('admin.dashboard');
-            } elseif ($user->role === 'team') {
-                return redirect()->route('team.dashboard');
-            }
-            
-            return redirect()->route('client.dashboard');
+        if (!$user) {
+            return back()->withErrors([
+                'email' => 'No account was found with the provided details. Please check your information or create a new account.',
+            ])->onlyInput('email');
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        if (!\Illuminate\Support\Facades\Hash::check($credentials['password'], $user->password)) {
+            return back()->withErrors([
+                'password' => 'The password entered is incorrect. Please try again.',
+            ])->onlyInput('email');
+        }
+
+        Auth::login($user, $request->boolean('remember'));
+        $request->session()->regenerate();
+
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->role === 'team') {
+            return redirect()->route('team.dashboard');
+        }
+        
+        return redirect()->route('client.dashboard');
     }
 
     /**

@@ -22,6 +22,6 @@ class VerifyEmailController extends Controller
             event(new Verified($request->user()));
         }
 
-        return redirect()->intended(route('client.dashboard', absolute: false).'?verified=1');
+        return redirect()->intended(route('client.dashboard', absolute: false).'?verified=1')->with('success', 'Your account has been verified successfully. Welcome to Studio99 Digital.');
     }
 }

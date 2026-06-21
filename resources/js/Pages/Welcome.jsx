@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 import studioDarkImg from '../../images/studio99-dark.jpeg';
 import headerLogo from '../../images/logo.jpeg';
 import {
@@ -28,11 +29,18 @@ const SectionHeading = ({ children }) => (
 );
 
 export default function Welcome({ auth, showLogin = false, showRegister = false }) {
+  const { flash } = usePage().props;
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(showLogin);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(showRegister);
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    if (flash?.error) toast.error(flash.error);
+    if (flash?.success) toast.success(flash.success);
+    if (flash?.status) toast(flash.status);
+  }, [flash]);
 
   useEffect(() => {
     if (showLogin) setIsLoginModalOpen(true);
