@@ -8,11 +8,10 @@ use Illuminate\Http\Request;
 
 class EmailVerificationNotificationController extends Controller
 {
-    /**
-     * Send a new email verification notification.
-     */
     public function store(Request $request): RedirectResponse
     {
+        set_time_limit(120); // Increase max execution time for slow SMTP
+
         if ($request->user()->hasVerifiedEmail()) {
             return redirect()->intended(route('client.dashboard', absolute: false));
         }

@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Auth\Events\Registered;
+use App\Http\Requests\Auth\RegisterClientRequest;
+use App\Jobs\ProcessNewUserRegistration;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
-use App\Http\Requests\Auth\RegisterClientRequest;
-use App\Services\AuthService;
-use App\Jobs\ProcessNewUserRegistration;
 
 class RegisteredUserController extends Controller
 {
@@ -25,15 +24,15 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function store(RegisterClientRequest $request, AuthService $authService)
     {
+        set_time_limit(120);
+
         $user = $authService->registerClient($request->validated());
 
         ProcessNewUserRegistration::dispatch($user);
-
-        event(new Registered($user));
 
         Auth::login($user);
 
