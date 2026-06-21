@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/react';
 import { AppModal } from '@/Components/ui/app-modal';
 import { Loader2 } from 'lucide-react';
 
-export function LoginModal({ open, onClose, onSwitchToRegister }) {
+export function LoginModal({ open, onClose, onSwitchToRegister, onSwitchToForgotPassword }) {
   const { data, setData, post, processing, errors, reset, clearErrors } = useForm({
     email: '',
     password: '',
@@ -50,7 +50,7 @@ export function LoginModal({ open, onClose, onSwitchToRegister }) {
         <div className="space-y-2">
           <div className="flex justify-between">
             <label className="text-sm font-medium text-white">Password</label>
-            <a href="#" className="text-xs text-brand-red hover:text-red-400 transition-colors">Forgot password?</a>
+            <button type="button" onClick={onSwitchToForgotPassword} className="text-xs text-brand-red hover:text-red-400 transition-colors">Forgot password?</button>
           </div>
           <input
             type="password"

@@ -11,6 +11,7 @@ import {
 
 import { LoginModal } from '@/Components/Modals/LoginModal';
 import { RegisterModal } from '@/Components/Modals/RegisterModal';
+import { ForgotPasswordModal } from '@/Components/Modals/ForgotPasswordModal';
 
 // Shared Components
 const RedLabel = ({ children }) => (
@@ -29,6 +30,7 @@ const SectionHeading = ({ children }) => (
 export default function Welcome({ auth, showLogin = false, showRegister = false }) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(showLogin);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(showRegister);
+  const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -99,7 +101,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
           </div>
 
           {/* Mobile Menu Button */}
-          <button 
+          <button
             className="lg:hidden text-text-secondary hover:text-white"
             onClick={() => setIsMobileMenuOpen(true)}
           >
@@ -113,14 +115,14 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
         <div className="fixed inset-0 z-[60] bg-[#0A0A0A] flex flex-col px-6 py-8">
           <div className="flex items-center justify-between mb-12">
             <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
-            <button 
+            <button
               className="text-text-secondary hover:text-white"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <X className="w-8 h-8" />
             </button>
           </div>
-          
+
           <div className="flex flex-col gap-6 text-xl font-medium text-text-secondary flex-1">
             <a href="#services" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Request a Service</a>
             <a href="#work" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">View Portfolio</a>
@@ -351,7 +353,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
                   <h3 className="text-xl font-black mb-2">Website Development</h3>
                   <p className="text-text-secondary text-sm mb-4">Build modern, responsive, and high-performing websites designed to elevate your online presence and convert visitors into customers.</p>
                   <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors text-sm">
-                    💻 Build My Website <ArrowRight className="w-4 h-4" />
+                    Build My Website <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -367,7 +369,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
                   <h3 className="text-xl font-black mb-2">Social Media Management</h3>
                   <p className="text-text-secondary text-sm mb-4">Grow your audience and strengthen your brand with strategic content creation, publishing, engagement, and performance tracking tailored to your business goals.</p>
                   <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors text-sm">
-                    📈 Manage My Social Media <ArrowRight className="w-4 h-4" />
+                    Manage My Social Media <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -462,7 +464,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
             <button onClick={() => setIsRegisterModalOpen(true)} className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
-              🚀 Start Your Project Today
+              Start Your Project Today
             </button>
             <a href="#contact" className="w-full sm:w-auto px-8 py-4 rounded-full border border-bg-border bg-bg-card hover:bg-[#2A2A2A] transition-colors font-bold flex items-center justify-center gap-2">
               Contact Us
@@ -563,12 +565,19 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
         open={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
         onSwitchToRegister={() => { setIsLoginModalOpen(false); setIsRegisterModalOpen(true); }}
+        onSwitchToForgotPassword={() => { setIsLoginModalOpen(false); setIsForgotPasswordModalOpen(true); }}
       />
 
       <RegisterModal
         open={isRegisterModalOpen}
         onClose={() => setIsRegisterModalOpen(false)}
         onSwitchToLogin={() => { setIsRegisterModalOpen(false); setIsLoginModalOpen(true); }}
+      />
+
+      <ForgotPasswordModal
+        open={isForgotPasswordModalOpen}
+        onClose={() => setIsForgotPasswordModalOpen(false)}
+        onSwitchToLogin={() => { setIsForgotPasswordModalOpen(false); setIsLoginModalOpen(true); }}
       />
     </div>
   );

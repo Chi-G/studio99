@@ -33,6 +33,8 @@ class RegisteredUserController extends Controller
 
         ProcessNewUserRegistration::dispatch($user);
 
+        event(new Registered($user));
+
         Auth::login($user);
 
         return redirect(route('client.dashboard', absolute: false));
