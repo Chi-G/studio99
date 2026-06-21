@@ -11,6 +11,7 @@ import {
   X
 } from 'lucide-react';
 import { LogoutConfirmModal } from '@/Components/Modals/LogoutConfirmModal';
+import headerLogo from '../../images/logo.jpeg';
 
 export default function TeamLayout({ children }) {
   const { auth } = usePage().props;
@@ -46,9 +47,7 @@ export default function TeamLayout({ children }) {
       `}>
         <div className="h-20 flex items-center px-6 border-b border-[#2A2A3A] shrink-0 justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#10B981] to-[#047857] flex items-center justify-center font-display font-bold text-white">
-              T
-            </div>
+            <img src={headerLogo} alt="Studio99 Logo" className="w-8 h-8 rounded-lg object-cover" />
             <span className="font-display font-bold text-xl tracking-tight text-white">Team Hub</span>
           </div>
           <button 

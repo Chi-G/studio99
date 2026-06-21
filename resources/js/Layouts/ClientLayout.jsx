@@ -13,6 +13,7 @@ import {
   X
 } from 'lucide-react';
 import { LogoutConfirmModal } from '@/Components/Modals/LogoutConfirmModal';
+import headerLogo from '../../images/logo.jpeg';
 
 export default function ClientLayout({ children, onNewRequest }) {
   const { auth } = usePage().props;
@@ -45,9 +46,7 @@ export default function ClientLayout({ children, onNewRequest }) {
       `}>
         <div className="h-20 flex items-center px-6 border-b border-[#2A2A3A] shrink-0 justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#6C3CE1] to-[#EC4899] flex items-center justify-center font-display font-bold text-white">
-              S
-            </div>
+            <img src={headerLogo} alt="Studio99 Logo" className="w-8 h-8 rounded-lg object-cover" />
             <span className="font-display font-bold text-xl tracking-tight">Studio99</span>
           </div>
           <button className="lg:hidden text-[#94A3B8]" onClick={() => setSidebarOpen(false)}>
