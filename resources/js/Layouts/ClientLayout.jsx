@@ -12,10 +12,12 @@ import {
   Menu,
   X
 } from 'lucide-react';
+import { LogoutConfirmModal } from '@/Components/Modals/LogoutConfirmModal';
 
 export default function ClientLayout({ children, onNewRequest }) {
   const { auth } = usePage().props;
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: Home },
@@ -94,15 +96,13 @@ export default function ClientLayout({ children, onNewRequest }) {
               <p className="text-xs text-[#94A3B8] truncate">{auth.user.email}</p>
             </div>
           </div>
-          <Link
-            href="/logout"
-            method="post"
-            as="button"
+          <button
+            onClick={() => setIsLogoutModalOpen(true)}
             className="w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-[#94A3B8] hover:bg-[#1A1A28] hover:text-white transition-colors"
           >
             <LogOut className="w-5 h-5 shrink-0" />
             Log Out
-          </Link>
+          </button>
         </div>
       </div>
 
@@ -120,6 +120,11 @@ export default function ClientLayout({ children, onNewRequest }) {
           {children}
         </main>
       </div>
+      
+      <LogoutConfirmModal 
+        open={isLogoutModalOpen} 
+        onClose={() => setIsLogoutModalOpen(false)} 
+      />
     </div>
   );
 }
