@@ -29,8 +29,8 @@ export function LoginModal({ open, onClose, onSwitchToRegister }) {
     <AppModal 
       open={open} 
       onClose={onClose} 
-      title="Welcome Back" 
-      description="Log in to access your dashboard."
+      title="Welcome Back to Studio99 Digital" 
+      description="Sign in to manage projects, track progress, communicate with our team, and access your deliverables—all in one place"
       size="sm"
     >
       <form onSubmit={submit} className="mt-6 space-y-5">

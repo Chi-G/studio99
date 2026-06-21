@@ -31,8 +31,8 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }) {
     <AppModal 
       open={open} 
       onClose={onClose} 
-      title="Create an Account" 
-      description="Join Studio99 and elevate your digital presence."
+      title="Create Your Studio99 Account" 
+      description="Join Studio99 Digital to request services, track projects, upload files, make payments, and collaborate with our team seamlessly."
       size="md"
     >
       <form onSubmit={submit} className="mt-6 space-y-4">
