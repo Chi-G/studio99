@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from '@inertiajs/react';
 import { Dialog, DialogContent, DialogTitle } from '@/Components/ui/dialog';
-import { Loader2, ShieldCheck, Briefcase, Users, Lock, ChevronRight } from 'lucide-react';
+import { Loader2, ShieldCheck, Briefcase, Users, Lock, ChevronRight, Eye, EyeOff } from 'lucide-react';
 
 export function RegisterModal({ open, onClose, onSwitchToLogin }) {
+  const [showPassword, setShowPassword] = useState(false);
   const { data, setData, post, processing, errors, reset, clearErrors } = useForm({
     name: '',
     email: '',
@@ -141,27 +142,45 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-white">Password</label>
-                    <input
-                      type="password"
-                      value={data.password}
-                      onChange={(e) => setData('password', e.target.value)}
-                      className={`w-full bg-bg-card border ${errors.password ? 'border-brand-red' : 'border-bg-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-red transition-colors`}
-                      placeholder="••••••••"
-                      autoComplete="new-password"
-                    />
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        value={data.password}
+                        onChange={(e) => setData('password', e.target.value)}
+                        className={`w-full bg-bg-card border ${errors.password ? 'border-brand-red' : 'border-bg-border'} rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:border-brand-red transition-colors`}
+                        placeholder="••••••••"
+                        autoComplete="new-password"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary hover:text-white transition-colors"
+                      >
+                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      </button>
+                    </div>
                     {errors.password && <span className="text-brand-red text-xs mt-1 block font-medium">{errors.password}</span>}
                   </div>
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-white">Confirm Password</label>
-                    <input
-                      type="password"
-                      value={data.password_confirmation}
-                      onChange={(e) => setData('password_confirmation', e.target.value)}
-                      className={`w-full bg-bg-card border ${errors.password_confirmation ? 'border-brand-red' : 'border-bg-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-red transition-colors`}
-                      placeholder="••••••••"
-                      autoComplete="new-password"
-                    />
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        value={data.password_confirmation}
+                        onChange={(e) => setData('password_confirmation', e.target.value)}
+                        className={`w-full bg-bg-card border ${errors.password_confirmation ? 'border-brand-red' : 'border-bg-border'} rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:border-brand-red transition-colors`}
+                        placeholder="••••••••"
+                        autoComplete="new-password"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary hover:text-white transition-colors"
+                      >
+                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      </button>
+                    </div>
                     {errors.password_confirmation && <span className="text-brand-red text-xs mt-1 block font-medium">{errors.password_confirmation}</span>}
                   </div>
                 </div>
