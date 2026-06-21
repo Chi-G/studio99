@@ -31,5 +31,14 @@ class AppServiceProvider extends ServiceProvider
                 ->line(\Illuminate\Support\Facades\Lang::get('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
                 ->line(\Illuminate\Support\Facades\Lang::get('If you did not request a password reset, no further action is required.'));
         });
+
+        \Illuminate\Auth\Notifications\VerifyEmail::toMailUsing(function ($notifiable, $url) {
+            return (new \Illuminate\Notifications\Messages\MailMessage)
+                ->subject(\Illuminate\Support\Facades\Lang::get('Verify Email Address'))
+                ->greeting('Hello ' . $notifiable->name . ',')
+                ->line(\Illuminate\Support\Facades\Lang::get('Please click the button below to verify your email address.'))
+                ->action(\Illuminate\Support\Facades\Lang::get('Verify Email Address'), $url)
+                ->line(\Illuminate\Support\Facades\Lang::get('If you did not create an account, no further action is required.'));
+        });
     }
 }
