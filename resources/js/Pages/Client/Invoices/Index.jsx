@@ -58,7 +58,7 @@ export default function InvoicesIndex({ auth, invoices = [] }) {
                 <div className="flex items-center justify-between md:justify-end w-full md:w-auto gap-8">
                   <div className="text-left md:text-right">
                     <p className="text-sm text-[#94A3B8] mb-1">Amount</p>
-                    <p className="text-2xl font-bold font-display text-white">${parseFloat(invoice.amount).toFixed(2)}</p>
+                    <p className="text-2xl font-bold font-display text-white">₦{parseFloat(invoice.amount).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                   </div>
                   
                   <div className="flex flex-col md:flex-row items-end md:items-center gap-4">
@@ -102,7 +102,7 @@ export default function InvoicesIndex({ auth, invoices = [] }) {
           <div className="space-y-6 mt-4">
             <div className="bg-[#1A1A28] border border-[#2A2A3A] rounded-xl p-5 text-center">
               <p className="text-[#94A3B8] text-sm mb-2">Total Amount Due</p>
-              <h2 className="text-4xl font-display font-bold text-white mb-2">${parseFloat(selectedInvoice.amount).toFixed(2)}</h2>
+              <h2 className="text-4xl font-display font-bold text-white mb-2">₦{parseFloat(selectedInvoice.amount).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
               <p className="text-sm font-medium text-white">{selectedInvoice.description}</p>
             </div>
 

@@ -15,5 +15,8 @@ php artisan view:cache
 echo "Running migrations..."
 php artisan migrate --force
 
+echo "Seeding necessary initial data..."
+php artisan db:seed --class=ServiceSeeder --force
+
 # Start the main process
 

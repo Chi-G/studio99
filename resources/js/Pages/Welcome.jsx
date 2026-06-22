@@ -45,25 +45,10 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
     setIsRequestModalOpen(true);
   };
 
-  const handleRequestSubmit = (data) => {
-    if (auth.user) {
-      // In a real app, this would be an Inertia POST request
-      // router.post('/client/requests', data);
-      toast.success("Your request has been successfully received and is currently awaiting review.");
-      setIsRequestModalOpen(false);
-      setTimeout(() => {
-        router.visit('/dashboard');
-      }, 1500);
-    } else {
-      toast("Please create an account to submit your request.", {
-        description: "You need to be logged in to track and manage your projects.",
-        icon: '🔒',
-        duration: 8000,
-      });
-      setIsRequestModalOpen(false);
-      setIntendedUrl('/dashboard?action=new-request');
-      setIsRegisterModalOpen(true);
-    }
+  const handleRequestSubmit = () => {
+    setIsRequestModalOpen(false);
+    setIntendedUrl('/dashboard?action=new-request');
+    setIsRegisterModalOpen(true);
   };
 
   useEffect(() => {

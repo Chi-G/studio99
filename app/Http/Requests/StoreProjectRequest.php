@@ -27,8 +27,9 @@ class StoreProjectRequest extends FormRequest
             'package_id' => ['required', 'exists:packages,id'],
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'deadline' => ['required', 'date'],
             'reference_files' => ['nullable', 'array', 'max:5'],
-            'reference_files.*' => ['file', 'mimes:jpg,jpeg,png,pdf,docx,zip', 'max:10240'], // Max 10MB per file
+            'reference_files.*' => ['file', 'mimes:jpg,jpeg,png,pdf,docx,zip', 'max:10240'],
         ];
     }
 }

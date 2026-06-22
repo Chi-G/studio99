@@ -42,7 +42,7 @@ export default function Checkout({ auth, invoice, paystackPublicKey }) {
                         </div>
                         <div className="flex justify-between items-center border-t border-gray-200 pt-4 mt-4">
                             <span className="text-lg font-bold text-gray-900">Total Amount:</span>
-                            <span className="text-2xl font-bold text-indigo-600">${parseFloat(invoice.amount).toFixed(2)}</span>
+                            <span className="text-2xl font-bold text-indigo-600">₦{parseFloat(invoice.amount).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                         </div>
                     </div>
 
@@ -80,7 +80,7 @@ export default function Checkout({ auth, invoice, paystackPublicKey }) {
                                         onClick={simulatePaystackSuccess}
                                         className="w-full inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     >
-                                        Pay ${parseFloat(invoice.amount).toFixed(2)} Now
+                                        Pay ₦{parseFloat(invoice.amount).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Now
                                     </button>
                                     <p className="text-xs text-gray-400 mt-4">(Simulating Paystack for demo purposes)</p>
                                 </div>

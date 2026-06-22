@@ -35,10 +35,10 @@ class ProjectRequestController extends Controller
         }
         $data['reference_files'] = count($referenceFiles) > 0 ? $referenceFiles : null;
 
-        $projectRequest = ProjectRequest::create($data);
-
-        // Fetch the package to get the price
         $package = \App\Models\Package::find($data['package_id']);
+        $data['budget'] = $package->price;
+
+        $projectRequest = ProjectRequest::create($data);
 
         // Auto-generate Invoice
         $invoice = \App\Models\Invoice::create([

@@ -80,7 +80,7 @@ export function ProjectDetailModal({ open, onClose, project }) {
                     <li className="flex items-center gap-3 text-white">
                       <FileText className="w-4 h-4 text-[#EC4899]" /> 
                       <span className="text-[#94A3B8] w-24">Package:</span>
-                      <span className="font-medium">Professional ($999)</span>
+                      <span className="font-medium">Professional (₦1,500,000)</span>
                     </li>
                     <li className="flex items-center gap-3 text-white">
                       <CalendarIcon className="w-4 h-4 text-blue-400" /> 
