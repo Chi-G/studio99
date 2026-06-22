@@ -4,8 +4,10 @@ services:
     env: docker
     region: ohio
     plan: free # Change to starter/pro for production
-    healthCheckPath: /
+    healthCheckPath: /up
     envVars:
+      - key: PORT
+        value: 8000
       - key: APP_ENV
         value: production
       - key: APP_DEBUG

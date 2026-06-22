@@ -14,6 +14,8 @@ import { LoginModal } from '@/Components/Modals/LoginModal';
 import { RegisterModal } from '@/Components/Modals/RegisterModal';
 import { ForgotPasswordModal } from '@/Components/Modals/ForgotPasswordModal';
 
+import { NewRequestModal } from '@/Components/Modals/NewRequestModal';
+
 // Shared Components
 const RedLabel = ({ children }) => (
   <div className="inline-flex items-center gap-2 mb-4">
@@ -33,16 +35,33 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(showLogin);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(showRegister);
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
+  const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [intendedUrl, setIntendedUrl] = useState('');
 
   const handleRequestServiceClick = (e) => {
     if (e) e.preventDefault();
+    setIsRequestModalOpen(true);
+  };
+
+  const handleRequestSubmit = (data) => {
     if (auth.user) {
-      router.visit('/client/requests/create');
+      // In a real app, this would be an Inertia POST request
+      // router.post('/client/requests', data);
+      toast.success("Your request has been successfully received and is currently awaiting review.");
+      setIsRequestModalOpen(false);
+      setTimeout(() => {
+        router.visit('/dashboard');
+      }, 1500);
     } else {
-      setIntendedUrl('/client/requests/create');
+      toast("Please create an account to submit your request.", {
+        description: "You need to be logged in to track and manage your projects.",
+        icon: '🔒',
+        duration: 8000,
+      });
+      setIsRequestModalOpen(false);
+      setIntendedUrl('/dashboard?action=new-request');
       setIsRegisterModalOpen(true);
     }
   };
@@ -599,6 +618,12 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
         open={isForgotPasswordModalOpen}
         onClose={() => setIsForgotPasswordModalOpen(false)}
         onSwitchToLogin={() => { setIsForgotPasswordModalOpen(false); setIsLoginModalOpen(true); }}
+      />
+
+      <NewRequestModal
+        open={isRequestModalOpen}
+        onClose={() => setIsRequestModalOpen(false)}
+        onSubmitRequest={handleRequestSubmit}
       />
     </div>
   );

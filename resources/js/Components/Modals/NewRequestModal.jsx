@@ -197,7 +197,7 @@ function ReviewStep({ state }) {
   );
 }
 
-export function NewRequestModal({ open, onClose }) {
+export function NewRequestModal({ open, onClose, onSubmitRequest }) {
   const [step, setStep] = useState(1);
   const totalSteps = 5;
 
@@ -214,8 +214,12 @@ export function NewRequestModal({ open, onClose }) {
 
   const handleSubmit = () => {
     console.log("Submitting:", requestState);
-    // Here we'd use Inertia.post
-    onClose();
+    if (onSubmitRequest) {
+      onSubmitRequest(requestState);
+    } else {
+      // Fallback
+      onClose();
+    }
   };
 
   const isNextDisabled = () => {

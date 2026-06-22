@@ -1,0 +1,36 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0HTTP/1.1 200 OK
+Host: 127.0.0.1:8089
+Connection: close
+X-Powered-By: PHP/8.3.6
+Cache-Control: no-cache, private
+Date: Mon, 22 Jun 2026 15:40:14 GMT
+Content-Type: text/html; charset=utf-8
+Link: <http://127.0.0.1:8089/build/assets/app-DZuYZ5B9.css>; rel="preload"; as="style", <http://127.0.0.1:8089/build/assets/app-DqUEZPVI.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/Welcome-XTAmYygf.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/app-modal-CjMSG05n.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/clsx-CjueKrWZ.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/x-CVL9WFkw.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/createLucideIcon-ohghIYLe.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/proxy-dDhwSHi1.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/arrow-right-D7qHTB2d.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/briefcase-CqtkXZ_W.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/clock-B7Z0H284.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/headphones-CUg0hL2U.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/logo-BlDazc4S.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/share-2-C79a6wwv.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/zap-YgM-Fva8.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/trending-up-CHIhNYaR.js>; rel="modulepreload"; as="script", <http://127.0.0.1:8089/build/assets/video-BtjZMIBF.js>; rel="modulepreload"; as="script"
+Vary: X-Inertia
+Set-Cookie: XSRF-TOKEN=eyJpdiI6IjdoZHBObUVKczJaZmhwR2QyMit2dEE9PSIsInZhbHVlIjoic3F4RmhvQkR6U1NoYkdpOEZiTmhsQlZ4cWJ2bTlFeTJUWWNhV2lxdENBM3c3V1dTc3RrYmtad0RuUHNrVnlOdWp2R3JOMDNqWUQ0Qm1mczB5RmE0UEpoTmdrc0hDbC9jSkNNN0VuQzcvYlQxcG1tVUp6NURoYXhKdlRGNHlqenkiLCJtYWMiOiI4NGIwNmE5MTMyYTZhOTQ1YjEzZThkZDk4YmJkY2ZkZjZjNTcwNzQ2ZjY4YjQ0ZGU2ODY5ZGI2NjM0YThhZDg0IiwidGFnIjoiIn0%3D; expires=Mon, 22 Jun 2026 17:40:14 GMT; Max-Age=7200; path=/; samesite=lax
+Set-Cookie: studio99-session=eyJpdiI6IjFDTVVocTNMTUdpV3JacGpNZWIwR1E9PSIsInZhbHVlIjoiUXFHK1pXc1NFZS9YSy9SclBkY043RXNDRUdiRTNzN0FJTU44eE83QTZCdjNyN1UrWVh6ZlRpRDZYOEZ1d3U0VG02TmwzWGtUUXU2ZWN6Wjg1dldreTRmRi9RQXV1Z2xwNWZ6OG1qUWtvN25BdXliZThrc21YMzhyZHFFOTRMMU0iLCJtYWMiOiI2MjhmOGY0ZWVmNGFkN2E2ZWVkYTIxNTRlNGFhNTE3YjVkY2NlYjc3YmFlMGE2OThlZDlhY2JhZWIwM2U2MTNmIiwidGFnIjoiIn0%3D; expires=Mon, 22 Jun 2026 17:40:14 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title inertia>Studio99</title>
+        
+        <!-- Favicon -->
+        <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
+        <link rel="apple-touch-icon" href="/logo.jpeg" />
+        
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+
+        <!-- Scripts -->
+                <link rel="preload" as="style" href="http://127.0.0.1:8089/build/assets/app-DZuYZ5B9.css" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/app-DqUEZPVI.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/Welcome-XTAmYygf.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/app-modal-CjMSG05n.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/clsx-CjueKrWZ.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/x-CVL9WFkw.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/createLucideIcon-ohghIYLe.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/proxy-dDhwSHi1.js" /><link rel="modulepreload"100  3109    0  3109    0     0   2920      0 --:--:--  0:00:01 --:--:--  2921
+ as="script" href="http://127.0.0.1:8089/build/assets/arrow-right-D7qHTB2d.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/briefcase-CqtkXZ_W.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/clock-B7Z0H284.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/headphones-CUg0hL2U.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/logo-BlDazc4S.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/share-2-C79a6wwv.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/zap-YgM-Fva8.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/trending-up-CHIhNYaR.js" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8089/build/assets/video-BtjZMIBF.js" /><link rel="stylesheet" href="http://127.0.0.1:8089/build/assets/app-DZuYZ5B9.css" /><script type="module" src="http://127.0.0.1:8089/build/assets/app-DqUEZPVI.js"></script><script type="module" src="http://127.0.0.1:8089/build/assets/Welcome-XTAmYygf.js"></script>            </head>
+    <body class="font-sans antialiased text-gray-900 bg-gray-50">
+        <div id="app" data-page="{&quot;component&quot;:&quot;Welcome&quot;,&quot;props&quot;:{&quot;errors&quot;:{},&quot;auth&quot;:{&quot;user&quot;:null},&quot;flash&quot;:{&quot;status&quot;:null,&quot;success&quot;:null,&quot;error&quot;:null}},&quot;url&quot;:&quot;\/&quot;,&quot;version&quot;:&quot;385922523d6f9006c4bb5637a157f679&quot;,&quot;clearHistory&quot;:false,&quot;encryptHistory&quot;:false}"></div>    </body>
+</html>
