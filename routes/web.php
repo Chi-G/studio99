@@ -64,7 +64,8 @@ Route::middleware(['auth'])->group(function () {
         // Invoices and Payments
         Route::get('/client/invoices', [App\Http\Controllers\Client\InvoiceController::class, 'index'])->name('client.invoices.index');
         Route::get('/client/invoices/{invoice}', [App\Http\Controllers\Client\InvoiceController::class, 'show'])->name('client.invoices.show');
-        Route::post('/client/invoices/{invoice}/paystack', [App\Http\Controllers\Client\PaymentController::class, 'verifyPaystack'])->name('client.payments.paystack');
+        Route::post('/client/invoices/{invoice}/paystack', [App\Http\Controllers\Client\PaymentController::class, 'initializePaystack'])->name('client.payments.paystack');
+        Route::get('/client/payments/callback', [App\Http\Controllers\Client\PaymentController::class, 'callbackPaystack'])->name('client.payments.callback');
         Route::post('/client/invoices/{invoice}/bank-transfer', [App\Http\Controllers\Client\PaymentController::class, 'submitBankTransfer'])->name('client.payments.bank_transfer');
 
         // Client Project Workspace
@@ -73,7 +74,7 @@ Route::middleware(['auth'])->group(function () {
 
         // Client Subscriptions
         Route::get('/client/subscriptions', [App\Http\Controllers\Client\SubscriptionController::class, 'index'])->name('client.subscriptions.index');
-        Route::post('/client/subscriptions/verify', [App\Http\Controllers\Client\SubscriptionController::class, 'verifyPaystack'])->name('client.subscriptions.verify');
+        Route::post('/client/subscriptions/verify', [App\Http\Controllers\Client\SubscriptionController::class, 'initializePaystack'])->name('client.subscriptions.verify');
 
         // File Center & Support (UI Mocks for Dashboard Aesthetic)
         Route::get('/client/files', function () {

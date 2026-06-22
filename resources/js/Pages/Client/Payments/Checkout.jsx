@@ -14,12 +14,9 @@ export default function Checkout({ auth, invoice, paystackPublicKey }) {
         post(`/client/invoices/${invoice.id}/bank-transfer`);
     };
 
-    // Note: In a real implementation, you would use react-paystack.
-    // For this boilerplate, we'll simulate a successful Paystack callback.
-    const simulatePaystackSuccess = () => {
-        router.post(`/client/invoices/${invoice.id}/paystack`, {
-            reference: 'SIMULATED_REF_' + Math.floor(Math.random() * 1000000)
-        });
+    // Initiate Paystack Payment Flow
+    const initiatePaystack = () => {
+        router.post(`/client/invoices/${invoice.id}/paystack`);
     };
 
     return (
@@ -41,8 +38,20 @@ export default function Checkout({ auth, invoice, paystackPublicKey }) {
                             <span className="font-medium text-gray-900">{invoice.description}</span>
                         </div>
                         <div className="flex justify-between items-center border-t border-gray-200 pt-4 mt-4">
-                            <span className="text-lg font-bold text-gray-900">Total Amount:</span>
-                            <span className="text-2xl font-bold text-indigo-600">₦{parseFloat(invoice.amount).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                            <span className="text-lg font-bold text-gray-900">Amount:</span>
+                            <span className="text-xl font-bold text-gray-700">₦{parseFloat(invoice.amount).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        </div>
+                        <div className="flex justify-between items-center border-t border-gray-200 pt-4 mt-4">
+                            <span className="text-lg font-bold text-gray-900">Total + Gateway Fee:</span>
+                            <span className="text-2xl font-bold text-indigo-600">
+                                ₦{(() => {
+                                    const amount = parseFloat(invoice.amount);
+                                    let total = amount < 2500 ? amount / (1 - 0.015) : (amount + 100) / (1 - 0.015);
+                                    let fee = total - amount;
+                                    if (fee > 2000) fee = 2000;
+                                    return (amount + fee).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                                })()}
+                            </span>
                         </div>
                     </div>
 
@@ -77,12 +86,11 @@ export default function Checkout({ auth, invoice, paystackPublicKey }) {
                                 <div className="text-center py-6">
                                     <p className="text-gray-600 mb-6">Securely pay using your credit or debit card via Paystack.</p>
                                     <button
-                                        onClick={simulatePaystackSuccess}
+                                        onClick={initiatePaystack}
                                         className="w-full inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     >
-                                        Pay ₦{parseFloat(invoice.amount).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Now
+                                        Pay Now
                                     </button>
-                                    <p className="text-xs text-gray-400 mt-4">(Simulating Paystack for demo purposes)</p>
                                 </div>
                             )}
 
