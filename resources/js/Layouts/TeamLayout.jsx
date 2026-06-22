@@ -7,6 +7,7 @@ import {
   MessageSquare,
   Settings,
   LogOut,
+  User,
   Menu,
   X
 } from 'lucide-react';
@@ -88,6 +89,13 @@ export default function TeamLayout({ children }) {
               <p className="text-xs text-[#94A3B8] truncate">Creator</p>
             </div>
           </div>
+          <Link
+            href="/profile"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-[#94A3B8] hover:bg-[#1A1A28] hover:text-white transition-colors mb-1"
+          >
+            <User className="w-5 h-5 shrink-0" />
+            Profile
+          </Link>
           <button
             onClick={() => setIsLogoutModalOpen(true)}
             className="w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-[#94A3B8] hover:bg-[#1A1A28] hover:text-white transition-colors"
