@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
-use App\Http\Requests\Auth\LoginRequest;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -25,15 +27,15 @@ class AuthenticatedSessionController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        $user = \App\Models\User::where('email', $credentials['email'])->first();
+        $user = User::where('email', $credentials['email'])->first();
 
-        if (!$user) {
+        if (! $user) {
             return back()->withErrors([
                 'email' => 'No account was found with the provided details. Please check your information or create a new account.',
             ])->onlyInput('email');
         }
 
-        if (!\Illuminate\Support\Facades\Hash::check($credentials['password'], $user->password)) {
+        if (! Hash::check($credentials['password'], $user->password)) {
             return back()->withErrors([
                 'password' => 'The password entered is incorrect. Please try again.',
             ])->onlyInput('email');
@@ -42,12 +44,16 @@ class AuthenticatedSessionController extends Controller
         Auth::login($user, $request->boolean('remember'));
         $request->session()->regenerate();
 
+        if ($request->input('redirect_to')) {
+            return redirect()->to($request->input('redirect_to'));
+        }
+
         if ($user->role === 'admin') {
             return redirect()->route('admin.dashboard');
         } elseif ($user->role === 'team') {
             return redirect()->route('team.dashboard');
         }
-        
+
         return redirect()->route('client.dashboard');
     }
 

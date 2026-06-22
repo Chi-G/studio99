@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/react';
 import { Dialog, DialogContent, DialogTitle } from '@/Components/ui/dialog';
 import { Loader2, ShieldCheck, Briefcase, Users, Lock, ChevronRight, Eye, EyeOff } from 'lucide-react';
 
-export function RegisterModal({ open, onClose, onSwitchToLogin }) {
+export function RegisterModal({ open, onClose, onSwitchToLogin, intendedUrl }) {
   const [showPassword, setShowPassword] = useState(false);
   const { data, setData, post, processing, errors, reset, clearErrors } = useForm({
     name: '',
@@ -11,15 +11,17 @@ export function RegisterModal({ open, onClose, onSwitchToLogin }) {
     phone: '',
     password: '',
     password_confirmation: '',
+    redirect_to: intendedUrl || '',
   });
 
   useEffect(() => {
     if (open) {
       clearErrors();
+      setData('redirect_to', intendedUrl || '');
     } else {
       reset('password', 'password_confirmation');
     }
-  }, [open]);
+  }, [open, intendedUrl]);
 
   const submit = (e) => {
     e.preventDefault();

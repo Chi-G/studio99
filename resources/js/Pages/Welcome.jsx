@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, usePage, router } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-import studioDarkImg from '../../images/studio99-dark.jpeg';
+import heroImg from '../../images/landing_hero2.png';
 import headerLogo from '../../images/logo.jpeg';
 import {
   ArrowRight, Play, Globe, PenTool,
@@ -35,6 +35,17 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [intendedUrl, setIntendedUrl] = useState('');
+
+  const handleRequestServiceClick = (e) => {
+    if (e) e.preventDefault();
+    if (auth.user) {
+      router.visit('/client/requests/create');
+    } else {
+      setIntendedUrl('/client/requests/create');
+      setIsRegisterModalOpen(true);
+    }
+  };
 
   useEffect(() => {
     if (flash?.error) toast.error(flash.error);
@@ -89,7 +100,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             </div>
           </Link>
           <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-text-secondary">
-            <a href="#services" className="hover:text-white transition-colors">Request a Service</a>
+            <a href="#services" onClick={handleRequestServiceClick} className="hover:text-white transition-colors">Request a Service</a>
             <a href="#work" className="hover:text-white transition-colors">View Portfolio</a>
             <a href="#about" className="hover:text-white transition-colors">About</a>
             <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
@@ -132,7 +143,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
           </div>
 
           <div className="flex flex-col gap-6 text-xl font-medium text-text-secondary flex-1">
-            <a href="#services" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Request a Service</a>
+            <a href="#services" onClick={(e) => { setIsMobileMenuOpen(false); handleRequestServiceClick(e); }} className="hover:text-white transition-colors">Request a Service</a>
             <a href="#work" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">View Portfolio</a>
             <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">About</a>
             <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Pricing</a>
@@ -169,18 +180,18 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
               transition={{ duration: 0.7, delay: 0.1 }}
               className="font-black leading-[1.1] tracking-tighter text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] mb-6 max-w-3xl"
             >
-              Transform Ideas Into <br className="hidden md:block" /> <span className="text-brand-red">Exceptional Experiences</span>
+              Transform Your Ideas Into <br className="hidden md:block" /> <span className="text-brand-red">Exceptional Digital Experiences</span>
             </motion.h1>
 
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 1 }} className="text-text-secondary text-base sm:text-lg max-w-lg leading-relaxed mb-10 font-sans space-y-4">
               <p>
-                Premium design, video, web development, and social media services, all in one place. We make digital collaboration simple, seamless, and results-driven.
+                Studio99 Digital empowers businesses, organizations, professionals, and content creators with premium graphics design, video editing, website development, and social media management services - all in one place.
               </p>
             </motion.div>
 
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 1 }} className="flex flex-col sm:flex-row items-center gap-4">
-              <button onClick={() => setIsRegisterModalOpen(true)} className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
-                Get Started <ArrowRight className="w-5 h-5" />
+              <button onClick={handleRequestServiceClick} className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
+                Request a Service <ArrowRight className="w-5 h-5" />
               </button>
               <a href="#work" className="w-full sm:w-auto px-8 py-4 rounded-full border border-bg-border text-white font-bold hover:bg-bg-card transition-colors flex items-center justify-center gap-2">
                 <Play className="w-4 h-4" /> View Portfolio
@@ -209,9 +220,9 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
               </motion.div>
             </motion.div>
 
-            {/* Center Logo */}
-            <div className="relative z-10 w-[200px] h-[200px] lg:w-[250px] lg:h-[250px] rounded-full bg-black border-2 border-brand-red/30 shadow-[0_0_50px_rgba(227,30,36,0.2)] flex items-center justify-center p-4">
-              <img src={studioDarkImg} alt="Studio99" className="w-full h-full object-contain rounded-full" />
+            {/* Center Image */}
+            <div className="relative z-10 w-[220px] h-[220px] lg:w-[280px] lg:h-[280px] rounded-full bg-[#0A0A0A] border-4 border-bg-card shadow-[0_0_80px_rgba(227,30,36,0.3)] flex items-center justify-center overflow-hidden">
+              <img src={heroImg} alt="Studio99 Hero" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
@@ -328,8 +339,8 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
                 <div>
                   <h3 className="text-3xl font-black mb-3">Graphics Design</h3>
                   <p className="text-text-secondary max-w-md mb-6">Bring your brand to life with visually compelling designs that capture attention, communicate value, and leave a lasting impression. From social media creatives to branding materials, we design with purpose and impact.</p>
-                  <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors mt-2">
-                    Get Started <ArrowRight className="w-4 h-4" />
+                  <button onClick={handleRequestServiceClick} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors mt-2">
+                    Request a Service<ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -344,7 +355,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
                 <div>
                   <h3 className="text-xl font-black mb-2">Video Editing</h3>
                   <p className="text-text-secondary text-sm mb-4">Transform raw footage into engaging stories that drive views, engagement, and conversions. Whether for marketing, social media, or business presentations, our edits are crafted to deliver results.</p>
-                  <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors text-sm">
+                  <button onClick={handleRequestServiceClick} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors text-sm">
                     Request Video Editing <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -360,7 +371,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
                 <div>
                   <h3 className="text-xl font-black mb-2">Website Development</h3>
                   <p className="text-text-secondary text-sm mb-4">Build modern, responsive, and high-performing websites designed to elevate your online presence and convert visitors into customers.</p>
-                  <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors text-sm">
+                  <button onClick={handleRequestServiceClick} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors text-sm">
                     Build My Website <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -376,7 +387,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
                 <div>
                   <h3 className="text-xl font-black mb-2">Social Media Management</h3>
                   <p className="text-text-secondary text-sm mb-4">Grow your audience and strengthen your brand with strategic content creation, publishing, engagement, and performance tracking tailored to your business goals.</p>
-                  <button onClick={() => setIsRegisterModalOpen(true)} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors text-sm">
+                  <button onClick={handleRequestServiceClick} className="inline-flex items-center gap-2 text-brand-red font-bold hover:text-red-400 transition-colors text-sm">
                     Manage My Social Media <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -471,7 +482,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-            <button onClick={() => setIsRegisterModalOpen(true)} className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
+            <button onClick={handleRequestServiceClick} className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
               Start Your Project Today
             </button>
             <a href="#contact" className="w-full sm:w-auto px-8 py-4 rounded-full border border-bg-border bg-bg-card hover:bg-[#2A2A2A] transition-colors font-bold flex items-center justify-center gap-2">
@@ -569,17 +580,19 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
         </div>
       </footer>
 
-      <LoginModal
+            <LoginModal
         open={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
         onSwitchToRegister={() => { setIsLoginModalOpen(false); setIsRegisterModalOpen(true); }}
         onSwitchToForgotPassword={() => { setIsLoginModalOpen(false); setIsForgotPasswordModalOpen(true); }}
+        intendedUrl={intendedUrl}
       />
 
       <RegisterModal
         open={isRegisterModalOpen}
         onClose={() => setIsRegisterModalOpen(false)}
         onSwitchToLogin={() => { setIsRegisterModalOpen(false); setIsLoginModalOpen(true); }}
+        intendedUrl={intendedUrl}
       />
 
       <ForgotPasswordModal

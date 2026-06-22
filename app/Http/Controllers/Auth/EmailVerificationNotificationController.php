@@ -10,7 +10,7 @@ class EmailVerificationNotificationController extends Controller
 {
     public function store(Request $request): RedirectResponse
     {
-        set_time_limit(120); // Increase max execution time for slow SMTP
+        set_time_limit(120);
 
         if ($request->user()->hasVerifiedEmail()) {
             return redirect()->intended(route('client.dashboard', absolute: false));

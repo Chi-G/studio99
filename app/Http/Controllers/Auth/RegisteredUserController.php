@@ -36,6 +36,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        if ($request->input('redirect_to')) {
+            return redirect()->to($request->input('redirect_to'));
+        }
+
         return redirect(route('client.dashboard', absolute: false));
     }
 }

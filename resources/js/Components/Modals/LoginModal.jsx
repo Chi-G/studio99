@@ -3,21 +3,23 @@ import { useForm } from '@inertiajs/react';
 import { Dialog, DialogContent, DialogTitle } from '@/Components/ui/dialog';
 import { Loader2, ShieldCheck, Briefcase, Users, Lock, ChevronRight, Eye, EyeOff } from 'lucide-react';
 
-export function LoginModal({ open, onClose, onSwitchToRegister, onSwitchToForgotPassword }) {
+export function LoginModal({ open, onClose, onSwitchToRegister, onSwitchToForgotPassword, intendedUrl }) {
   const [showPassword, setShowPassword] = useState(false);
   const { data, setData, post, processing, errors, reset, clearErrors } = useForm({
     email: '',
     password: '',
     remember: false,
+    redirect_to: intendedUrl || '',
   });
 
   useEffect(() => {
     if (open) {
       clearErrors();
+      setData('redirect_to', intendedUrl || '');
     } else {
       reset('password');
     }
-  }, [open]);
+  }, [open, intendedUrl]);
 
   const submit = (e) => {
     e.preventDefault();
