@@ -64,4 +64,20 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Notification::class);
     }
+
+    /**
+     * Send the email verification notification asynchronously.
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new \App\Notifications\QueuedVerifyEmail);
+    }
+
+    /**
+     * Send the password reset notification asynchronously.
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new \App\Notifications\QueuedResetPassword($token));
+    }
 }

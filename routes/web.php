@@ -14,6 +14,22 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
+// TEMPORARY: SMTP Diagnostics Route
+Route::get('/test-mail', function (\Illuminate\Http\Request $request) {
+    if (!$request->has('email')) {
+        return "Please provide an email to test: /test-mail?email=your-personal-email@gmail.com";
+    }
+    
+    try {
+        \Illuminate\Support\Facades\Mail::raw('Test email from Studio99! Your SMTP is working.', function ($message) use ($request) { 
+            $message->to($request->email)->subject('Studio99 SMTP Diagnostics'); 
+        });
+        return "SUCCESS! The email was accepted by the Hostinger server. Please check your inbox (and spam folder) for {$request->email}.";
+    } catch (\Exception $e) {
+        return "FAILED! Here is the exact error from Hostinger: <br><br><b>" . $e->getMessage() . "</b>";
+    }
+});
+
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
     Route::post('register', [RegisteredUserController::class, 'store']);

@@ -104,7 +104,7 @@ class PaymentController extends Controller
         ]);
 
         // Queue the payment receipt email
-        Mail::to(auth()->user()->email)->send(new PaymentReceipt($invoice, $payment));
+        Mail::to(auth()->user()->email)->queue(new PaymentReceipt($invoice, $payment));
 
         return redirect()->route('client.dashboard')->with('success', 'Payment successful! Your project request is now fully confirmed.');
     }
