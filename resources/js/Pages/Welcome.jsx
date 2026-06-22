@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Head, Link, usePage, router } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-import heroImg from '../../images/landing_hero2.png';
+import heroImg1 from '../../images/landing_hero1.png';
+import heroImg2 from '../../images/landing_hero2.png';
 import headerLogo from '../../images/logo.jpeg';
 import {
   ArrowRight, Play, Globe, PenTool,
@@ -39,6 +40,8 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [intendedUrl, setIntendedUrl] = useState('');
+  const [currentHeroImg, setCurrentHeroImg] = useState(0);
+  const heroImages = [heroImg2, heroImg1];
 
   const handleRequestServiceClick = (e) => {
     if (e) e.preventDefault();
@@ -68,6 +71,13 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeroImg((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   const fadeUpVariant = {
@@ -167,68 +177,49 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
         </div>
       )}
 
-      {/* 2. HERO SECTION */}
-      <section className="relative min-h-screen pt-32 pb-20 flex flex-col justify-center overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full z-10 grid lg:grid-cols-2 gap-12 items-center">
+      <section className="relative min-h-[800px] lg:min-h-[1000px] pt-32 pb-20 flex flex-col justify-center overflow-hidden border-b border-bg-border">
+        {/* Background Image stretched to cover the hero section */}
+        <div className="absolute inset-0 z-0">
+          {heroImages.map((img, index) => (
+            <img
+              key={index}
+              src={img}
+              alt="Studio99 Hero Background"
+              className={`absolute inset-0 w-full h-full object-cover mix-blend-luminosity transition-opacity duration-1000 ease-in-out ${currentHeroImg === index ? 'opacity-60' : 'opacity-0'}`}
+            />
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/80 via-[#0A0A0A]/40 to-bg-base z-10"></div>
+        </div>
 
-          {/* Left Text */}
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-bg-border bg-bg-card mb-8">
-              <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
-              <span className="text-[10px] font-black tracking-widest text-text-secondary uppercase">Premium Digital Agency</span>
-            </div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-black leading-[1.1] tracking-tighter text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] mb-6 max-w-3xl"
-            >
-              Transform Your Ideas Into <br className="hidden md:block" /> <span className="text-brand-red">Exceptional Digital Experiences</span>
-            </motion.h1>
-
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 1 }} className="text-text-secondary text-base sm:text-lg max-w-lg leading-relaxed mb-10 font-sans space-y-4">
-              <p>
-                Studio99 Digital empowers businesses, organizations, professionals, and content creators with premium graphics design, video editing, website development, and social media management services - all in one place.
-              </p>
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 1 }} className="flex flex-col sm:flex-row items-center gap-4">
-              <button onClick={handleRequestServiceClick} className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
-                Request a Service <ArrowRight className="w-5 h-5" />
-              </button>
-              <a href="#work" className="w-full sm:w-auto px-8 py-4 rounded-full border border-bg-border text-white font-bold hover:bg-bg-card transition-colors flex items-center justify-center gap-2">
-                <Play className="w-4 h-4" /> View Portfolio
-              </a>
-            </motion.div>
+        <div className="max-w-5xl mx-auto px-4 md:px-8 w-full z-10 relative flex flex-col items-center text-center mt-12">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/50 backdrop-blur-md mb-8">
+            <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
+            <span className="text-xs font-black tracking-widest text-white uppercase">Premium Digital Agency</span>
           </div>
 
-          {/* Right Circular Graphic */}
-          <div className="relative h-[400px] lg:h-[600px] flex items-center justify-center hidden sm:flex">
-            {/* Outer Ring */}
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[350px] h-[350px] lg:w-[450px] lg:h-[450px] rounded-full border border-bg-border flex items-center justify-center"
-            >
-              {/* Red Dots on ring */}
-              <div className="absolute -top-1.5 w-3 h-3 bg-brand-red rounded-full"></div>
-              <div className="absolute -bottom-1.5 w-3 h-3 bg-brand-red rounded-full"></div>
+          <motion.h1
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="font-black leading-[1.1] tracking-tighter text-5xl md:text-6xl lg:text-[5.5rem] mb-6 drop-shadow-2xl text-white"
+          >
+            Transform Your Ideas Into <br className="hidden md:block" /> <span className="text-brand-red">Exceptional Digital Experiences</span>
+          </motion.h1>
 
-              {/* Orbiting Badges */}
-              <motion.div animate={{ rotate: -360 }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }} className="absolute -left-10 top-20 px-4 py-2 bg-bg-card border border-bg-border rounded-full text-xs font-bold whitespace-nowrap shadow-xl">
-                • Brand Identity
-              </motion.div>
-              <motion.div animate={{ rotate: -360 }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }} className="absolute -right-10 bottom-20 px-4 py-2 bg-bg-card border border-bg-border rounded-full text-xs font-bold whitespace-nowrap shadow-xl">
-                100+ Projects
-              </motion.div>
-            </motion.div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 1 }} className="text-gray-200 text-lg md:text-xl max-w-3xl leading-relaxed mb-10 font-sans drop-shadow-lg">
+            <p>
+              Studio99 Digital empowers businesses, organizations, professionals, and content creators with premium graphics design, video editing, website development, and social media management services - all in one place.
+            </p>
+          </motion.div>
 
-            {/* Center Image */}
-            <div className="relative z-10 w-[220px] h-[220px] lg:w-[280px] lg:h-[280px] rounded-full bg-[#0A0A0A] border-4 border-bg-card shadow-[0_0_80px_rgba(227,30,36,0.3)] flex items-center justify-center overflow-hidden">
-              <img src={heroImg} alt="Studio99 Hero" className="w-full h-full object-cover" />
-            </div>
-          </div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 1 }} className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+            <button onClick={handleRequestServiceClick} className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(227,30,36,0.3)]">
+              Request a Service <ArrowRight className="w-5 h-5" />
+            </button>
+            <a href="#work" className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/20 bg-black/40 backdrop-blur-md text-white font-bold hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+              <Play className="w-4 h-4" /> View Portfolio
+            </a>
+          </motion.div>
         </div>
 
         {/* Hero Service Preview Cards */}
@@ -584,7 +575,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
         </div>
       </footer>
 
-            <LoginModal
+      <LoginModal
         open={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
         onSwitchToRegister={() => { setIsLoginModalOpen(false); setIsRegisterModalOpen(true); }}
