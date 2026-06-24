@@ -1,33 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
 import ClientLayout from '@/Layouts/ClientLayout';
 import { 
-  Monitor, 
-  PenTool, 
-  Smartphone, 
-  Film, 
-  Share2, 
-  Megaphone, 
-  Type, 
-  Star, 
-  MoreHorizontal,
-  CheckCircle2,
-  MessageSquare,
-  ArrowRight,
-  ClipboardList
+  Monitor, PenTool, Smartphone, Film, Share2, Megaphone, Type, Star, MoreHorizontal,
+  CheckCircle2, MessageSquare, ArrowRight, ClipboardList,
+  UploadCloud, Eye, Trash2, Image as ImageIcon, FileText, Video, ExternalLink, Calendar,
+  ArrowLeft, Send, Check, Edit2, ShieldCheck, Clock, HeadphonesIcon
 } from 'lucide-react';
 
 export default function Create({ auth, services = [] }) {
     const { data, setData, post, processing, errors } = useForm({
+        // Step 1
         service_id: '',
-        title: '',
-        description: '',
-        reference_files: [],
+        // Step 2
+        project_name: '',
+        project_category: '',
+        deadline: '',
+        budget_range: '',
+        project_description: '',
+        project_goals: [],
+        // Step 3
+        brand_info: '',
+        problem_to_solve: '',
+        competitors: '',
+        existing_content: '',
+        tone_of_voice: '',
+        key_message: '',
+        reference_websites: '',
+        language: 'English',
+        complexity: 'Medium',
+        revisions: '2 Revisions Included',
+        communication: '',
+        referral_source: '',
+        additional_notes: '',
+        // Step 4
+        files: [],
+        file_categories: [],
+        file_instructions: '',
     });
 
     const [currentStep, setCurrentStep] = useState(1);
+    const fileInputRef = useRef(null);
 
-    // Mock services if empty, to match the design grid exactly
+    // Mock services if empty
     const displayServices = services.length > 0 ? services : [
       { id: 1, name: 'Web Development', desc: 'Custom websites, web applications and platforms.', icon: 'monitor' },
       { id: 2, name: 'Graphic Design', desc: 'Logos, branding, social media graphics and more.', icon: 'pen' },
@@ -58,7 +73,7 @@ export default function Create({ auth, services = [] }) {
     const steps = [
       { id: 1, name: 'Select Service' },
       { id: 2, name: 'Project Details' },
-      { id: 3, name: 'Additional Info' },
+      { id: 3, name: 'Additional Information' },
       { id: 4, name: 'Upload Files' },
       { id: 5, name: 'Review & Submit' }
     ];
@@ -71,7 +86,49 @@ export default function Create({ auth, services = [] }) {
     };
 
     const handleNext = () => {
-      if (currentStep < 5) setCurrentStep(currentStep + 1);
+      if (currentStep < 5) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          setCurrentStep(currentStep + 1);
+      }
+    };
+
+    const handleBack = () => {
+      if (currentStep > 1) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          setCurrentStep(currentStep - 1);
+      }
+    };
+
+    const toggleGoal = (goal) => {
+      const newGoals = data.project_goals.includes(goal) 
+        ? data.project_goals.filter(g => g !== goal)
+        : [...data.project_goals, goal];
+      setData('project_goals', newGoals);
+    };
+
+    const toggleFileCategory = (cat) => {
+      const newCats = data.file_categories.includes(cat)
+        ? data.file_categories.filter(c => c !== cat)
+        : [...data.file_categories, cat];
+      setData('file_categories', newCats);
+    };
+
+    const handleFileChange = (e) => {
+      if (e.target.files) {
+        const newFiles = Array.from(e.target.files);
+        setData('files', [...data.files, ...newFiles.map(f => ({
+            name: f.name,
+            size: (f.size / (1024 * 1024)).toFixed(1) + ' MB',
+            type: f.type,
+            raw: f
+        }))]);
+      }
+    };
+
+    const removeFile = (index) => {
+      const newFiles = [...data.files];
+      newFiles.splice(index, 1);
+      setData('files', newFiles);
     };
 
     return (
@@ -95,15 +152,15 @@ export default function Create({ auth, services = [] }) {
                 <div key={step.id} className="flex items-center flex-shrink-0">
                   <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold transition-colors ${
                     currentStep === step.id ? 'bg-brand-red text-white' : 
-                    currentStep > step.id ? 'bg-[#2A2A2A] text-white' : 'bg-[#1A1A1A] text-[#4A4A4A] border border-[#2A2A2A]'
+                    currentStep > step.id ? 'bg-brand-red text-white' : 'bg-[#1A1A1A] text-[#4A4A4A] border border-[#2A2A2A]'
                   }`}>
                     {currentStep > step.id ? <CheckCircle2 className="w-5 h-5" /> : step.id}
                   </div>
-                  <span className={`ml-3 text-sm font-bold whitespace-nowrap ${currentStep === step.id ? 'text-white' : 'text-[#4A4A4A]'}`}>
+                  <span className={`ml-3 text-sm font-bold whitespace-nowrap ${currentStep === step.id ? 'text-white' : (currentStep > step.id ? 'text-white' : 'text-[#4A4A4A]')}`}>
                     {step.name}
                   </span>
                   {index < steps.length - 1 && (
-                    <div className="w-12 sm:w-24 h-px bg-[#2A2A2A] mx-4"></div>
+                    <div className={`w-12 sm:w-24 h-px mx-4 ${currentStep > step.id ? 'bg-brand-red' : 'bg-[#2A2A2A]'}`}></div>
                   )}
                 </div>
               ))}
@@ -112,6 +169,8 @@ export default function Create({ auth, services = [] }) {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column (Main Content) */}
               <div className="lg:col-span-2">
+                
+                {/* STEP 1 */}
                 {currentStep === 1 && (
                   <div className="animate-in fade-in duration-300">
                     <div className="mb-6">
@@ -152,90 +211,684 @@ export default function Create({ auth, services = [] }) {
                     <button 
                       onClick={handleNext}
                       disabled={!data.service_id}
-                      className="bg-brand-red hover:bg-red-600 disabled:bg-[#2A2A2A] disabled:text-[#4A4A4A] text-white px-8 py-3.5 rounded-xl font-bold flex items-center gap-2 transition-colors w-full sm:w-auto justify-center"
+                      className="bg-brand-red hover:bg-red-600 disabled:bg-[#2A2A2A] disabled:text-[#4A4A4A] text-white px-8 py-3.5 rounded-xl font-bold flex items-center gap-2 transition-colors w-full sm:w-auto justify-center ml-auto"
                     >
                       Next Step <ArrowRight className="w-5 h-5" />
                     </button>
                   </div>
                 )}
 
-                {currentStep > 1 && (
-                  <div className="animate-in fade-in duration-300 bg-[#111111] border border-[#2A2A2A] rounded-2xl p-8 text-center py-20">
-                    <ClipboardList className="w-16 h-16 text-[#2A2A2A] mx-auto mb-4" />
-                    <h3 className="text-2xl font-bold text-white mb-2">Step {currentStep} under construction</h3>
-                    <p className="text-[#9CA3AF] mb-6">The remaining steps of the wizard will be implemented based on the backend requirements.</p>
-                    <button 
-                      onClick={() => setCurrentStep(1)}
-                      className="bg-[#1A1A1A] hover:bg-[#2A2A2A] text-white px-6 py-2.5 rounded-xl font-bold transition-colors border border-[#2A2A2A]"
-                    >
-                      Go back to Step 1
-                    </button>
+                {/* STEP 2 */}
+                {currentStep === 2 && (
+                  <div className="animate-in fade-in duration-300">
+                    <div className="mb-6">
+                      <h2 className="text-xl font-bold text-white mb-1">Project Details</h2>
+                      <p className="text-sm text-[#9CA3AF]">Provide the basic details about your project.</p>
+                    </div>
+
+                    <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6 mb-8 space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-sm font-bold text-white mb-2">Project Name <span className="text-brand-red">*</span></label>
+                                <input type="text" value={data.project_name} onChange={e => setData('project_name', e.target.value)} placeholder="e.g. Studio99 Brand Identity Design" className="w-full bg-[#1A1A1A] border border-[#2A2A2A] text-white text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3 transition-colors" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-bold text-white mb-2">Project Category <span className="text-brand-red">*</span></label>
+                                <input type="text" value={data.project_category} onChange={e => setData('project_category', e.target.value)} placeholder="e.g. Logo Design" className="w-full bg-[#1A1A1A] border border-[#2A2A2A] text-white text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3 transition-colors" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-bold text-white mb-2">Deadline</label>
+                                <div className="relative">
+                                    <input type="date" value={data.deadline} onChange={e => setData('deadline', e.target.value)} className="w-full bg-[#1A1A1A] border border-[#2A2A2A] text-white text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3 pl-10 transition-colors [color-scheme:dark]" />
+                                    <Calendar className="w-4 h-4 text-[#9CA3AF] absolute left-3.5 top-3.5 pointer-events-none" />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-bold text-white mb-2">Budget Range</label>
+                                <select value={data.budget_range} onChange={e => setData('budget_range', e.target.value)} className="w-full bg-[#1A1A1A] border border-[#2A2A2A] text-white text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3 transition-colors appearance-none">
+                                    <option value="">Select a range</option>
+                                    <option value="Under ₦50,000">Under ₦50,000</option>
+                                    <option value="₦50,000 - ₦100,000">₦50,000 - ₦100,000</option>
+                                    <option value="₦100,000 - ₦250,000">₦100,000 - ₦250,000</option>
+                                    <option value="₦250,000 - ₦500,000">₦250,000 - ₦500,000</option>
+                                    <option value="Over ₦500,000">Over ₦500,000</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-bold text-white mb-2">Project Description <span className="text-brand-red">*</span></label>
+                            <textarea value={data.project_description} onChange={e => setData('project_description', e.target.value)} placeholder="Describe what you need in detail..." rows="4" className="w-full bg-[#1A1A1A] border border-[#2A2A2A] text-white text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3 transition-colors resize-none"></textarea>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-bold text-white mb-3">Project Goals</label>
+                            <div className="flex flex-wrap gap-2">
+                                {['Increase Brand Awareness', 'Improve Professional Image', 'Build Online Presence', 'Drive Sales', 'Refresh Brand Identity'].map(goal => (
+                                    <button
+                                        key={goal}
+                                        type="button"
+                                        onClick={() => toggleGoal(goal)}
+                                        className={`px-4 py-2 text-sm rounded-full border transition-colors ${data.project_goals.includes(goal) ? 'bg-brand-red text-white border-brand-red' : 'bg-[#1A1A1A] text-[#9CA3AF] border-[#2A2A2A] hover:text-white hover:border-[#4A4A4A]'}`}
+                                    >
+                                        {goal}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <button onClick={handleBack} className="text-[#9CA3AF] hover:text-white font-bold flex items-center gap-2 transition-colors">
+                        <ArrowLeft className="w-5 h-5" /> Back
+                      </button>
+                      <button 
+                        onClick={handleNext}
+                        disabled={!data.project_name || !data.project_description || !data.project_category}
+                        className="bg-brand-red hover:bg-red-600 disabled:bg-[#2A2A2A] disabled:text-[#4A4A4A] text-white px-8 py-3.5 rounded-xl font-bold flex items-center gap-2 transition-colors w-full sm:w-auto justify-center"
+                      >
+                        Continue to Additional Info <ArrowRight className="w-5 h-5" />
+                      </button>
+                    </div>
                   </div>
                 )}
+
+                {/* STEP 3 */}
+                {currentStep === 3 && (
+                  <div className="animate-in fade-in duration-300">
+                    <div className="mb-6">
+                      <h2 className="text-2xl font-black text-white mb-2 tracking-tight">Additional Information</h2>
+                      <p className="text-sm text-[#9CA3AF]">Help us understand your project better. The more details you provide, the better we can deliver exactly what you need.</p>
+                    </div>
+
+                    {/* Section 1: Project Background */}
+                    <div className="mb-8">
+                        <h3 className="text-white font-bold mb-4">Project Background</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label className="block text-sm text-white mb-2 font-medium">Tell us about your brand/business <span className="text-brand-red">*</span></label>
+                                <textarea value={data.brand_info} onChange={e => setData('brand_info', e.target.value)} placeholder="Share information about your business, industry, mission, values, and what makes your brand unique." rows="4" className="w-full bg-[#111111] border border-[#2A2A2A] text-white text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-4 transition-colors resize-none"></textarea>
+                                <div className="text-xs text-[#4A4A4A] mt-2">{data.brand_info.length} / 1000</div>
+                            </div>
+                            <div>
+                                <label className="block text-sm text-white mb-2 font-medium">What problem are you trying to solve?</label>
+                                <textarea value={data.problem_to_solve} onChange={e => setData('problem_to_solve', e.target.value)} placeholder="Describe the problem or challenge your business is facing that this project will help address." rows="4" className="w-full bg-[#111111] border border-[#2A2A2A] text-white text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-4 transition-colors resize-none"></textarea>
+                                <div className="text-xs text-[#4A4A4A] mt-2">{data.problem_to_solve.length} / 1000</div>
+                            </div>
+                        </div>
+                        <div>
+                            <label className="block text-sm text-white mb-2 font-medium">Who are your main competitors? (Optional)</label>
+                            <input type="text" value={data.competitors} onChange={e => setData('competitors', e.target.value)} placeholder="Enter competitor names or websites" className="w-full bg-[#111111] border border-[#2A2A2A] text-white text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3.5 transition-colors" />
+                        </div>
+                    </div>
+
+                    {/* Section 2: Content & Messaging */}
+                    <div className="mb-8">
+                        <h3 className="text-white font-bold mb-4">Content & Messaging</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label className="block text-sm text-white mb-2 font-medium">Do you have existing content or materials?</label>
+                                <select value={data.existing_content} onChange={e => setData('existing_content', e.target.value)} className="w-full bg-[#111111] border border-[#2A2A2A] text-[#9CA3AF] text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3.5 transition-colors appearance-none">
+                                    <option value="">Select an option</option>
+                                    <option value="Yes, I have everything">Yes, I have everything</option>
+                                    <option value="I have some, need help with rest">I have some, need help with rest</option>
+                                    <option value="No, I need everything created">No, I need everything created</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm text-white mb-2 font-medium">Preferred tone of voice</label>
+                                <select value={data.tone_of_voice} onChange={e => setData('tone_of_voice', e.target.value)} className="w-full bg-[#111111] border border-[#2A2A2A] text-[#9CA3AF] text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3.5 transition-colors appearance-none">
+                                    <option value="">Select an option</option>
+                                    <option value="Professional & Corporate">Professional & Corporate</option>
+                                    <option value="Friendly & Approachable">Friendly & Approachable</option>
+                                    <option value="Modern & Innovative">Modern & Innovative</option>
+                                    <option value="Playful & Fun">Playful & Fun</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label className="block text-sm text-white mb-2 font-medium">Key message you want your audience to remember</label>
+                            <textarea value={data.key_message} onChange={e => setData('key_message', e.target.value)} placeholder="What is the most important message you want your audience to take away?" rows="3" className="w-full bg-[#111111] border border-[#2A2A2A] text-white text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-4 transition-colors resize-none"></textarea>
+                            <div className="text-xs text-[#4A4A4A] mt-2">{data.key_message.length} / 500</div>
+                        </div>
+                    </div>
+
+                    {/* Section 3: Design & Inspiration */}
+                    <div className="mb-8">
+                        <h3 className="text-white font-bold mb-4">Design & Inspiration</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-sm text-white mb-2 font-medium">Share design or style inspiration (Optional)</label>
+                                <div className="border border-dashed border-[#4A4A4A] hover:border-brand-red transition-colors rounded-xl bg-[#111111] p-6 text-center cursor-pointer flex flex-col items-center justify-center min-h-[140px]">
+                                    <UploadCloud className="w-8 h-8 text-brand-red mb-3" />
+                                    <p className="text-sm text-white font-medium mb-1">Upload reference images</p>
+                                    <p className="text-xs text-[#4A4A4A] mb-3">PNG, JPG or PDF (Max. 10MB)</p>
+                                    <button className="bg-[#1A1A1A] border border-[#2A2A2A] text-white text-xs px-4 py-2 rounded-lg hover:bg-[#2A2A2A] transition-colors">Upload Files</button>
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm text-white mb-2 font-medium">Any reference websites or examples you like?</label>
+                                <textarea value={data.reference_websites} onChange={e => setData('reference_websites', e.target.value)} placeholder="Enter website links (one per line)&#10;e.g. https://example.com&#10;https://inspiration.com" rows="5" className="w-full bg-[#111111] border border-[#2A2A2A] text-white text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-4 transition-colors resize-none h-[140px]"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Section 4: Project Preferences */}
+                    <div className="mb-8">
+                        <h3 className="text-white font-bold mb-4">Project Preferences</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                            <div>
+                                <label className="block text-sm text-white mb-2 font-medium">Language</label>
+                                <select value={data.language} onChange={e => setData('language', e.target.value)} className="w-full bg-[#111111] border border-[#2A2A2A] text-[#9CA3AF] text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3.5 transition-colors appearance-none">
+                                    <option value="English">English</option>
+                                    <option value="French">French</option>
+                                    <option value="Spanish">Spanish</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm text-white mb-2 font-medium">Project Complexity</label>
+                                <select value={data.complexity} onChange={e => setData('complexity', e.target.value)} className="w-full bg-[#111111] border border-[#2A2A2A] text-[#9CA3AF] text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3.5 transition-colors appearance-none">
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm text-white mb-2 font-medium">Revision Preference</label>
+                                <select value={data.revisions} onChange={e => setData('revisions', e.target.value)} className="w-full bg-[#111111] border border-[#2A2A2A] text-[#9CA3AF] text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3.5 transition-colors appearance-none">
+                                    <option value="1 Revision">1 Revision</option>
+                                    <option value="2 Revisions Included">2 Revisions Included</option>
+                                    <option value="Unlimited">Unlimited</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-sm text-white mb-2 font-medium">Communication Preference</label>
+                                <select value={data.communication} onChange={e => setData('communication', e.target.value)} className="w-full bg-[#111111] border border-[#2A2A2A] text-[#9CA3AF] text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3.5 transition-colors appearance-none">
+                                    <option value="">Select an option</option>
+                                    <option value="Platform Messages">Platform Messages</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Phone Call">Phone Call</option>
+                                    <option value="Video Call">Video Call</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm text-white mb-2 font-medium">How did you hear about us?</label>
+                                <select value={data.referral_source} onChange={e => setData('referral_source', e.target.value)} className="w-full bg-[#111111] border border-[#2A2A2A] text-[#9CA3AF] text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3.5 transition-colors appearance-none">
+                                    <option value="">Select an option</option>
+                                    <option value="Social Media">Social Media</option>
+                                    <option value="Search Engine">Search Engine</option>
+                                    <option value="Friend/Colleague">Friend / Colleague</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Section 5: Additional Notes */}
+                    <div className="mb-8">
+                        <h3 className="text-white font-bold mb-4">Additional Notes</h3>
+                        <div>
+                            <label className="block text-sm text-white mb-2 font-medium">Anything else you want us to know?</label>
+                            <textarea value={data.additional_notes} onChange={e => setData('additional_notes', e.target.value)} placeholder="Share any additional information, special requests, or important details..." rows="4" className="w-full bg-[#111111] border border-[#2A2A2A] text-white text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-4 transition-colors resize-none"></textarea>
+                            <div className="text-xs text-[#4A4A4A] mt-2">{data.additional_notes.length} / 1000</div>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-4">
+                      <button onClick={handleBack} className="text-[#9CA3AF] hover:text-white font-bold flex items-center gap-2 transition-colors">
+                        <ArrowLeft className="w-5 h-5" /> Back
+                      </button>
+                      <button 
+                        onClick={handleNext}
+                        className="bg-brand-red hover:bg-red-600 text-white px-8 py-3.5 rounded-xl font-bold flex items-center gap-2 transition-colors w-full sm:w-auto justify-center"
+                      >
+                        Continue to Upload Files <ArrowRight className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 4 */}
+                {currentStep === 4 && (
+                  <div className="animate-in fade-in duration-300">
+                    <div className="mb-6">
+                      <h2 className="text-2xl font-black text-white mb-2 tracking-tight">Upload Files</h2>
+                      <p className="text-sm text-[#9CA3AF]">Upload any files, documents, images or references that will help our team better understand your project requirements.</p>
+                    </div>
+
+                    <div className="mb-8">
+                        <h3 className="text-white font-bold mb-4">Upload Your Files</h3>
+                        <p className="text-sm text-[#4A4A4A] mb-4">You can upload multiple files. Supported formats: JPG, PNG, PDF, DOC, MP4, ZIP (Max 50MB per file)</p>
+                        
+                        <div 
+                            className="border-2 border-dashed border-[#2A2A2A] hover:border-brand-red transition-colors rounded-2xl bg-[#111111] p-10 text-center cursor-pointer flex flex-col items-center justify-center"
+                            onClick={() => fileInputRef.current?.click()}
+                        >
+                            <input 
+                                type="file" 
+                                multiple 
+                                className="hidden" 
+                                ref={fileInputRef}
+                                onChange={handleFileChange}
+                            />
+                            <UploadCloud className="w-12 h-12 text-brand-red mb-4" />
+                            <p className="text-white font-medium mb-2">Drag & drop files here</p>
+                            <p className="text-sm text-[#4A4A4A] mb-4">or</p>
+                            <button className="bg-brand-red hover:bg-red-600 text-white px-6 py-2.5 rounded-xl font-bold transition-colors">Browse Files</button>
+                        </div>
+                        <div className="flex justify-between items-center mt-3 text-xs font-medium">
+                            <span className="text-[#4A4A4A] flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5" /> You can upload up to 10 files, 50MB each</span>
+                            <span className="text-green-500">{data.files.length} files uploaded</span>
+                        </div>
+                    </div>
+
+                    {data.files.length > 0 && (
+                        <div className="mb-8">
+                            <div className="flex justify-between items-center mb-4">
+                                <h3 className="text-white font-bold text-sm">Uploaded Files ({data.files.length}/10)</h3>
+                                <span className="text-xs text-[#9CA3AF]">Total Size: {data.files.reduce((acc, file) => acc + parseFloat(file.size), 0).toFixed(1)} MB</span>
+                            </div>
+                            <div className="space-y-3">
+                                {data.files.map((file, idx) => (
+                                    <div key={idx} className="flex items-center justify-between p-4 bg-[#111111] border border-[#2A2A2A] rounded-xl hover:border-[#3A3A3A] transition-colors group">
+                                        <div className="flex items-center gap-4">
+                                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${file.type.includes('pdf') ? 'bg-red-500/10 text-red-500' : file.type.includes('image') ? 'bg-blue-500/10 text-blue-500' : file.type.includes('video') ? 'bg-purple-500/10 text-purple-500' : 'bg-[#1A1A1A] text-white'}`}>
+                                                {file.type.includes('pdf') ? <FileText className="w-5 h-5" /> : file.type.includes('image') ? <ImageIcon className="w-5 h-5" /> : file.type.includes('video') ? <Video className="w-5 h-5" /> : <Paperclip className="w-5 h-5" />}
+                                            </div>
+                                            <div>
+                                                <h4 className="text-sm font-bold text-white mb-0.5 truncate max-w-[200px] sm:max-w-xs">{file.name}</h4>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-4">
+                                            <span className="text-xs text-[#9CA3AF] font-medium hidden sm:inline-block">{file.size}</span>
+                                            <div className="flex items-center gap-2">
+                                                <button className="w-8 h-8 rounded-lg hover:bg-[#2A2A2A] flex items-center justify-center text-[#9CA3AF] hover:text-white transition-colors">
+                                                    <Eye className="w-4 h-4" />
+                                                </button>
+                                                <button onClick={() => removeFile(idx)} className="w-8 h-8 rounded-lg hover:bg-red-500/10 flex items-center justify-center text-brand-red transition-colors">
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <button className="mt-4 text-xs font-bold text-white border border-[#2A2A2A] bg-[#111111] hover:bg-[#1A1A1A] px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+                                + Add More Files
+                            </button>
+                        </div>
+                    )}
+
+                    <div className="mb-8 pt-8 border-t border-[#2A2A2A]">
+                        <h3 className="text-white font-bold mb-2 text-sm">File Categories (Optional)</h3>
+                        <p className="text-xs text-[#9CA3AF] mb-4">Help us understand your uploaded files better by categorizing them.</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {[
+                                { id: 'brand', title: 'Brand References', desc: 'Logos, brand guidelines, brand assets', icon: <CheckCircle2 className="w-4 h-4" /> },
+                                { id: 'inspiration', title: 'Design Inspiration', desc: 'Examples of styles, layouts, or designs', icon: <PenTool className="w-4 h-4" /> },
+                                { id: 'content', title: 'Content Materials', desc: 'Text docs, content, copy documents', icon: <FileText className="w-4 h-4" /> },
+                                { id: 'images', title: 'Images & Photos', desc: 'Product photos, team photos, or images', icon: <ImageIcon className="w-4 h-4" /> },
+                                { id: 'video', title: 'Videos & Audio', desc: 'Video references, voice notes, audio files', icon: <Video className="w-4 h-4" /> },
+                                { id: 'other', title: 'Other Files', desc: 'Any other related documents or files', icon: <Paperclip className="w-4 h-4" /> }
+                            ].map(cat => {
+                                const isSelected = data.file_categories.includes(cat.id);
+                                return (
+                                    <div 
+                                        key={cat.id} 
+                                        onClick={() => toggleFileCategory(cat.id)}
+                                        className={`relative border rounded-xl p-4 cursor-pointer transition-colors ${isSelected ? 'bg-brand-red/5 border-brand-red' : 'bg-[#111111] border-[#2A2A2A] hover:border-[#4A4A4A]'}`}
+                                    >
+                                        {isSelected && (
+                                            <div className="absolute top-3 right-3 w-4 h-4 bg-brand-red rounded-full flex items-center justify-center">
+                                                <Check className="w-3 h-3 text-white" />
+                                            </div>
+                                        )}
+                                        <div className={`flex items-center gap-2 mb-2 ${isSelected ? 'text-brand-red' : 'text-white'}`}>
+                                            {cat.icon}
+                                            <h4 className="text-sm font-bold">{cat.title}</h4>
+                                        </div>
+                                        <p className="text-[10px] text-[#9CA3AF] leading-relaxed">{cat.desc}</p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <div className="mb-8">
+                        <h3 className="text-white font-bold mb-2 text-sm">Additional Instructions (Optional)</h3>
+                        <p className="text-xs text-[#9CA3AF] mb-3">Provide any specific instructions for our team regarding the uploaded files.</p>
+                        <textarea value={data.file_instructions} onChange={e => setData('file_instructions', e.target.value)} placeholder="Example: Please focus on the modern style references. The logo should be minimal..." rows="3" className="w-full bg-[#111111] border border-[#2A2A2A] text-white text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-4 transition-colors resize-none"></textarea>
+                        <div className="text-xs text-[#4A4A4A] mt-2">{data.file_instructions.length} / 500</div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-4 border-t border-[#2A2A2A]">
+                      <button onClick={handleBack} className="text-[#9CA3AF] hover:text-white font-bold flex items-center gap-2 transition-colors">
+                        <ArrowLeft className="w-5 h-5" /> Back
+                      </button>
+                      <button 
+                        onClick={handleNext}
+                        className="bg-brand-red hover:bg-red-600 text-white px-8 py-3.5 rounded-xl font-bold flex items-center gap-2 transition-colors w-full sm:w-auto justify-center"
+                      >
+                        Continue to Review & Submit <ArrowRight className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 5: REVIEW & SUBMIT */}
+                {currentStep === 5 && (
+                  <div className="animate-in fade-in duration-300">
+                    <div className="mb-8">
+                      <h2 className="text-3xl font-black text-white mb-2 tracking-tight">Review & Submit</h2>
+                      <p className="text-[#9CA3AF] text-sm">Please review all the information below before submitting your project request. You can go back and edit any section if needed.</p>
+                    </div>
+
+                    {/* Review Sections */}
+                    <div className="space-y-6 mb-8">
+                        
+                        {/* 1. Project Details Summary */}
+                        <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+                            <div className="flex justify-between items-center mb-6 pb-4 border-b border-[#2A2A2A]">
+                                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                                    <span className="text-[#4A4A4A]">1.</span> Project Details
+                                </h3>
+                                <div className="flex items-center gap-3">
+                                    <button onClick={() => setCurrentStep(2)} className="text-xs font-bold text-white bg-[#1A1A1A] hover:bg-[#2A2A2A] px-3 py-1.5 rounded-lg border border-[#2A2A2A] transition-colors flex items-center gap-1.5">
+                                        <Edit2 className="w-3 h-3" /> Edit
+                                    </button>
+                                    <CheckCircle2 className="w-5 h-5 text-green-500" />
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8">
+                                <div>
+                                    <p className="text-xs font-bold text-[#4A4A4A] mb-1">Project Name</p>
+                                    <p className="text-sm text-white">{data.project_name || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold text-[#4A4A4A] mb-1">Project Description</p>
+                                    <p className="text-sm text-[#9CA3AF] leading-relaxed">{data.project_description || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold text-[#4A4A4A] mb-1">Project Category</p>
+                                    <p className="text-sm text-[#9CA3AF]">{data.project_category || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold text-[#4A4A4A] mb-1">Project Goals</p>
+                                    <div className="flex flex-wrap gap-2 mt-1">
+                                        {data.project_goals.length > 0 ? data.project_goals.map(g => (
+                                            <span key={g} className="text-xs bg-[#1A1A1A] text-[#9CA3AF] px-2 py-1 rounded-md border border-[#2A2A2A]">{g}</span>
+                                        )) : <span className="text-sm text-[#9CA3AF]">N/A</span>}
+                                    </div>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold text-[#4A4A4A] mb-1">Deadline</p>
+                                    <p className="text-sm text-[#9CA3AF]">{data.deadline || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold text-[#4A4A4A] mb-1">Budget Range</p>
+                                    <p className="text-sm text-[#9CA3AF]">{data.budget_range || 'N/A'}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 2. Additional Information Summary */}
+                        <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+                            <div className="flex justify-between items-center mb-6 pb-4 border-b border-[#2A2A2A]">
+                                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                                    <span className="text-[#4A4A4A]">2.</span> Additional Information
+                                </h3>
+                                <div className="flex items-center gap-3">
+                                    <button onClick={() => setCurrentStep(3)} className="text-xs font-bold text-white bg-[#1A1A1A] hover:bg-[#2A2A2A] px-3 py-1.5 rounded-lg border border-[#2A2A2A] transition-colors flex items-center gap-1.5">
+                                        <Edit2 className="w-3 h-3" /> Edit
+                                    </button>
+                                    <CheckCircle2 className="w-5 h-5 text-green-500" />
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8">
+                                <div>
+                                    <p className="text-xs font-bold text-[#4A4A4A] mb-1">Project Background</p>
+                                    <p className="text-sm text-[#9CA3AF] line-clamp-2">{data.brand_info || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold text-[#4A4A4A] mb-1">Design Inspiration</p>
+                                    <div className="flex gap-2 mt-1">
+                                        <div className="w-10 h-10 rounded-lg bg-white border flex items-center justify-center overflow-hidden"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="ref" className="w-6 h-6 object-contain"/></div>
+                                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-500 border flex items-center justify-center"><h1 className="text-white font-bold text-xs">N/A</h1></div>
+                                        <div className="w-10 h-10 rounded-lg bg-white border flex items-center justify-center"><h1 className="text-black font-black text-xl">A</h1></div>
+                                        <div className="w-10 h-10 rounded-lg bg-[#1A1A1A] border border-[#2A2A2A] flex items-center justify-center text-xs text-[#9CA3AF]">+2</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold text-[#4A4A4A] mb-1">Main Competitors</p>
+                                    <p className="text-sm text-[#9CA3AF]">{data.competitors || 'N/A'}</p>
+                                </div>
+                                <div className="row-span-2">
+                                    <p className="text-xs font-bold text-[#4A4A4A] mb-1">Reference Websites</p>
+                                    <p className="text-sm text-blue-400 whitespace-pre-line">{data.reference_websites ? data.reference_websites : '• https://stripe.com\n• https://invisionapp.com'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold text-[#4A4A4A] mb-1">Preferred Tone of Voice</p>
+                                    <p className="text-sm text-[#9CA3AF]">{data.tone_of_voice || 'Professional, Innovative, Friendly'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold text-[#4A4A4A] mb-1">Key Message</p>
+                                    <p className="text-sm text-[#9CA3AF]">{data.key_message || 'Empowering businesses with smart digital solutions.'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold text-[#4A4A4A] mb-1">Additional Notes</p>
+                                    <p className="text-sm text-[#9CA3AF]">{data.additional_notes || 'Please keep the design minimal and versatile. We prefer a combination of icon and text in the logo.'}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 3. Uploaded Files Summary */}
+                        <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+                            <div className="flex justify-between items-center mb-6 pb-4 border-b border-[#2A2A2A]">
+                                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                                    <span className="text-[#4A4A4A]">3.</span> Uploaded Files ({data.files.length})
+                                </h3>
+                                <div className="flex items-center gap-3">
+                                    <button onClick={() => setCurrentStep(4)} className="text-xs font-bold text-white bg-[#1A1A1A] hover:bg-[#2A2A2A] px-3 py-1.5 rounded-lg border border-[#2A2A2A] transition-colors flex items-center gap-1.5">
+                                        <Edit2 className="w-3 h-3" /> Edit
+                                    </button>
+                                    <CheckCircle2 className="w-5 h-5 text-green-500" />
+                                </div>
+                            </div>
+                            {data.files.length > 0 ? (
+                                <div className="space-y-2">
+                                    {data.files.map((file, idx) => (
+                                        <div key={idx} className="flex items-center justify-between py-2 border-b border-[#1A1A1A] last:border-0">
+                                            <div className="flex items-center gap-3">
+                                                <div className={`w-8 h-8 rounded bg-[#1A1A1A] flex items-center justify-center shrink-0`}>
+                                                    {file.type.includes('pdf') ? <FileText className="w-4 h-4 text-red-500" /> : file.type.includes('image') ? <ImageIcon className="w-4 h-4 text-blue-500" /> : <Paperclip className="w-4 h-4 text-[#9CA3AF]" />}
+                                                </div>
+                                                <span className="text-sm text-white">{file.name}</span>
+                                            </div>
+                                            <div className="flex items-center gap-4">
+                                                <span className="text-xs text-[#4A4A4A]">{file.size}</span>
+                                                <Eye className="w-4 h-4 text-[#4A4A4A]" />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p className="text-sm text-[#9CA3AF]">No files uploaded.</p>
+                            )}
+                        </div>
+
+                        {/* 4. Final Notes Summary */}
+                        <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+                            <div className="flex justify-between items-center mb-4">
+                                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                                    <span className="text-[#4A4A4A]">4.</span> Final Notes
+                                </h3>
+                            </div>
+                            <p className="text-xs font-bold text-[#4A4A4A] mb-2">Anything else you want us to know?</p>
+                            <p className="text-sm text-[#9CA3AF]">Looking forward to working with Studio99. Please let me know if you need any further information.</p>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-4">
+                      <button onClick={handleBack} className="text-[#9CA3AF] hover:text-white font-bold flex items-center gap-2 transition-colors">
+                        <ArrowLeft className="w-5 h-5" /> Back
+                      </button>
+                      <form onSubmit={handleSubmit}>
+                          <button 
+                            type="submit"
+                            disabled={processing}
+                            className="bg-brand-red hover:bg-red-600 disabled:opacity-70 text-white px-10 py-4 rounded-xl font-bold flex items-center gap-2 transition-colors shadow-[0_4px_15px_rgba(227,30,36,0.2)]"
+                          >
+                            {processing ? 'Submitting...' : 'Submit Project Request'} <Send className="w-5 h-5 ml-1" />
+                          </button>
+                      </form>
+                    </div>
+                    
+                    <div className="text-center mt-6 flex justify-center items-center gap-2 text-xs text-[#4A4A4A] font-medium">
+                        <ShieldCheck className="w-4 h-4" />
+                        Your information is secure and will only be used to deliver your project.
+                    </div>
+                  </div>
+                )}
+
               </div>
 
               {/* Right Column (Widgets) */}
               <div className="space-y-6">
-                {/* Request Summary */}
+                
+                {/* Project Summary Box (Shown on steps 2-5) */}
+                {currentStep > 1 && (
+                    <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+                        <h3 className="text-sm font-bold text-white mb-6 uppercase tracking-wider flex items-center gap-2">
+                            <FileText className="w-4 h-4 text-[#9CA3AF]" /> Project Summary
+                        </h3>
+                        
+                        {selectedServiceDetails && (
+                            <div className="space-y-5">
+                                <div>
+                                    <p className="text-[10px] uppercase font-bold text-[#4A4A4A] mb-1">Selected Service</p>
+                                    <p className="text-sm font-bold text-brand-red">{selectedServiceDetails.name}</p>
+                                </div>
+                                <div>
+                                    <p className="text-[10px] uppercase font-bold text-[#4A4A4A] mb-1">Project Type</p>
+                                    <p className="text-sm font-bold text-brand-red">{data.project_category || 'Logo Design'}</p>
+                                </div>
+                                <div className="border-t border-[#2A2A2A] pt-5">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <Calendar className="w-4 h-4 text-[#9CA3AF]" />
+                                        <p className="text-[10px] uppercase font-bold text-[#4A4A4A]">Estimated Delivery</p>
+                                    </div>
+                                    <p className="text-sm font-bold text-white flex items-center gap-2">
+                                        <span className="w-2 h-2 rounded-full bg-brand-red relative"><span className="absolute inset-0 bg-brand-red rounded-full animate-ping opacity-75"></span></span>
+                                        3 - 5 Business Days
+                                    </p>
+                                </div>
+                                <div className="border-t border-[#2A2A2A] pt-5">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className="w-4 h-4 rounded-full border border-[#9CA3AF] flex items-center justify-center text-[#9CA3AF] text-[8px] font-bold">₦</div>
+                                        <p className="text-[10px] uppercase font-bold text-[#4A4A4A]">Estimated Cost</p>
+                                    </div>
+                                    <p className="text-xs text-[#9CA3AF] mb-0.5">Starting from</p>
+                                    <p className="text-xl font-black text-brand-red tracking-tight">₦50,000</p>
+                                </div>
+                                <p className="text-[10px] text-[#4A4A4A] leading-relaxed pt-2">
+                                    Final cost may vary based on project complexity and requirements.
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* Upload Tips (Shown on step 4) */}
+                {currentStep === 4 && (
+                    <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+                        <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
+                            <span className="text-yellow-500">💡</span> Upload Tips
+                        </h3>
+                        <ul className="space-y-3 text-xs text-[#9CA3AF]">
+                            <li className="flex items-start gap-2"><Check className="w-3.5 h-3.5 text-green-500 shrink-0 mt-0.5" /> High quality files give us better understanding</li>
+                            <li className="flex items-start gap-2"><Check className="w-3.5 h-3.5 text-green-500 shrink-0 mt-0.5" /> Include as many references as possible</li>
+                            <li className="flex items-start gap-2"><Check className="w-3.5 h-3.5 text-green-500 shrink-0 mt-0.5" /> Add brand guidelines if available</li>
+                            <li className="flex items-start gap-2"><Check className="w-3.5 h-3.5 text-green-500 shrink-0 mt-0.5" /> Include content or text documents</li>
+                            <li className="flex items-start gap-2"><Check className="w-3.5 h-3.5 text-green-500 shrink-0 mt-0.5" /> Supported formats: JPG, PNG, PDF, DOC, MP4, ZIP</li>
+                        </ul>
+                        <button className="w-full mt-4 py-2 bg-[#1A1A1A] hover:bg-[#2A2A2A] border border-[#2A2A2A] text-white text-xs font-bold rounded-lg transition-colors flex items-center justify-center gap-1.5">
+                            View Guidelines <ExternalLink className="w-3 h-3" />
+                        </button>
+                    </div>
+                )}
+
+                {/* What Happens Next (Shown on step 5) */}
+                {currentStep === 5 && (
+                    <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+                        <h3 className="text-sm font-bold text-white mb-6 uppercase tracking-wider flex items-center gap-2">
+                            <span className="w-5 h-5 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red">?</span> What Happens Next?
+                        </h3>
+                        <div className="space-y-6">
+                            <div className="flex gap-4">
+                                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
+                                <p className="text-xs text-[#9CA3AF] leading-relaxed">We will review your request within 24 hours</p>
+                            </div>
+                            <div className="flex gap-4">
+                                <Clock className="w-5 h-5 text-[#9CA3AF] shrink-0" />
+                                <p className="text-xs text-[#9CA3AF] leading-relaxed">Our team will contact you to discuss your project</p>
+                            </div>
+                            <div className="flex gap-4">
+                                <FileText className="w-5 h-5 text-[#9CA3AF] shrink-0" />
+                                <p className="text-xs text-[#9CA3AF] leading-relaxed">We will send you a proposal and timeline</p>
+                            </div>
+                            <div className="flex gap-4">
+                                <ClipboardList className="w-5 h-5 text-[#9CA3AF] shrink-0" />
+                                <p className="text-xs text-[#9CA3AF] leading-relaxed">Project kick-off after proposal approval</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Need Assistance */}
                 <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
-                  <h3 className="text-lg font-bold text-white mb-6">Request Summary</h3>
-                  
-                  {selectedServiceDetails ? (
-                    <div className="space-y-4">
-                      <div className="flex items-start gap-4 p-4 bg-[#1A1A1A] rounded-xl border border-[#2A2A2A]">
-                        <div className="w-10 h-10 rounded-lg bg-brand-red/10 flex items-center justify-center shrink-0">
-                          {getServiceIcon(selectedServiceDetails.icon, true)}
-                        </div>
-                        <div>
-                          <h4 className="text-white font-bold">{selectedServiceDetails.name}</h4>
-                          <p className="text-xs text-[#9CA3AF] mt-1">Service Selected</p>
-                        </div>
+                  <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-full bg-[#1A1A1A] border border-[#2A2A2A] flex items-center justify-center shrink-0">
+                          <HeadphonesIcon className="w-5 h-5 text-brand-red" />
                       </div>
-                      
-                      <div className="border-t border-[#2A2A2A] pt-4">
-                        <div className="flex justify-between items-center text-sm">
-                          <span className="text-[#9CA3AF]">Status</span>
-                          <span className="text-white font-bold">Draft</span>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="text-center py-8">
-                      <div className="w-16 h-16 rounded-full bg-[#1A1A1A] border border-[#2A2A2A] flex items-center justify-center mx-auto mb-4">
-                        <ClipboardList className="w-6 h-6 text-[#4A4A4A]" />
-                      </div>
-                      <p className="text-white font-bold mb-1">No service selected yet</p>
-                      <p className="text-xs text-[#9CA3AF]">Fill in the details to see<br/>your request summary.</p>
-                    </div>
-                  )}
+                      <h3 className="text-sm font-bold text-white">Need Assistance?</h3>
+                  </div>
+                  <p className="text-xs text-[#9CA3AF] mb-6 leading-relaxed">Our team is ready to help you plan your project.</p>
+                  <div className="space-y-3">
+                      <button className="w-full py-2.5 bg-brand-red hover:bg-red-600 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-colors shadow-[0_4px_15px_rgba(227,30,36,0.2)]">
+                        <MessageSquare className="w-4 h-4" /> Chat with Support
+                      </button>
+                      <button className="w-full py-2.5 bg-[#1A1A1A] hover:bg-[#2A2A2A] border border-[#2A2A2A] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-colors">
+                        <Calendar className="w-4 h-4" /> Schedule Consultation
+                      </button>
+                  </div>
                 </div>
 
-                {/* Need Help */}
-                <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
-                  <h3 className="text-lg font-bold text-white mb-2">Need Help?</h3>
-                  <p className="text-sm text-[#9CA3AF] mb-6">If you're not sure which service fits your needs, our team can help you.</p>
-                  <button className="w-full py-2.5 bg-transparent border border-[#4A4A4A] hover:border-white text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-colors">
-                    <MessageSquare className="w-4 h-4" /> Chat with Us
-                  </button>
-                </div>
+                {/* Secure & Private */}
+                {currentStep > 2 && (
+                    <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+                        <h3 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
+                            <ShieldCheck className="w-4 h-4 text-green-500" /> Secure & Private
+                        </h3>
+                        <p className="text-xs text-[#9CA3AF] mb-4 leading-relaxed">Your information is 100% secure and will only be used to deliver your project.</p>
+                        <Link href="#" className="text-xs font-bold text-brand-red hover:text-red-400 transition-colors flex items-center gap-1">
+                            Learn more <ArrowRight className="w-3 h-3" />
+                        </Link>
+                    </div>
+                )}
 
-                {/* Why Choose Studio99 */}
-                <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
-                  <h3 className="text-lg font-bold text-white mb-4">Why Choose Studio99 Digital?</h3>
-                  <ul className="space-y-3">
-                    {[
-                      'Professional & Experienced Team',
-                      'High-Quality Work',
-                      'On-Time Delivery',
-                      '100% Client Satisfaction'
-                    ].map((perk, i) => (
-                      <li key={i} className="flex items-center gap-3 text-sm text-[#9CA3AF]">
-                        <CheckCircle2 className="w-4 h-4 text-brand-red shrink-0" />
-                        {perk}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {/* Progress Bar */}
+                {currentStep > 2 && (
+                    <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+                        <h3 className="text-sm font-bold text-white mb-4">Request Progress</h3>
+                        <p className="text-xs text-[#9CA3AF] mb-2">Step {currentStep} of 5</p>
+                        <div className="w-full h-2 bg-[#1A1A1A] rounded-full overflow-hidden mb-2 border border-[#2A2A2A]">
+                            <div className="h-full bg-brand-red transition-all duration-300" style={{ width: `${(currentStep / 5) * 100}%` }}></div>
+                        </div>
+                        <p className="text-[10px] text-[#4A4A4A]">{currentStep * 20}% Complete</p>
+                    </div>
+                )}
               </div>
             </div>
 
