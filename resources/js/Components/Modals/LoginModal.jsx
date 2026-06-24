@@ -36,7 +36,7 @@ export function LoginModal({ open, onClose, onSwitchToRegister, onSwitchToForgot
 
         <div className="flex flex-col md:flex-row min-h-[600px]">
           {/* Left Panel - Information */}
-          <div className="hidden md:flex flex-col w-[45%] bg-[#0A0A0A] p-10 relative overflow-hidden border-r border-bg-border">
+          <div className="hidden md:flex flex-col w-[45%] bg-bg-base p-10 relative overflow-hidden border-r border-bg-border">
             {/* Background Accent */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-red/5 rounded-full blur-3xl -mr-20 -mt-20"></div>
 
@@ -44,7 +44,7 @@ export function LoginModal({ open, onClose, onSwitchToRegister, onSwitchToForgot
               <div className="mb-10">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-8 h-8 rounded bg-brand-red flex items-center justify-center font-black text-white text-xs">S</div>
-                  <span className="font-black text-lg tracking-tight text-white">studio99</span>
+                  <span className="font-black text-lg tracking-tight text-text-primary">studio99</span>
                 </div>
                 <p className="text-text-secondary text-sm">Welcome back to your workspace</p>
               </div>
@@ -58,10 +58,10 @@ export function LoginModal({ open, onClose, onSwitchToRegister, onSwitchToForgot
                   {/* Client Role */}
                   <div className="flex gap-4 group">
                     <div className="w-10 h-10 rounded-xl bg-bg-card border border-bg-border flex items-center justify-center shrink-0 group-hover:border-brand-red transition-colors">
-                      <Briefcase className="w-5 h-5 text-white" />
+                      <Briefcase className="w-5 h-5 text-text-primary" />
                     </div>
                     <div>
-                      <h4 className="text-white font-bold text-sm mb-1 flex items-center gap-2">
+                      <h4 className="text-text-primary font-bold text-sm mb-1 flex items-center gap-2">
                         Client <ChevronRight className="w-3 h-3 text-brand-red" />
                       </h4>
                       <p className="text-text-secondary text-xs leading-relaxed">
@@ -73,10 +73,10 @@ export function LoginModal({ open, onClose, onSwitchToRegister, onSwitchToForgot
                   {/* Team Member Role */}
                   <div className="flex gap-4 group">
                     <div className="w-10 h-10 rounded-xl bg-bg-card border border-bg-border flex items-center justify-center shrink-0 group-hover:border-brand-red transition-colors">
-                      <Users className="w-5 h-5 text-white" />
+                      <Users className="w-5 h-5 text-text-primary" />
                     </div>
                     <div>
-                      <h4 className="text-white font-bold text-sm mb-1 flex items-center gap-2">
+                      <h4 className="text-text-primary font-bold text-sm mb-1 flex items-center gap-2">
                         Team Member <ChevronRight className="w-3 h-3 text-brand-red" />
                       </h4>
                       <p className="text-text-secondary text-xs leading-relaxed">
@@ -93,18 +93,18 @@ export function LoginModal({ open, onClose, onSwitchToRegister, onSwitchToForgot
           <div className="w-full md:w-[55%] bg-bg-base p-8 md:p-12 flex flex-col justify-center">
             <div className="max-w-sm w-full mx-auto">
               <div className="mb-8 text-center md:text-left">
-                <h2 className="text-2xl font-black text-white mb-2">Welcome Back</h2>
+                <h2 className="text-2xl font-black text-text-primary mb-2">Welcome Back</h2>
                 <p className="text-sm text-text-secondary">Sign in to your account to continue</p>
               </div>
 
               <form onSubmit={submit} className="space-y-5">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-white">Email Address</label>
+                  <label className="text-sm font-medium text-text-primary">Email Address</label>
                   <input
                     type="email"
                     value={data.email}
                     onChange={(e) => setData('email', e.target.value)}
-                    className={`w-full bg-bg-card border ${errors.email ? 'border-brand-red' : 'border-bg-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-red transition-colors`}
+                    className={`w-full bg-bg-card border ${errors.email ? 'border-brand-red' : 'border-bg-border'} rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-brand-red transition-colors`}
                     placeholder="name@company.com"
                     autoComplete="username"
                   />
@@ -113,7 +113,7 @@ export function LoginModal({ open, onClose, onSwitchToRegister, onSwitchToForgot
 
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
-                    <label className="text-sm font-medium text-white">Password</label>
+                    <label className="text-sm font-medium text-text-primary">Password</label>
                     <button type="button" onClick={onSwitchToForgotPassword} className="text-xs font-bold text-brand-red hover:text-red-400 transition-colors">
                       Forgot Password?
                     </button>
@@ -123,14 +123,14 @@ export function LoginModal({ open, onClose, onSwitchToRegister, onSwitchToForgot
                       type={showPassword ? "text" : "password"}
                       value={data.password}
                       onChange={(e) => setData('password', e.target.value)}
-                      className={`w-full bg-bg-card border ${errors.password ? 'border-brand-red' : 'border-bg-border'} rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:border-brand-red transition-colors`}
+                      className={`w-full bg-bg-card border ${errors.password ? 'border-brand-red' : 'border-bg-border'} rounded-xl px-4 py-3 pr-10 text-text-primary focus:outline-none focus:border-brand-red transition-colors`}
                       placeholder="••••••••"
                       autoComplete="current-password"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary hover:text-white transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary hover:text-text-primary transition-colors"
                     >
                       {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
@@ -159,7 +159,7 @@ export function LoginModal({ open, onClose, onSwitchToRegister, onSwitchToForgot
 
                 <p className="text-center text-sm text-text-secondary mt-6">
                   Don't have an account?{' '}
-                  <button type="button" onClick={onSwitchToRegister} className="text-white hover:text-brand-red transition-colors font-bold">
+                  <button type="button" onClick={onSwitchToRegister} className="text-text-primary hover:text-brand-red transition-colors font-bold">
                     Create an account
                   </button>
                 </p>
@@ -170,7 +170,7 @@ export function LoginModal({ open, onClose, onSwitchToRegister, onSwitchToForgot
                 <div className="flex items-start gap-3">
                   <Lock className="w-5 h-5 text-brand-red shrink-0 mt-0.5" />
                   <div>
-                    <h5 className="text-[10px] font-black tracking-widest text-white uppercase mb-1 flex gap-2">
+                    <h5 className="text-[10px] font-black tracking-widest text-text-primary uppercase mb-1 flex gap-2">
                       <span>Secure</span><span className="text-brand-red">•</span><span>Reliable</span><span className="text-brand-red">•</span><span>Trusted</span>
                     </h5>
                     <p className="text-[11px] text-text-secondary leading-relaxed">

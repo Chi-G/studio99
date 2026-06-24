@@ -29,11 +29,11 @@ export function AppModal({
           ${sizeMap[size]} 
           bg-bg-card 
           border border-bg-border 
-          text-white
+          text-text-primary
         `}
       >
         <DialogHeader>
-          <DialogTitle className="text-xl font-black font-sans text-white">
+          <DialogTitle className="text-xl font-black font-sans text-text-primary">
             {title}
           </DialogTitle>
           {description && (

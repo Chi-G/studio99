@@ -16,6 +16,7 @@ import { RegisterModal } from '@/Components/Modals/RegisterModal';
 import { ForgotPasswordModal } from '@/Components/Modals/ForgotPasswordModal';
 
 import { NewRequestModal } from '@/Components/Modals/NewRequestModal';
+import { ThemeToggle } from '@/Components/ThemeToggle';
 
 // Shared Components
 const RedLabel = ({ children }) => (
@@ -60,11 +61,6 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
     if (flash?.status) toast(flash.status);
   }, [flash]);
 
-  useEffect(() => {
-    if (auth?.user) {
-      router.visit('/dashboard', { replace: true });
-    }
-  }, [auth?.user]);
 
   useEffect(() => {
     if (showLogin) setIsLoginModalOpen(true);
@@ -106,7 +102,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
       <Head title="Design • Create • Grow | Studio99 Digital" />
 
       {/* 1. NAVBAR */}
-      <nav className="fixed top-0 w-full z-50 bg-[#0A0A0A] border-b border-bg-border py-4">
+      <nav className="fixed top-0 w-full z-50 bg-bg-base border-b border-bg-border py-4">
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
             <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
@@ -120,29 +116,30 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             </div>
           </Link>
           <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-text-secondary">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
-            <a href="#services" className="hover:text-white transition-colors">Services</a>
-            <a href="#work" className="hover:text-white transition-colors">Portfolio</a>
-            <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
-            <a href="#about" className="hover:text-white transition-colors">About</a>
-            <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+            <Link href="/" className="hover:text-text-primary transition-colors">Home</Link>
+            <a href="#services" className="hover:text-text-primary transition-colors">Services</a>
+            <a href="#work" className="hover:text-text-primary transition-colors">Portfolio</a>
+            <a href="#pricing" className="hover:text-text-primary transition-colors">Pricing</a>
+            <a href="#about" className="hover:text-text-primary transition-colors">About</a>
+            <a href="#contact" className="hover:text-text-primary transition-colors">Contact</a>
           </div>
 
           {/* Desktop Auth Buttons */}
           <div className="hidden lg:flex items-center gap-4">
             {auth.user ? (
-              <Link href="/dashboard" className="text-sm font-medium text-white hover:text-brand-red transition-colors">Dashboard</Link>
+              <Link href="/dashboard" className="text-sm font-medium text-text-primary hover:text-brand-red transition-colors">Dashboard</Link>
             ) : (
               <>
-                <button onClick={() => setIsLoginModalOpen(true)} className="text-sm font-medium text-text-secondary hover:text-white transition-colors">Login</button>
+                <button onClick={() => setIsLoginModalOpen(true)} className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors">Login</button>
                 <button onClick={() => setIsRegisterModalOpen(true)} className="text-sm font-medium bg-brand-red text-white px-5 py-2 rounded-full hover:bg-red-700 transition-colors whitespace-nowrap">Get Started</button>
               </>
             )}
+            <ThemeToggle />
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-text-secondary hover:text-white"
+            className="lg:hidden text-text-secondary hover:text-text-primary"
             onClick={() => setIsMobileMenuOpen(true)}
           >
             <Menu className="w-6 h-6" />
@@ -152,32 +149,35 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[60] bg-[#0A0A0A] flex flex-col px-6 py-8">
+        <div className="fixed inset-0 z-[60] bg-bg-base flex flex-col px-6 py-8">
           <div className="flex items-center justify-between mb-12">
             <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
-            <button
-              className="text-text-secondary hover:text-white"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <X className="w-8 h-8" />
-            </button>
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+              <button
+                className="text-text-secondary hover:text-text-primary"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <X className="w-8 h-8" />
+              </button>
+            </div>
           </div>
 
           <div className="flex flex-col gap-6 text-xl font-medium text-text-secondary flex-1">
-            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Home</Link>
-            <a href="#services" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Services</a>
-            <a href="#work" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Portfolio</a>
-            <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Pricing</a>
-            <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">About</a>
-            <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Contact</a>
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Home</Link>
+            <a href="#services" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Services</a>
+            <a href="#work" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Portfolio</a>
+            <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Pricing</a>
+            <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">About</a>
+            <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Contact</a>
           </div>
 
           <div className="flex flex-col gap-4 mt-auto">
             {auth.user ? (
-              <Link href="/dashboard" className="w-full text-center py-4 rounded-full bg-bg-card border border-bg-border text-white font-bold">Open Dashboard</Link>
+              <Link href="/dashboard" className="w-full text-center py-4 rounded-full bg-bg-card border border-bg-border text-text-primary font-bold">Open Dashboard</Link>
             ) : (
               <>
-                <button onClick={() => { setIsMobileMenuOpen(false); setIsLoginModalOpen(true); }} className="w-full py-4 rounded-full border border-bg-border text-white font-bold hover:bg-bg-card">Login</button>
+                <button onClick={() => { setIsMobileMenuOpen(false); setIsLoginModalOpen(true); }} className="w-full py-4 rounded-full border border-bg-border text-text-primary font-bold hover:bg-bg-card">Login</button>
                 <button onClick={() => { setIsMobileMenuOpen(false); setIsRegisterModalOpen(true); }} className="w-full py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700">Get Started</button>
               </>
             )}
@@ -196,7 +196,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
               className={`absolute inset-0 w-full h-full object-cover mix-blend-luminosity transition-opacity duration-1000 ease-in-out ${currentHeroImg === index ? 'opacity-60' : 'opacity-0'}`}
             />
           ))}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/80 via-[#0A0A0A]/40 to-bg-base z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-bg-base/80 via-bg-base/40 to-bg-base z-10"></div>
         </div>
 
         <div className="max-w-5xl mx-auto px-4 md:px-8 w-full z-10 relative flex flex-col items-center text-center mt-12">
@@ -241,7 +241,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             ].map((s, i) => (
               <motion.div key={i} whileHover={{ y: -5 }} className="relative h-32 md:h-40 rounded-xl overflow-hidden group cursor-pointer hover-glow border border-bg-border">
                 <img src={s.img} alt={s.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/70 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-bg-base via-bg-base/70 to-transparent"></div>
                 <div className="absolute inset-0 p-4 flex flex-col justify-end">
                   <s.icon className="w-5 h-5 text-brand-red mb-2" />
                   <h4 className="font-bold text-sm md:text-base">{s.title}</h4>
@@ -285,7 +285,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
           <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
             <div className="aspect-[4/3] md:aspect-[4/5] rounded-3xl overflow-hidden border border-bg-border">
               <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1000&auto=format&fit=crop" alt="Office Workspace" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-[#0A0A0A]/40 mix-blend-overlay"></div>
+              <div className="absolute inset-0 bg-bg-base/40 mix-blend-overlay"></div>
             </div>
             {/* Floating Badge */}
             <div className="absolute -bottom-6 right-0 md:-bottom-8 lg:-right-8 bg-brand-red text-white p-4 sm:p-6 rounded-2xl shadow-2xl z-10">
@@ -336,7 +336,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             {/* Graphics Design (Large left) */}
             <motion.div variants={fadeUpVariant} className="md:col-span-2 md:row-span-2 relative rounded-3xl overflow-hidden group hover-glow border border-bg-border">
               <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1200&auto=format&fit=crop" alt="Graphics" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-[#0A0A0A]/20"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-bg-base via-bg-base/80 to-bg-base/20"></div>
               <div className="absolute inset-0 p-8 flex flex-col justify-between">
                 <span className="text-brand-red font-black text-2xl">01</span>
                 <div>
@@ -352,7 +352,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             {/* Video Editing (Top right) */}
             <motion.div variants={fadeUpVariant} className="relative rounded-3xl overflow-hidden group hover-glow border border-bg-border">
               <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=600&auto=format&fit=crop" alt="Video" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-[#0A0A0A]/20"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-bg-base via-bg-base/80 to-bg-base/20"></div>
               <div className="absolute inset-0 p-8 flex flex-col justify-between">
                 <span className="text-brand-red font-black text-xl">02</span>
                 <div>
@@ -368,7 +368,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             {/* Web Dev (Middle right) */}
             <motion.div variants={fadeUpVariant} className="relative rounded-3xl overflow-hidden group hover-glow border border-bg-border">
               <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&auto=format&fit=crop" alt="Web" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-[#0A0A0A]/20"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-bg-base via-bg-base/80 to-bg-base/20"></div>
               <div className="absolute inset-0 p-8 flex flex-col justify-between">
                 <span className="text-brand-red font-black text-xl">03</span>
                 <div>
@@ -384,7 +384,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             {/* Social Media (Bottom right) */}
             <motion.div variants={fadeUpVariant} className="md:col-span-3 relative rounded-3xl overflow-hidden group hover-glow border border-bg-border h-[250px] md:h-auto">
               <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1200&auto=format&fit=crop" alt="Social" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-[#0A0A0A]/20"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-bg-base via-bg-base/80 to-bg-base/20"></div>
               <div className="absolute inset-0 p-8 flex flex-col justify-between">
                 <span className="text-brand-red font-black text-xl">04</span>
                 <div>
@@ -454,7 +454,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="group cursor-pointer">
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4 border border-bg-border hover-glow">
                   <img src={p.img} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-[#0A0A0A]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-bg-base/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute bottom-4 left-4">
                     <span className="px-3 py-1 bg-brand-red text-white text-[10px] font-bold uppercase tracking-wider rounded-full">{p.tag}</span>
                   </div>
@@ -488,7 +488,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             <button onClick={handleRequestServiceClick} className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
               Start Your Project Today
             </button>
-            <a href="#contact" className="w-full sm:w-auto px-8 py-4 rounded-full border border-bg-border bg-bg-card hover:bg-[#2A2A2A] transition-colors font-bold flex items-center justify-center gap-2">
+            <a href="#contact" className="w-full sm:w-auto px-8 py-4 rounded-full border border-bg-border bg-bg-card hover:bg-bg-border transition-colors font-bold flex items-center justify-center gap-2">
               Contact Us
             </a>
           </div>
@@ -511,8 +511,15 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div className="md:col-span-1">
               <div className="flex items-center gap-2 mb-6">
-                <div className="w-8 h-8 rounded bg-brand-red flex items-center justify-center font-black text-white text-xs">S</div>
-                <span className="font-black text-lg tracking-tight">studio99</span>
+                <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
+                <div className="flex flex-col justify-center leading-none mt-0.5">
+                  <span className="font-black text-lg tracking-tight">
+                    studio<span className="text-brand-red">99</span>
+                  </span>
+                  <span className="text-[10px] uppercase text-text-secondary tracking-widest font-sans font-bold -mt-1">
+                    Digital
+                  </span>
+                </div>
               </div>
               <p className="text-text-secondary text-sm mb-8 leading-relaxed">
                 Premium digital solutions for businesses ready to build stronger brands and grow online.

@@ -9,14 +9,14 @@
   /* Studio99 Brand Colors mapped directly to Tailwind v4 @theme */
   --color-brand-red: #E31E24;
 
-  --color-bg-base: #0A0A0A;
-  --color-bg-surface: #111111;
-  --color-bg-card: #1A1A1A;
-  --color-bg-card-hover: #242424;
-  --color-bg-border: #2A2A2A;
+  --color-bg-base: var(--bg-base);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-card: var(--bg-card);
+  --color-bg-card-hover: var(--bg-card-hover);
+  --color-bg-border: var(--bg-border);
 
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #9CA3AF;
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
 }
 
 /* Custom Styles & Base Variables */
@@ -25,6 +25,20 @@
   :root {
     --brand-red: #E31E24;
 
+    /* Light Theme (Default) */
+    --bg-base: #FFFFFF;
+    --bg-surface: #F9FAFB;
+    --bg-card: #F3F4F6;
+    --bg-card-hover: #E5E7EB;
+    --bg-border: #E5E7EB;
+
+    --text-primary: #111827;
+    --text-secondary: #4B5563;
+
+    --red-glow: rgba(227, 30, 36, 0.15);
+  }
+
+  .dark {
     --bg-base: #0A0A0A;
     --bg-surface: #111111;
     --bg-card: #1A1A1A;

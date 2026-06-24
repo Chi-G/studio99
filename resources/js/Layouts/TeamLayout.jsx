@@ -12,6 +12,7 @@ import {
   X
 } from 'lucide-react';
 import { LogoutConfirmModal } from '@/Components/Modals/LogoutConfirmModal';
+import { ThemeToggle } from '@/Components/ThemeToggle';
 import headerLogo from '../../images/logo.jpeg';
 
 export default function TeamLayout({ children }) {
@@ -27,7 +28,7 @@ export default function TeamLayout({ children }) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0A0A0F] text-[#F8FAFC] font-sans flex">
+    <div className="min-h-screen bg-bg-base text-text-primary font-sans flex">
       {/* Mobile Sidebar Overlay */}
       <AnimatePresence>
         {sidebarOpen && (
@@ -43,20 +44,23 @@ export default function TeamLayout({ children }) {
 
       {/* Sidebar */}
       <div className={`
-        fixed inset-y-0 left-0 z-50 w-64 bg-[#111118] border-r border-[#2A2A3A] transform transition-transform duration-300 lg:translate-x-0 flex flex-col
+        fixed inset-y-0 left-0 z-50 w-64 bg-bg-surface border-r border-bg-border transform transition-transform duration-300 lg:translate-x-0 flex flex-col
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
-        <div className="h-20 flex items-center px-6 border-b border-[#2A2A3A] shrink-0 justify-between">
+        <div className="h-20 flex items-center px-6 border-b border-bg-border shrink-0 justify-between">
           <div className="flex items-center gap-2">
             <img src={headerLogo} alt="Studio99 Logo" className="w-8 h-8 rounded-lg object-cover" />
             <span className="font-display font-bold text-xl tracking-tight text-white">Team Hub</span>
           </div>
-          <button 
-            className="lg:hidden text-[#94A3B8] hover:text-white"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle className="hidden lg:flex" />
+            <button 
+              className="lg:hidden text-text-secondary hover:text-white"
+              onClick={() => setSidebarOpen(false)}
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         <nav className="flex-1 overflow-y-auto p-4 space-y-1">
@@ -69,7 +73,7 @@ export default function TeamLayout({ children }) {
                 href={item.href}
                 className={`
                   flex items-center gap-3 px-3 py-2.5 rounded-lg font-medium transition-colors
-                  ${isActive ? 'bg-[#10B981]/10 text-[#10B981]' : 'text-[#94A3B8] hover:bg-[#1A1A28] hover:text-white'}
+                  ${isActive ? 'bg-[#10B981]/10 text-[#10B981]' : 'text-text-secondary hover:bg-bg-card hover:text-white'}
                 `}
               >
                 <item.icon className="w-5 h-5 shrink-0" />
@@ -79,26 +83,26 @@ export default function TeamLayout({ children }) {
           })}
         </nav>
 
-        <div className="p-4 border-t border-[#2A2A3A] shrink-0">
+        <div className="p-4 border-t border-bg-border shrink-0">
           <div className="flex items-center gap-3 mb-4 px-3">
-            <div className="w-10 h-10 rounded-full bg-[#2A2A3A] flex items-center justify-center font-bold text-sm overflow-hidden shrink-0">
+            <div className="w-10 h-10 rounded-full bg-bg-border flex items-center justify-center font-bold text-sm overflow-hidden shrink-0">
               {auth.user.name.charAt(0)}
             </div>
             <div className="truncate">
               <p className="font-medium text-sm text-white truncate">{auth.user.name}</p>
-              <p className="text-xs text-[#94A3B8] truncate">Creator</p>
+              <p className="text-xs text-text-secondary truncate">Creator</p>
             </div>
           </div>
           <Link
             href="/profile"
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-[#94A3B8] hover:bg-[#1A1A28] hover:text-white transition-colors mb-1"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-text-secondary hover:bg-bg-card hover:text-white transition-colors mb-1"
           >
             <User className="w-5 h-5 shrink-0" />
             Profile
           </Link>
           <button
             onClick={() => setIsLogoutModalOpen(true)}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-[#94A3B8] hover:bg-[#1A1A28] hover:text-white transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-text-secondary hover:bg-bg-card hover:text-white transition-colors"
           >
             <LogOut className="w-5 h-5 shrink-0" />
             Log Out
@@ -109,11 +113,14 @@ export default function TeamLayout({ children }) {
       {/* Main Content */}
       <div className="flex-1 lg:ml-64 flex flex-col min-h-screen relative max-w-full">
         {/* Mobile Header */}
-        <div className="lg:hidden h-16 flex items-center px-4 border-b border-[#2A2A3A] bg-[#111118] shrink-0">
-          <button className="text-[#94A3B8]" onClick={() => setSidebarOpen(true)}>
-            <Menu className="w-6 h-6" />
-          </button>
-          <span className="font-display font-bold ml-4">Team Hub</span>
+        <div className="lg:hidden h-16 flex items-center justify-between px-4 border-b border-bg-border bg-bg-surface shrink-0">
+          <div className="flex items-center">
+            <button className="text-text-secondary" onClick={() => setSidebarOpen(true)}>
+              <Menu className="w-6 h-6" />
+            </button>
+            <span className="font-display font-bold ml-4">Team Hub</span>
+          </div>
+          <ThemeToggle />
         </div>
 
         <motion.main 

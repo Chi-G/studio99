@@ -55,8 +55,8 @@ export default function FilesIndex() {
       case 'need_review': return 'text-orange-500';
       case 'approved': return 'text-green-500';
       case 'final': return 'text-purple-500';
-      case 'archived': return 'text-[#9CA3AF]';
-      default: return 'text-[#9CA3AF]';
+      case 'archived': return 'text-text-secondary';
+      default: return 'text-text-secondary';
     }
   };
 
@@ -77,7 +77,7 @@ export default function FilesIndex() {
       case 'Image': return 'text-green-500';
       case 'Document': return 'text-purple-500';
       case 'Video': return 'text-pink-500';
-      default: return 'text-[#9CA3AF]';
+      default: return 'text-text-secondary';
     }
   };
 
@@ -88,13 +88,13 @@ export default function FilesIndex() {
       {/* Header Area */}
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-black text-white mb-2 tracking-tight">Files & Deliverables</h1>
-          <div className="flex items-center text-sm font-medium text-[#9CA3AF] gap-2">
-            <Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
+          <h1 className="text-3xl font-black text-text-primary mb-2 tracking-tight">Files & Deliverables</h1>
+          <div className="flex items-center text-sm font-medium text-text-secondary gap-2">
+            <Link href="/dashboard" className="hover:text-text-primary transition-colors">Dashboard</Link>
             <span>/</span>
             <span className="text-brand-red">Files & Deliverables</span>
           </div>
-          <p className="text-[#9CA3AF] mt-4">Access all project files, deliverables and documents shared by our team.</p>
+          <p className="text-text-secondary mt-4">Access all project files, deliverables and documents shared by our team.</p>
         </div>
         
         <button className="bg-brand-red hover:bg-red-600 text-white px-6 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors shrink-0">
@@ -105,50 +105,50 @@ export default function FilesIndex() {
       {/* Top Row: Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
         {/* Total Files */}
-        <div className="bg-[#111111] border border-[#2A2A2A] p-6 rounded-2xl flex items-center gap-4 hover:border-[#3A3A3A] transition-colors">
+        <div className="bg-bg-surface border border-bg-border p-6 rounded-2xl flex items-center gap-4 hover:border-bg-border transition-colors">
           <div className="w-12 h-12 rounded-xl bg-brand-red flex items-center justify-center text-white shrink-0">
             <Folder className="w-6 h-6 fill-current" />
           </div>
           <div>
-            <p className="text-white text-sm font-medium mb-0.5">Total Files</p>
-            <h3 className="text-3xl font-black text-white leading-none">128</h3>
-            <p className="text-[11px] text-[#9CA3AF] mt-1">All projects</p>
+            <p className="text-text-primary text-sm font-medium mb-0.5">Total Files</p>
+            <h3 className="text-3xl font-black text-text-primary leading-none">128</h3>
+            <p className="text-[11px] text-text-secondary mt-1">All projects</p>
           </div>
         </div>
 
         {/* Pending Review */}
-        <div className="bg-[#111111] border border-[#2A2A2A] p-6 rounded-2xl flex items-center gap-4 hover:border-[#3A3A3A] transition-colors">
+        <div className="bg-bg-surface border border-bg-border p-6 rounded-2xl flex items-center gap-4 hover:border-bg-border transition-colors">
           <div className="w-12 h-12 rounded-xl bg-orange-500 flex items-center justify-center text-white shrink-0">
             <CloudDownload className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-white text-sm font-medium mb-0.5">Pending Review</p>
-            <h3 className="text-3xl font-black text-white leading-none">6</h3>
-            <p className="text-[11px] text-[#9CA3AF] mt-1">Files awaiting your review</p>
+            <p className="text-text-primary text-sm font-medium mb-0.5">Pending Review</p>
+            <h3 className="text-3xl font-black text-text-primary leading-none">6</h3>
+            <p className="text-[11px] text-text-secondary mt-1">Files awaiting your review</p>
           </div>
         </div>
 
         {/* Approved */}
-        <div className="bg-[#111111] border border-[#2A2A2A] p-6 rounded-2xl flex items-center gap-4 hover:border-[#3A3A3A] transition-colors">
+        <div className="bg-bg-surface border border-bg-border p-6 rounded-2xl flex items-center gap-4 hover:border-bg-border transition-colors">
           <div className="w-12 h-12 rounded-xl bg-green-500 flex items-center justify-center text-white shrink-0">
             <CheckCircle2 className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-white text-sm font-medium mb-0.5">Approved</p>
-            <h3 className="text-3xl font-black text-white leading-none">34</h3>
-            <p className="text-[11px] text-[#9CA3AF] mt-1">Files approved</p>
+            <p className="text-text-primary text-sm font-medium mb-0.5">Approved</p>
+            <h3 className="text-3xl font-black text-text-primary leading-none">34</h3>
+            <p className="text-[11px] text-text-secondary mt-1">Files approved</p>
           </div>
         </div>
 
         {/* Downloads */}
-        <div className="bg-[#111111] border border-[#2A2A2A] p-6 rounded-2xl flex items-center gap-4 hover:border-[#3A3A3A] transition-colors">
+        <div className="bg-bg-surface border border-bg-border p-6 rounded-2xl flex items-center gap-4 hover:border-bg-border transition-colors">
           <div className="w-12 h-12 rounded-xl bg-purple-500 flex items-center justify-center text-white shrink-0">
             <Download className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-white text-sm font-medium mb-0.5">Downloads</p>
-            <h3 className="text-3xl font-black text-white leading-none">312</h3>
-            <p className="text-[11px] text-[#9CA3AF] mt-1">All time downloads</p>
+            <p className="text-text-primary text-sm font-medium mb-0.5">Downloads</p>
+            <h3 className="text-3xl font-black text-text-primary leading-none">312</h3>
+            <p className="text-[11px] text-text-secondary mt-1">All time downloads</p>
           </div>
         </div>
       </div>
@@ -156,9 +156,9 @@ export default function FilesIndex() {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         {/* Left Column (Table) */}
         <div className="xl:col-span-2">
-          <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl overflow-hidden">
+          <div className="bg-bg-surface border border-bg-border rounded-2xl overflow-hidden">
             {/* Filters Header */}
-            <div className="p-4 border-b border-[#2A2A2A] flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+            <div className="p-4 border-b border-bg-border flex flex-col xl:flex-row xl:items-center justify-between gap-4">
               <div className="flex overflow-x-auto hide-scrollbar gap-2 pb-2 xl:pb-0">
                 {filters.map(f => (
                   <button
@@ -166,8 +166,8 @@ export default function FilesIndex() {
                     onClick={() => setActiveFilter(f.id)}
                     className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 transition-colors ${
                       activeFilter === f.id 
-                        ? 'text-white border-b-2 border-brand-red rounded-none px-2' 
-                        : 'text-[#9CA3AF] hover:text-white px-2'
+                        ? 'text-text-primary border-b-2 border-brand-red rounded-none px-2' 
+                        : 'text-text-secondary hover:text-text-primary px-2'
                     }`}
                   >
                     {f.label}
@@ -182,14 +182,14 @@ export default function FilesIndex() {
 
               <div className="flex items-center gap-3 shrink-0">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9CA3AF]" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
                   <input 
                     type="text"
                     placeholder="Search files..."
-                    className="bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#3A3A3A] w-full xl:w-48 placeholder:text-[#4A4A4A]"
+                    className="bg-bg-base border border-bg-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-text-primary focus:outline-none focus:border-bg-border w-full xl:w-48 placeholder:text-text-secondary"
                   />
                 </div>
-                <button className="py-2.5 px-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#9CA3AF] hover:text-white transition-colors flex items-center justify-center gap-2">
+                <button className="py-2.5 px-4 bg-bg-base border border-bg-border rounded-xl text-text-secondary hover:text-text-primary transition-colors flex items-center justify-center gap-2">
                   <Filter className="w-4 h-4 shrink-0" />
                   <span className="text-sm font-bold hidden sm:inline">Filter</span>
                 </button>
@@ -200,39 +200,39 @@ export default function FilesIndex() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[800px]">
                 <thead>
-                  <tr className="border-b border-[#2A2A2A] bg-[#0A0A0A]/50">
-                    <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] uppercase tracking-wider">File Name</th>
-                    <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] uppercase tracking-wider">Project</th>
-                    <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] uppercase tracking-wider">Type</th>
-                    <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] uppercase tracking-wider">Uploaded On</th>
-                    <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] uppercase tracking-wider">Status</th>
-                    <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] uppercase tracking-wider text-right">Actions</th>
+                  <tr className="border-b border-bg-border bg-bg-base/50">
+                    <th className="py-4 px-6 text-xs font-bold text-text-secondary uppercase tracking-wider">File Name</th>
+                    <th className="py-4 px-6 text-xs font-bold text-text-secondary uppercase tracking-wider">Project</th>
+                    <th className="py-4 px-6 text-xs font-bold text-text-secondary uppercase tracking-wider">Type</th>
+                    <th className="py-4 px-6 text-xs font-bold text-text-secondary uppercase tracking-wider">Uploaded On</th>
+                    <th className="py-4 px-6 text-xs font-bold text-text-secondary uppercase tracking-wider">Status</th>
+                    <th className="py-4 px-6 text-xs font-bold text-text-secondary uppercase tracking-wider text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#2A2A2A]">
+                <tbody className="divide-y divide-bg-border">
                   {filesList.map(file => (
-                    <tr key={file.id} className="hover:bg-[#1A1A1A] transition-colors group">
+                    <tr key={file.id} className="hover:bg-bg-border transition-colors group">
                       <td className="py-4 px-6">
                         <div className="flex items-center gap-4">
                           <div className={`w-10 h-10 rounded-lg flex items-center justify-center border text-[11px] font-black shrink-0 ${getFormatBadge(file.format)}`}>
                             {file.format}
                           </div>
                           <div>
-                            <p className="font-bold text-white text-sm truncate max-w-[180px]">{file.name}</p>
-                            <p className="text-[11px] text-[#9CA3AF] mt-0.5">{file.size}</p>
+                            <p className="font-bold text-text-primary text-sm truncate max-w-[180px]">{file.name}</p>
+                            <p className="text-[11px] text-text-secondary mt-0.5">{file.size}</p>
                           </div>
                         </div>
                       </td>
                       <td className="py-4 px-6">
-                        <p className="font-medium text-white text-sm">{file.project}</p>
-                        <p className="text-[11px] text-[#9CA3AF] mt-0.5">{file.projectCategory}</p>
+                        <p className="font-medium text-text-primary text-sm">{file.project}</p>
+                        <p className="text-[11px] text-text-secondary mt-0.5">{file.projectCategory}</p>
                       </td>
                       <td className="py-4 px-6">
                         <span className={`text-xs font-medium ${getTypeColor(file.type)}`}>{file.type}</span>
                       </td>
                       <td className="py-4 px-6">
-                        <p className="font-medium text-white text-sm">{file.uploadedOn}</p>
-                        <p className="text-[11px] text-[#9CA3AF] mt-0.5">by {file.uploadedBy}</p>
+                        <p className="font-medium text-text-primary text-sm">{file.uploadedOn}</p>
+                        <p className="text-[11px] text-text-secondary mt-0.5">by {file.uploadedBy}</p>
                       </td>
                       <td className="py-4 px-6">
                         <span className={`text-xs font-bold ${getStatusClass(file.status)}`}>
@@ -241,10 +241,10 @@ export default function FilesIndex() {
                       </td>
                       <td className="py-4 px-6 text-right">
                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button className="p-2 text-[#9CA3AF] hover:text-white border border-[#2A2A2A] bg-[#111111] rounded-lg transition-colors">
+                          <button className="p-2 text-text-secondary hover:text-text-primary border border-bg-border bg-bg-surface rounded-lg transition-colors">
                             <Download className="w-4 h-4" />
                           </button>
-                          <button className="p-2 text-[#9CA3AF] hover:text-white border border-[#2A2A2A] bg-[#111111] rounded-lg transition-colors">
+                          <button className="p-2 text-text-secondary hover:text-text-primary border border-bg-border bg-bg-surface rounded-lg transition-colors">
                             <MoreVertical className="w-4 h-4" />
                           </button>
                         </div>
@@ -256,26 +256,26 @@ export default function FilesIndex() {
             </div>
 
             {/* Pagination */}
-            <div className="p-4 border-t border-[#2A2A2A] flex items-center justify-between">
-              <p className="text-xs font-medium text-[#9CA3AF]">Showing 1 to 8 of 128 files</p>
+            <div className="p-4 border-t border-bg-border flex items-center justify-between">
+              <p className="text-xs font-medium text-text-secondary">Showing 1 to 8 of 128 files</p>
               <div className="flex items-center gap-1">
-                <button className="w-8 h-8 rounded border border-[#2A2A2A] flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-[#1A1A1A] transition-colors disabled:opacity-50">
+                <button className="w-8 h-8 rounded border border-bg-border flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-border transition-colors disabled:opacity-50">
                   &lt;
                 </button>
                 <button className="w-8 h-8 rounded border border-brand-red bg-brand-red flex items-center justify-center text-white font-bold transition-colors">
                   1
                 </button>
-                <button className="w-8 h-8 rounded border border-[#2A2A2A] flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-[#1A1A1A] transition-colors">
+                <button className="w-8 h-8 rounded border border-bg-border flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-border transition-colors">
                   2
                 </button>
-                <button className="w-8 h-8 rounded border border-[#2A2A2A] flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-[#1A1A1A] transition-colors">
+                <button className="w-8 h-8 rounded border border-bg-border flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-border transition-colors">
                   3
                 </button>
-                <span className="text-[#9CA3AF] px-2">...</span>
-                <button className="w-8 h-8 rounded border border-[#2A2A2A] flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-[#1A1A1A] transition-colors">
+                <span className="text-text-secondary px-2">...</span>
+                <button className="w-8 h-8 rounded border border-bg-border flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-border transition-colors">
                   16
                 </button>
-                <button className="w-8 h-8 rounded border border-[#2A2A2A] flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-[#1A1A1A] transition-colors">
+                <button className="w-8 h-8 rounded border border-bg-border flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-border transition-colors">
                   &gt;
                 </button>
               </div>
@@ -286,8 +286,8 @@ export default function FilesIndex() {
         {/* Right Column (Widgets) */}
         <div className="space-y-6">
           {/* Storage Overview */}
-          <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6 relative">
-            <h3 className="text-lg font-bold text-white mb-6">Storage Overview</h3>
+          <div className="bg-bg-surface border border-bg-border rounded-2xl p-6 relative">
+            <h3 className="text-lg font-bold text-text-primary mb-6">Storage Overview</h3>
             
             <div className="flex justify-center mb-6">
               <div className="relative w-40 h-40">
@@ -296,7 +296,7 @@ export default function FilesIndex() {
                   <circle 
                     cx="50" cy="50" r="40" 
                     fill="transparent" 
-                    stroke="#2A2A2A" 
+                    className="stroke-bg-border" 
                     strokeWidth="8"
                   />
                   <circle 
@@ -310,8 +310,8 @@ export default function FilesIndex() {
                   />
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-2xl font-black text-white">2.4 GB</span>
-                  <span className="text-[10px] text-[#9CA3AF]">of 10 GB used</span>
+                  <span className="text-2xl font-black text-text-primary">2.4 GB</span>
+                  <span className="text-[10px] text-text-secondary">of 10 GB used</span>
                 </div>
               </div>
             </div>
@@ -320,61 +320,61 @@ export default function FilesIndex() {
               <div className="flex justify-between items-center text-sm">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-brand-red"></div>
-                  <span className="text-[#9CA3AF]">Uploaded Files</span>
+                  <span className="text-text-secondary">Uploaded Files</span>
                 </div>
-                <span className="text-white font-medium">2.4 GB</span>
+                <span className="text-text-primary font-medium">2.4 GB</span>
               </div>
               <div className="flex justify-between items-center text-sm">
                 <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#2A2A2A]"></div>
-                  <span className="text-[#9CA3AF]">Available Space</span>
+                  <div className="w-2.5 h-2.5 rounded-full bg-bg-border"></div>
+                  <span className="text-text-secondary">Available Space</span>
                 </div>
-                <span className="text-white font-medium">7.6 GB</span>
+                <span className="text-text-primary font-medium">7.6 GB</span>
               </div>
             </div>
 
-            <button className="w-full py-3 bg-transparent border border-[#4A4A4A] hover:border-white text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-colors">
+            <button className="w-full py-3 bg-transparent border border-bg-border hover:border-text-primary text-text-primary rounded-xl font-bold flex items-center justify-center gap-2 transition-colors">
               <ArrowUpCircle className="w-4 h-4" /> Upgrade Storage
             </button>
           </div>
 
           {/* Upload New Files Drag & Drop */}
-          <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
-            <h3 className="text-lg font-bold text-white mb-4">Upload New Files</h3>
-            <div className="border-2 border-dashed border-[#4A4A4A] hover:border-brand-red bg-[#151515] rounded-xl p-8 flex flex-col items-center justify-center text-center transition-colors cursor-pointer group">
-              <div className="w-12 h-12 bg-[#2A2A2A] group-hover:bg-brand-red/20 rounded-full flex items-center justify-center mb-4 transition-colors">
-                <UploadCloud className="w-6 h-6 text-[#9CA3AF] group-hover:text-brand-red transition-colors" />
+          <div className="bg-bg-surface border border-bg-border rounded-2xl p-6">
+            <h3 className="text-lg font-bold text-text-primary mb-4">Upload New Files</h3>
+            <div className="border-2 border-dashed border-bg-border hover:border-brand-red bg-bg-card rounded-xl p-8 flex flex-col items-center justify-center text-center transition-colors cursor-pointer group">
+              <div className="w-12 h-12 bg-bg-border group-hover:bg-brand-red/20 rounded-full flex items-center justify-center mb-4 transition-colors">
+                <UploadCloud className="w-6 h-6 text-text-secondary group-hover:text-brand-red transition-colors" />
               </div>
-              <p className="text-sm font-bold text-white mb-1">Drag & drop files here</p>
-              <p className="text-xs text-[#9CA3AF] mb-4">or</p>
+              <p className="text-sm font-bold text-text-primary mb-1">Drag & drop files here</p>
+              <p className="text-xs text-text-secondary mb-4">or</p>
               <button className="bg-brand-red hover:bg-red-600 text-white px-6 py-2 rounded-lg font-bold text-sm transition-colors mb-2">
                 Choose Files
               </button>
-              <p className="text-[10px] text-[#9CA3AF]">Max file size: 100MB</p>
+              <p className="text-[10px] text-text-secondary">Max file size: 100MB</p>
             </div>
           </div>
 
           {/* File Guidelines */}
-          <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
-            <h3 className="text-lg font-bold text-white mb-4">File Guidelines</h3>
+          <div className="bg-bg-surface border border-bg-border rounded-2xl p-6">
+            <h3 className="text-lg font-bold text-text-primary mb-4">File Guidelines</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <Check className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
-                <p className="text-xs text-[#9CA3AF] leading-relaxed">
-                  Allowed formats: <span className="text-white font-medium">PDF, DOC, DOCX, JPG, PNG, ZIP, AI, PSD, MP4, MOV</span>
+                <p className="text-xs text-text-secondary leading-relaxed">
+                  Allowed formats: <span className="text-text-primary font-medium">PDF, DOC, DOCX, JPG, PNG, ZIP, AI, PSD, MP4, MOV</span>
                 </p>
               </li>
               <li className="flex items-start gap-3">
                 <Check className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
-                <p className="text-xs text-[#9CA3AF] leading-relaxed">Max file size: <span className="text-white font-medium">100MB</span></p>
+                <p className="text-xs text-text-secondary leading-relaxed">Max file size: <span className="text-text-primary font-medium">100MB</span></p>
               </li>
               <li className="flex items-start gap-3">
                 <Check className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
-                <p className="text-xs text-[#9CA3AF] leading-relaxed">Keep your files organized</p>
+                <p className="text-xs text-text-secondary leading-relaxed">Keep your files organized</p>
               </li>
               <li className="flex items-start gap-3">
                 <Check className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
-                <p className="text-xs text-[#9CA3AF] leading-relaxed">Name files clearly for easy reference</p>
+                <p className="text-xs text-text-secondary leading-relaxed">Name files clearly for easy reference</p>
               </li>
             </ul>
           </div>

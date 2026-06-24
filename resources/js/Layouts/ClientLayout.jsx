@@ -17,6 +17,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { LogoutConfirmModal } from '@/Components/Modals/LogoutConfirmModal';
+import { ThemeToggle } from '@/Components/ThemeToggle';
 import logoImage from '../../images/logo.jpeg';
 
 export default function ClientLayout({ children }) {
@@ -51,7 +52,7 @@ export default function ClientLayout({ children }) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-[#FFFFFF] font-sans flex overflow-hidden">
+    <div className="min-h-screen bg-bg-base text-text-primary font-sans flex overflow-hidden">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -62,12 +63,12 @@ export default function ClientLayout({ children }) {
 
       {/* Sidebar */}
       <div className={`
-        fixed inset-y-0 left-0 z-50 bg-[#111111] border-r border-[#2A2A2A] transform transition-all duration-300 flex flex-col h-full
+        fixed inset-y-0 left-0 z-50 bg-bg-surface border-r border-bg-border transform transition-all duration-300 flex flex-col h-full
         ${sidebarOpen ? 'translate-x-0 w-[280px]' : '-translate-x-full lg:translate-x-0'}
         ${sidebarCollapsed ? 'lg:w-[88px]' : 'lg:w-[280px] w-[280px]'}
       `}>
         {/* Logo Area */}
-        <div className={`h-24 flex items-center border-b border-[#2A2A2A] shrink-0 ${sidebarCollapsed ? 'justify-center px-0' : 'justify-between px-8'}`}>
+        <div className={`h-24 flex items-center border-b border-bg-border shrink-0 ${sidebarCollapsed ? 'justify-center px-0' : 'justify-between px-8'}`}>
           <Link href="/dashboard" className="flex items-center gap-2 hover:opacity-90 transition-opacity" title={sidebarCollapsed ? "Studio99" : undefined}>
             <div className={`flex flex-col justify-center leading-none mt-0.5 ${sidebarCollapsed ? 'items-center' : ''}`}>
               <span className="font-black text-2xl tracking-tight flex items-center gap-1">
@@ -77,14 +78,14 @@ export default function ClientLayout({ children }) {
                 )}
               </span>
               {!sidebarCollapsed && (
-                <span className="text-[10px] uppercase text-[#9CA3AF] tracking-[0.25em] font-sans font-bold mt-1 ml-10">
+                <span className="text-[10px] uppercase text-text-secondary tracking-[0.25em] font-sans font-bold mt-1 ml-10">
                   — Digital —
                 </span>
               )}
             </div>
           </Link>
           {!sidebarCollapsed && (
-            <button className="lg:hidden text-[#9CA3AF] hover:text-white" onClick={() => setSidebarOpen(false)}>
+            <button className="lg:hidden text-text-secondary hover:text-text-primary" onClick={() => setSidebarOpen(false)}>
               <X className="w-6 h-6" />
             </button>
           )}
@@ -104,11 +105,11 @@ export default function ClientLayout({ children }) {
                   flex items-center ${sidebarCollapsed ? 'justify-center px-0 py-4' : 'justify-between px-4 py-3.5'} rounded-xl font-medium transition-all duration-200 group relative
                   ${isActive
                     ? 'bg-brand-red text-white shadow-[0_0_20px_rgba(227,30,36,0.2)]'
-                    : 'text-[#9CA3AF] hover:bg-[#1A1A1A] hover:text-white'}
+                    : 'text-text-secondary hover:bg-bg-border hover:text-text-primary'}
                 `}
               >
                 <div className="flex items-center gap-3.5">
-                  <item.icon className={`w-5 h-5 shrink-0 transition-colors ${isActive ? 'text-white' : 'text-[#9CA3AF] group-hover:text-white'}`} />
+                  <item.icon className={`w-5 h-5 shrink-0 transition-colors ${isActive ? 'text-text-primary' : 'text-text-secondary group-hover:text-text-primary'}`} />
                   {!sidebarCollapsed && (
                     <span className="text-sm font-bold tracking-wide">{item.name}</span>
                   )}
@@ -126,13 +127,13 @@ export default function ClientLayout({ children }) {
             )
           })}
 
-          <div className="pt-4 mt-4 border-t border-[#2A2A2A]">
+          <div className="pt-4 mt-4 border-t border-bg-border">
             <button
               onClick={() => setIsLogoutModalOpen(true)}
               title={sidebarCollapsed ? "Logout" : undefined}
-              className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center px-0 py-4' : 'gap-3.5 px-4 py-3.5'} rounded-xl font-medium text-[#9CA3AF] hover:bg-[#1A1A1A] hover:text-white transition-all duration-200 group`}
+              className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center px-0 py-4' : 'gap-3.5 px-4 py-3.5'} rounded-xl font-medium text-text-secondary hover:bg-bg-border hover:text-text-primary transition-all duration-200 group`}
             >
-              <LogOut className="w-5 h-5 shrink-0 transition-colors text-[#9CA3AF] group-hover:text-white" />
+              <LogOut className="w-5 h-5 shrink-0 transition-colors text-text-secondary group-hover:text-text-primary" />
               {!sidebarCollapsed && <span className="text-sm font-bold tracking-wide">Logout</span>}
             </button>
           </div>
@@ -140,25 +141,25 @@ export default function ClientLayout({ children }) {
 
         {/* Help Block */}
         {!sidebarCollapsed ? (
-          <div className="p-6 shrink-0 mt-auto border-t border-[#2A2A2A] bg-[#111111]">
+          <div className="p-6 shrink-0 mt-auto border-t border-bg-border bg-bg-surface">
             <div className="text-center relative">
               <div className="flex items-center gap-3 mb-4 justify-center">
-                <div className="w-10 h-10 rounded-full bg-[#1A1A1A] flex items-center justify-center border border-[#2A2A2A]">
+                <div className="w-10 h-10 rounded-full bg-bg-card flex items-center justify-center border border-bg-border">
                   <HeadphonesIcon className="w-5 h-5 text-brand-red" />
                 </div>
                 <div className="text-left">
-                  <h4 className="text-white font-bold text-sm">Need Help?</h4>
-                  <p className="text-[#9CA3AF] text-xs">We're here to assist you.</p>
+                  <h4 className="text-text-primary font-bold text-sm">Need Help?</h4>
+                  <p className="text-text-secondary text-xs">We're here to assist you.</p>
                 </div>
               </div>
-              <button className="w-full py-3 rounded-xl border border-brand-red text-brand-red text-sm font-bold hover:bg-brand-red hover:text-white transition-colors">
+              <button className="w-full py-3 rounded-xl border border-brand-red text-brand-red text-sm font-bold hover:bg-brand-red hover:text-text-primary transition-colors">
                 Contact Support
               </button>
             </div>
           </div>
         ) : (
-          <div className="p-4 shrink-0 mt-auto border-t border-[#2A2A2A] bg-[#111111] flex justify-center">
-             <button title="Need Help? Contact Support" className="w-12 h-12 rounded-full bg-[#1A1A1A] flex items-center justify-center border border-[#2A2A2A] hover:border-brand-red hover:bg-brand-red/10 transition-colors group">
+          <div className="p-4 shrink-0 mt-auto border-t border-bg-border bg-bg-surface flex justify-center">
+             <button title="Need Help? Contact Support" className="w-12 h-12 rounded-full bg-bg-card flex items-center justify-center border border-bg-border hover:border-brand-red hover:bg-brand-red/10 transition-colors group">
                <HeadphonesIcon className="w-5 h-5 text-brand-red group-hover:text-brand-red" />
              </button>
           </div>
@@ -166,34 +167,36 @@ export default function ClientLayout({ children }) {
       </div>
 
       {/* Main Content */}
-      <div className={`flex-1 flex flex-col min-h-screen relative max-w-full overflow-hidden bg-[#0A0A0A] transition-all duration-300 ${sidebarCollapsed ? 'lg:ml-[88px]' : 'lg:ml-[280px]'}`}>
+      <div className={`flex-1 flex flex-col min-h-screen relative max-w-full overflow-hidden bg-bg-base transition-all duration-300 ${sidebarCollapsed ? 'lg:ml-[88px]' : 'lg:ml-[280px]'}`}>
         {/* Header */}
         <header className="h-24 flex items-center justify-between px-6 lg:px-10 shrink-0 sticky top-0 z-30">
-          <div className="flex flex-col justify-center h-full">
-            <button className="lg:hidden text-[#9CA3AF] hover:text-white mb-2" onClick={() => setSidebarOpen(true)}>
+          <div className="flex items-center gap-4 h-full">
+            <button className="lg:hidden text-text-secondary hover:text-text-primary" onClick={() => setSidebarOpen(true)}>
               <Menu className="w-6 h-6" />
             </button>
             <div className="hidden md:flex items-center gap-4">
               <button 
                 onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                className="hidden lg:flex items-center justify-center w-10 h-10 rounded-xl bg-[#111111] border border-[#2A2A2A] text-[#9CA3AF] hover:text-white hover:border-[#3A3A3A] transition-all shadow-sm"
+                className="hidden lg:flex items-center justify-center w-10 h-10 rounded-xl bg-bg-surface border border-bg-border text-text-secondary hover:text-text-primary hover:border-bg-border transition-all shadow-sm"
               >
                 <Menu className="w-5 h-5" />
               </button>
               <div>
-                <h1 className="text-3xl font-black text-white flex items-center gap-2">
+                <h1 className="text-3xl font-black text-text-primary flex items-center gap-2">
                   Good Morning, {auth.user.name.split(' ')[0]}! <span className="text-2xl">👋</span>
                 </h1>
-                <p className="text-[#9CA3AF] text-sm mt-1">Here's what's happening with your projects today.</p>
+                <p className="text-text-secondary text-sm mt-1">Here's what's happening with your projects today.</p>
               </div>
             </div>
           </div>
 
           <div className="flex items-center gap-6">
+            <ThemeToggle />
+
             {/* Notification Bell */}
-            <button className="relative text-[#9CA3AF] hover:text-white transition-colors">
+            <button className="relative text-text-secondary hover:text-text-primary transition-colors">
               <Bell className="w-6 h-6" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-brand-red flex items-center justify-center text-[9px] font-bold text-white ring-2 ring-[#0A0A0A]">
+              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-brand-red flex items-center justify-center text-[9px] font-bold text-white ring-2 ring-bg-base">
                 5
               </span>
             </button>
@@ -204,21 +207,21 @@ export default function ClientLayout({ children }) {
                 className="flex items-center gap-3 hover:opacity-80 transition-opacity"
                 onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
               >
-                <div className="w-10 h-10 rounded-full bg-[#1A1A1A] flex items-center justify-center font-bold text-white overflow-hidden border border-[#2A2A2A]">
+                <div className="w-10 h-10 rounded-full bg-bg-card flex items-center justify-center font-bold text-text-primary overflow-hidden border border-bg-border">
                   {auth.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
                 </div>
                 <div className="hidden sm:block text-left">
-                  <p className="text-sm font-bold text-white">{auth.user.name}</p>
-                  <p className="text-xs text-[#9CA3AF]">Client</p>
+                  <p className="text-sm font-bold text-text-primary">{auth.user.name}</p>
+                  <p className="text-xs text-text-secondary">Client</p>
                 </div>
-                <ChevronDown className={`w-4 h-4 text-[#9CA3AF] hidden sm:block transition-transform ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-text-secondary hidden sm:block transition-transform ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {/* Dropdown Menu */}
               {isProfileDropdownOpen && (
-                <div className="absolute right-0 mt-3 w-48 bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl shadow-2xl py-2 z-50">
-                  <Link href="/profile" className="block px-4 py-2.5 text-sm text-[#9CA3AF] hover:text-white hover:bg-[#2A2A2A] font-medium">Account Settings</Link>
-                  <button onClick={() => { setIsProfileDropdownOpen(false); setIsLogoutModalOpen(true); }} className="block w-full text-left px-4 py-2.5 text-sm text-brand-red hover:bg-[#2A2A2A] font-medium">Log Out</button>
+                <div className="absolute right-0 mt-3 w-48 bg-bg-card border border-bg-border rounded-xl shadow-2xl py-2 z-50">
+                  <Link href="/profile" className="block px-4 py-2.5 text-sm text-text-secondary hover:text-text-primary hover:bg-bg-border font-medium">Account Settings</Link>
+                  <button onClick={() => { setIsProfileDropdownOpen(false); setIsLogoutModalOpen(true); }} className="block w-full text-left px-4 py-2.5 text-sm text-brand-red hover:bg-bg-border font-medium">Log Out</button>
                 </div>
               )}
             </div>
@@ -227,7 +230,7 @@ export default function ClientLayout({ children }) {
 
         {/* Mobile Title (Since header title is hidden on small screens) */}
         <div className="md:hidden px-6 pt-4 pb-2">
-          <h1 className="text-2xl font-black text-white flex items-center gap-2">
+          <h1 className="text-2xl font-black text-text-primary flex items-center gap-2">
             Hi, {auth.user.name.split(' ')[0]}! <span className="text-xl">👋</span>
           </h1>
         </div>
@@ -238,11 +241,11 @@ export default function ClientLayout({ children }) {
           </div>
           
           {/* Footer */}
-          <footer className="mt-12 pt-6 border-t border-[#2A2A2A] flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0">
-            <p className="text-[#9CA3AF] text-sm font-medium">© 2025 Studio99 Digital. All rights reserved.</p>
+          <footer className="mt-12 pt-6 border-t border-bg-border flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0">
+            <p className="text-text-secondary text-sm font-medium">© 2025 Studio99 Digital. All rights reserved.</p>
             <div className="flex items-center gap-6">
-              <Link href="#" className="text-[#9CA3AF] text-sm font-medium hover:text-white transition-colors">Privacy Policy</Link>
-              <Link href="#" className="text-[#9CA3AF] text-sm font-medium hover:text-white transition-colors">Terms of Service</Link>
+              <Link href="#" className="text-text-secondary text-sm font-medium hover:text-text-primary transition-colors">Privacy Policy</Link>
+              <Link href="#" className="text-text-secondary text-sm font-medium hover:text-text-primary transition-colors">Terms of Service</Link>
             </div>
           </footer>
         </main>

@@ -128,26 +128,26 @@ export default function NotificationsIndex() {
 
             {/* Header */}
             <div className="mb-8">
-                <h1 className="text-3xl font-black text-white mb-2 tracking-tight">Notifications</h1>
-                <p className="text-[#9CA3AF] text-sm">Stay updated with the latest activities and important alerts.</p>
+                <h1 className="text-3xl font-black text-text-primary mb-2 tracking-tight">Notifications</h1>
+                <p className="text-text-secondary text-sm">Stay updated with the latest activities and important alerts.</p>
             </div>
 
             <div className="flex flex-col xl:flex-row gap-6">
                 
                 {/* Main Content */}
                 <div className="flex-1">
-                    <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl overflow-hidden flex flex-col">
+                    <div className="bg-bg-surface border border-bg-border rounded-2xl overflow-hidden flex flex-col">
                         
                         {/* Tabs & Actions */}
-                        <div className="p-4 border-b border-[#2A2A2A] flex items-center justify-between">
+                        <div className="p-4 border-b border-bg-border flex items-center justify-between">
                             <div className="flex items-center gap-6">
-                                <button className="text-white font-bold text-sm border-b-2 border-brand-red pb-1 flex items-center gap-1.5">
+                                <button className="text-text-primary font-bold text-sm border-b-2 border-brand-red pb-1 flex items-center gap-1.5">
                                     All <span className="bg-brand-red text-white text-[10px] px-1.5 rounded-full">5</span>
                                 </button>
-                                <button className="text-[#9CA3AF] hover:text-white font-bold text-sm pb-1 flex items-center gap-1.5 transition-colors">
+                                <button className="text-text-secondary hover:text-text-primary font-bold text-sm pb-1 flex items-center gap-1.5 transition-colors">
                                     Unread <span className="bg-brand-red text-white text-[10px] px-1.5 rounded-full">5</span>
                                 </button>
-                                <button className="text-[#9CA3AF] hover:text-white font-bold text-sm pb-1 transition-colors">
+                                <button className="text-text-secondary hover:text-text-primary font-bold text-sm pb-1 transition-colors">
                                     Read
                                 </button>
                             </div>
@@ -157,20 +157,20 @@ export default function NotificationsIndex() {
                         </div>
 
                         {/* List */}
-                        <div className="divide-y divide-[#2A2A2A]">
+                        <div className="divide-y divide-bg-border">
                             {notifications.map((n, idx) => (
-                                <div key={idx} className={`p-6 flex items-start gap-4 transition-colors hover:bg-[#151515] ${n.unread ? 'bg-[#151515]' : ''}`}>
+                                <div key={idx} className={`p-6 flex items-start gap-4 transition-colors hover:bg-bg-border ${n.unread ? 'bg-bg-card' : ''}`}>
                                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-lg ${n.iconColor}`}>
                                         <n.icon className="w-5 h-5" />
                                     </div>
                                     <div className="flex-1 min-w-0 pr-4">
-                                        <h4 className="text-white font-bold text-sm mb-1">{n.title}</h4>
-                                        <p className="text-sm text-[#9CA3AF] mb-1 leading-relaxed">{n.desc}</p>
-                                        <p className="text-[10px] text-[#4A4A4A]">{n.meta}</p>
+                                        <h4 className="text-text-primary font-bold text-sm mb-1">{n.title}</h4>
+                                        <p className="text-sm text-text-secondary mb-1 leading-relaxed">{n.desc}</p>
+                                        <p className="text-[10px] text-text-secondary">{n.meta}</p>
                                     </div>
                                     <div className="shrink-0 text-right flex flex-col items-end">
-                                        <p className="text-xs text-[#9CA3AF] mb-1">{n.time}</p>
-                                        <p className="text-[10px] text-[#4A4A4A] mb-2">{n.date}</p>
+                                        <p className="text-xs text-text-secondary mb-1">{n.time}</p>
+                                        <p className="text-[10px] text-text-secondary mb-2">{n.date}</p>
                                         {n.unread && (
                                             <div className="w-2 h-2 rounded-full bg-brand-red shadow-[0_0_8px_rgba(227,30,36,0.6)]"></div>
                                         )}
@@ -180,22 +180,22 @@ export default function NotificationsIndex() {
                         </div>
 
                         {/* Pagination */}
-                        <div className="p-4 border-t border-[#2A2A2A] flex items-center justify-between bg-[#151515]">
-                            <span className="text-sm text-[#9CA3AF]">Showing <span className="font-bold text-white">1</span> to <span className="font-bold text-white">7</span> of <span className="font-bold text-white">24</span> notifications</span>
+                        <div className="p-4 border-t border-bg-border flex items-center justify-between bg-bg-card">
+                            <span className="text-sm text-text-secondary">Showing <span className="font-bold text-text-primary">1</span> to <span className="font-bold text-text-primary">7</span> of <span className="font-bold text-text-primary">24</span> notifications</span>
                             <div className="flex items-center gap-1">
-                                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-[#9CA3AF] hover:bg-[#2A2A2A] hover:text-white transition-colors border border-transparent">
+                                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-text-secondary hover:bg-bg-border hover:text-text-primary transition-colors border border-transparent">
                                     <ChevronLeft className="w-4 h-4" />
                                 </button>
                                 <button className="w-8 h-8 rounded-lg flex items-center justify-center bg-brand-red text-white font-bold text-sm transition-colors shadow-[0_0_10px_rgba(227,30,36,0.2)]">
                                     1
                                 </button>
-                                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-[#9CA3AF] hover:bg-[#2A2A2A] hover:text-white transition-colors text-sm font-medium">
+                                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-text-secondary hover:bg-bg-border hover:text-text-primary transition-colors text-sm font-medium">
                                     2
                                 </button>
-                                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-[#9CA3AF] hover:bg-[#2A2A2A] hover:text-white transition-colors text-sm font-medium">
+                                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-text-secondary hover:bg-bg-border hover:text-text-primary transition-colors text-sm font-medium">
                                     3
                                 </button>
-                                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-[#9CA3AF] hover:bg-[#2A2A2A] hover:text-white transition-colors border border-transparent">
+                                <button className="w-8 h-8 rounded-lg flex items-center justify-center text-text-secondary hover:bg-bg-border hover:text-text-primary transition-colors border border-transparent">
                                     <ChevronRight className="w-4 h-4" />
                                 </button>
                             </div>
@@ -208,16 +208,16 @@ export default function NotificationsIndex() {
                 <div className="w-full xl:w-[320px] shrink-0 space-y-6">
                     
                     {/* Filters */}
-                    <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
-                        <h3 className="text-white font-bold text-sm mb-4">Notification Filters</h3>
+                    <div className="bg-bg-surface border border-bg-border rounded-2xl p-6">
+                        <h3 className="text-text-primary font-bold text-sm mb-4">Notification Filters</h3>
                         <div className="space-y-1">
                             {filters.map((f, idx) => (
-                                <button key={idx} className={`w-full flex items-center justify-between p-3 rounded-xl transition-colors text-sm group ${f.active ? 'bg-brand-red/10 border border-brand-red/20 text-white' : 'text-[#9CA3AF] hover:bg-[#1A1A1A] hover:text-white border border-transparent'}`}>
+                                <button key={idx} className={`w-full flex items-center justify-between p-3 rounded-xl transition-colors text-sm group ${f.active ? 'bg-brand-red/10 border border-brand-red/20 text-brand-red' : 'text-text-secondary hover:bg-bg-card hover:text-text-primary border border-transparent'}`}>
                                     <div className="flex items-center gap-3">
-                                        <f.icon className={`w-4 h-4 ${f.active ? 'text-brand-red' : 'text-[#4A4A4A] group-hover:text-white transition-colors'}`} />
+                                        <f.icon className={`w-4 h-4 ${f.active ? 'text-brand-red' : 'text-text-secondary group-hover:text-text-primary transition-colors'}`} />
                                         <span className="font-medium">{f.name}</span>
                                     </div>
-                                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${f.active ? 'bg-brand-red text-white' : 'bg-[#1A1A1A] text-[#9CA3AF] group-hover:bg-[#2A2A2A] transition-colors'}`}>
+                                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${f.active ? 'bg-brand-red text-white' : 'bg-bg-card text-text-secondary group-hover:bg-bg-border transition-colors'}`}>
                                         {f.count}
                                     </span>
                                 </button>
@@ -226,53 +226,53 @@ export default function NotificationsIndex() {
                     </div>
 
                     {/* Preferences */}
-                    <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
-                        <h3 className="text-white font-bold text-sm mb-2">Preferences</h3>
-                        <p className="text-xs text-[#9CA3AF] mb-6 leading-relaxed">Manage how you receive notifications.</p>
+                    <div className="bg-bg-surface border border-bg-border rounded-2xl p-6">
+                        <h3 className="text-text-primary font-bold text-sm mb-2">Preferences</h3>
+                        <p className="text-xs text-text-secondary mb-6 leading-relaxed">Manage how you receive notifications.</p>
                         
                         <div className="space-y-4 mb-6">
                             <div className="flex items-center justify-between">
-                                <span className="text-sm text-white font-medium">Email Notifications</span>
+                                <span className="text-sm text-text-primary font-medium">Email Notifications</span>
                                 <button 
                                     onClick={() => toggleSetting('email')}
-                                    className={`w-10 h-5 rounded-full relative transition-colors ${toggles.email ? 'bg-brand-red' : 'bg-[#2A2A2A]'}`}
+                                    className={`w-10 h-5 rounded-full relative transition-colors ${toggles.email ? 'bg-brand-red' : 'bg-bg-border'}`}
                                 >
                                     <div className={`absolute top-[2px] w-4 h-4 bg-white rounded-full transition-all ${toggles.email ? 'left-[22px]' : 'left-[2px]'}`}></div>
                                 </button>
                             </div>
                             
                             <div className="flex items-center justify-between">
-                                <span className="text-sm text-white font-medium">Browser Notifications</span>
+                                <span className="text-sm text-text-primary font-medium">Browser Notifications</span>
                                 <button 
                                     onClick={() => toggleSetting('browser')}
-                                    className={`w-10 h-5 rounded-full relative transition-colors ${toggles.browser ? 'bg-brand-red' : 'bg-[#2A2A2A]'}`}
+                                    className={`w-10 h-5 rounded-full relative transition-colors ${toggles.browser ? 'bg-brand-red' : 'bg-bg-border'}`}
                                 >
                                     <div className={`absolute top-[2px] w-4 h-4 bg-white rounded-full transition-all ${toggles.browser ? 'left-[22px]' : 'left-[2px]'}`}></div>
                                 </button>
                             </div>
                             
                             <div className="flex items-center justify-between">
-                                <span className="text-sm text-white font-medium">SMS Notifications</span>
+                                <span className="text-sm text-text-primary font-medium">SMS Notifications</span>
                                 <button 
                                     onClick={() => toggleSetting('sms')}
-                                    className={`w-10 h-5 rounded-full relative transition-colors ${toggles.sms ? 'bg-brand-red' : 'bg-[#2A2A2A]'}`}
+                                    className={`w-10 h-5 rounded-full relative transition-colors ${toggles.sms ? 'bg-brand-red' : 'bg-bg-border'}`}
                                 >
                                     <div className={`absolute top-[2px] w-4 h-4 bg-white rounded-full transition-all ${toggles.sms ? 'left-[22px]' : 'left-[2px]'}`}></div>
                                 </button>
                             </div>
                             
                             <div className="flex items-center justify-between">
-                                <span className="text-sm text-white font-medium">Sound Alerts</span>
+                                <span className="text-sm text-text-primary font-medium">Sound Alerts</span>
                                 <button 
                                     onClick={() => toggleSetting('sound')}
-                                    className={`w-10 h-5 rounded-full relative transition-colors ${toggles.sound ? 'bg-brand-red' : 'bg-[#2A2A2A]'}`}
+                                    className={`w-10 h-5 rounded-full relative transition-colors ${toggles.sound ? 'bg-brand-red' : 'bg-bg-border'}`}
                                 >
                                     <div className={`absolute top-[2px] w-4 h-4 bg-white rounded-full transition-all ${toggles.sound ? 'left-[22px]' : 'left-[2px]'}`}></div>
                                 </button>
                             </div>
                         </div>
 
-                        <button className="w-full py-2.5 bg-transparent border border-[#2A2A2A] hover:bg-[#1A1A1A] text-brand-red rounded-xl text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-2">
+                        <button className="w-full py-2.5 bg-transparent border border-bg-border hover:bg-bg-card text-brand-red rounded-xl text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-2">
                             <Settings className="w-4 h-4" /> Manage Preferences
                         </button>
                     </div>

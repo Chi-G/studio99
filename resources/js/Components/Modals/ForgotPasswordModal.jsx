@@ -36,7 +36,7 @@ export function ForgotPasswordModal({ open, onClose, onSwitchToLogin }) {
           <button 
             type="button" 
             onClick={onSwitchToLogin}
-            className="w-full mt-6 bg-bg-card border border-bg-border text-white py-3 rounded-xl font-bold hover:bg-[#2A2A2A] transition-colors flex items-center justify-center"
+            className="w-full mt-6 bg-bg-card border border-bg-border text-text-primary py-3 rounded-xl font-bold hover:bg-bg-border transition-colors flex items-center justify-center"
           >
             Return to Login
           </button>
@@ -44,12 +44,12 @@ export function ForgotPasswordModal({ open, onClose, onSwitchToLogin }) {
       ) : (
         <form onSubmit={submit} className="mt-6 space-y-5">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">Email</label>
+            <label className="text-sm font-medium text-text-primary">Email</label>
             <input
               type="email"
               value={data.email}
               onChange={(e) => setData('email', e.target.value)}
-              className="w-full bg-bg-base border border-bg-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-red transition-colors"
+              className="w-full bg-bg-base border border-bg-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-brand-red transition-colors"
               placeholder="name@company.com"
               required
             />
@@ -66,7 +66,7 @@ export function ForgotPasswordModal({ open, onClose, onSwitchToLogin }) {
 
           <p className="text-center text-sm text-text-secondary mt-4">
             Remember your password?{' '}
-            <button type="button" onClick={onSwitchToLogin} className="text-white hover:text-brand-red transition-colors font-bold">
+            <button type="button" onClick={onSwitchToLogin} className="text-text-primary hover:text-brand-red transition-colors font-bold">
               Log In
             </button>
           </p>

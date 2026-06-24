@@ -15,17 +15,17 @@ export function LogoutConfirmModal({ open, onClose }) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-md bg-[#111111] border border-[#2A2A2A] p-0 shadow-2xl rounded-3xl overflow-hidden">
+      <DialogContent className="max-w-md bg-bg-surface border border-bg-border p-0 shadow-2xl rounded-3xl overflow-hidden">
         <DialogTitle className="sr-only">Ready to log out?</DialogTitle>
         
         <div className="p-10 text-center">
-            <div className="w-24 h-24 rounded-full bg-[#1A1A1A] border border-[#2A2A2A] flex items-center justify-center mx-auto mb-8">
+            <div className="w-24 h-24 rounded-full bg-bg-card border border-bg-border flex items-center justify-center mx-auto mb-8">
                 <LogOut className="w-10 h-10 text-brand-red" />
             </div>
 
-            <h2 className="text-2xl font-black text-white mb-4">Ready to log out?</h2>
+            <h2 className="text-2xl font-black text-text-primary mb-4">Ready to log out?</h2>
             
-            <p className="text-[#9CA3AF] text-sm mb-8 leading-relaxed">
+            <p className="text-text-secondary text-sm mb-8 leading-relaxed">
                 You will be logged out of your account.<br/>
                 You can log back in anytime to access your projects and data.
             </p>
@@ -43,7 +43,7 @@ export function LogoutConfirmModal({ open, onClose }) {
                 <button 
                     type="button"
                     onClick={onClose}
-                    className="w-full py-3.5 border border-[#2A2A2A] hover:border-[#4A4A4A] text-white rounded-xl font-bold transition-all bg-[#151515] hover:bg-[#1A1A1A]"
+                    className="w-full py-3.5 border border-bg-border hover:border-text-primary text-text-primary rounded-xl font-bold transition-all bg-bg-card hover:bg-bg-border"
                 >
                     Cancel
                 </button>
@@ -51,16 +51,16 @@ export function LogoutConfirmModal({ open, onClose }) {
 
             <div className="mt-8 mb-6 relative">
                 <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-[#2A2A2A]"></div>
+                    <div className="w-full border-t border-bg-border"></div>
                 </div>
                 <div className="relative flex justify-center text-xs">
-                    <span className="bg-[#111111] px-4 text-[#9CA3AF]">or</span>
+                    <span className="bg-bg-surface px-4 text-text-secondary">or</span>
                 </div>
             </div>
 
             <button 
                 onClick={onClose}
-                className="text-sm text-white font-medium hover:text-brand-red transition-colors inline-flex items-center gap-2 group"
+                className="text-sm text-text-primary font-medium hover:text-brand-red transition-colors inline-flex items-center gap-2 group"
             >
                 <span className="group-hover:-translate-x-1 transition-transform">→</span> Go to Dashboard
             </button>

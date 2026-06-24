@@ -48,7 +48,7 @@ export default function ProjectsIndex({ auth, projects = [] }) {
       case 'review': return 'text-orange-500';
       case 'in_progress': return 'text-brand-red';
       case 'on_hold': return 'text-purple-500';
-      default: return 'text-[#9CA3AF]';
+      default: return 'text-text-secondary';
     }
   };
 
@@ -58,7 +58,7 @@ export default function ProjectsIndex({ auth, projects = [] }) {
       case 'review': return 'bg-orange-500/10 border-orange-500/20';
       case 'in_progress': return 'bg-brand-red/10 border-brand-red/20';
       case 'on_hold': return 'bg-purple-500/10 border-purple-500/20';
-      default: return 'bg-[#2A2A2A] border-[#333]';
+      default: return 'bg-bg-border border-[#333]';
     }
   };
 
@@ -89,9 +89,9 @@ export default function ProjectsIndex({ auth, projects = [] }) {
       {/* Header Area */}
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-black text-white mb-2 tracking-tight">My Projects</h1>
-          <div className="flex items-center text-sm font-medium text-[#9CA3AF] gap-2">
-            <Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
+          <h1 className="text-3xl font-black text-text-primary mb-2 tracking-tight">My Projects</h1>
+          <div className="flex items-center text-sm font-medium text-text-secondary gap-2">
+            <Link href="/dashboard" className="hover:text-text-primary transition-colors">Dashboard</Link>
             <span>/</span>
             <span className="text-brand-red">My Projects</span>
           </div>
@@ -108,74 +108,74 @@ export default function ProjectsIndex({ auth, projects = [] }) {
       {/* Top Row: Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {/* Total Projects */}
-        <div className="bg-[#111111] border border-[#2A2A2A] p-6 rounded-2xl flex items-center justify-between hover:border-[#3A3A3A] transition-colors">
+        <div className="bg-bg-surface border border-bg-border p-6 rounded-2xl flex items-center justify-between hover:border-bg-border transition-colors">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-brand-red/10 flex items-center justify-center text-brand-red border border-brand-red/20 shrink-0">
               <Briefcase className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-[#9CA3AF] text-sm font-medium mb-1">Total Projects</p>
-              <h3 className="text-3xl font-black text-white leading-none">8</h3>
+              <p className="text-text-secondary text-sm font-medium mb-1">Total Projects</p>
+              <h3 className="text-3xl font-black text-text-primary leading-none">8</h3>
             </div>
           </div>
           <div className="text-right self-end mt-2">
-            <p className="text-[10px] text-[#9CA3AF] uppercase font-bold tracking-wider">All time</p>
+            <p className="text-[10px] text-text-secondary uppercase font-bold tracking-wider">All time</p>
           </div>
         </div>
 
         {/* In Progress */}
-        <div className="bg-[#111111] border border-[#2A2A2A] p-6 rounded-2xl flex items-center justify-between hover:border-[#3A3A3A] transition-colors">
+        <div className="bg-bg-surface border border-bg-border p-6 rounded-2xl flex items-center justify-between hover:border-bg-border transition-colors">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/20 shrink-0">
               <Clock className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-[#9CA3AF] text-sm font-medium mb-1">In Progress</p>
-              <h3 className="text-3xl font-black text-white leading-none">4</h3>
+              <p className="text-text-secondary text-sm font-medium mb-1">In Progress</p>
+              <h3 className="text-3xl font-black text-text-primary leading-none">4</h3>
             </div>
           </div>
           <div className="text-right self-end mt-2">
-            <p className="text-[10px] text-[#9CA3AF] uppercase font-bold tracking-wider">Currently active</p>
+            <p className="text-[10px] text-text-secondary uppercase font-bold tracking-wider">Currently active</p>
           </div>
         </div>
 
         {/* Completed */}
-        <div className="bg-[#111111] border border-[#2A2A2A] p-6 rounded-2xl flex items-center justify-between hover:border-[#3A3A3A] transition-colors">
+        <div className="bg-bg-surface border border-bg-border p-6 rounded-2xl flex items-center justify-between hover:border-bg-border transition-colors">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500 border border-green-500/20 shrink-0">
               <CheckCircle className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-[#9CA3AF] text-sm font-medium mb-1">Completed</p>
-              <h3 className="text-3xl font-black text-white leading-none">3</h3>
+              <p className="text-text-secondary text-sm font-medium mb-1">Completed</p>
+              <h3 className="text-3xl font-black text-text-primary leading-none">3</h3>
             </div>
           </div>
           <div className="text-right self-end mt-2">
-            <p className="text-[10px] text-[#9CA3AF] uppercase font-bold tracking-wider">Successfully delivered</p>
+            <p className="text-[10px] text-text-secondary uppercase font-bold tracking-wider">Successfully delivered</p>
           </div>
         </div>
 
         {/* On Hold */}
-        <div className="bg-[#111111] border border-[#2A2A2A] p-6 rounded-2xl flex items-center justify-between hover:border-[#3A3A3A] transition-colors">
+        <div className="bg-bg-surface border border-bg-border p-6 rounded-2xl flex items-center justify-between hover:border-bg-border transition-colors">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-500 border border-purple-500/20 shrink-0">
               <PauseCircle className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-[#9CA3AF] text-sm font-medium mb-1">On Hold</p>
-              <h3 className="text-3xl font-black text-white leading-none">1</h3>
+              <p className="text-text-secondary text-sm font-medium mb-1">On Hold</p>
+              <h3 className="text-3xl font-black text-text-primary leading-none">1</h3>
             </div>
           </div>
           <div className="text-right self-end mt-2">
-            <p className="text-[10px] text-[#9CA3AF] uppercase font-bold tracking-wider">Waiting on something</p>
+            <p className="text-[10px] text-text-secondary uppercase font-bold tracking-wider">Waiting on something</p>
           </div>
         </div>
       </div>
 
       {/* Filters and List */}
-      <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl overflow-hidden">
+      <div className="bg-bg-surface border border-bg-border rounded-2xl overflow-hidden">
         {/* Filters Header */}
-        <div className="p-4 border-b border-[#2A2A2A] flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+        <div className="p-4 border-b border-bg-border flex flex-col xl:flex-row xl:items-center justify-between gap-4">
           <div className="flex overflow-x-auto hide-scrollbar gap-2 pb-2 xl:pb-0">
             {filters.map(f => (
               <button
@@ -183,8 +183,8 @@ export default function ProjectsIndex({ auth, projects = [] }) {
                 onClick={() => setActiveFilter(f.id)}
                 className={`whitespace-nowrap px-4 py-2.5 rounded-full text-sm font-bold transition-colors ${
                   activeFilter === f.id 
-                    ? 'border border-[#4A4A4A] text-white bg-[#1A1A1A]' 
-                    : 'text-[#9CA3AF] hover:bg-[#1A1A1A] hover:text-white border border-transparent'
+                    ? 'border border-bg-border text-text-primary bg-bg-card' 
+                    : 'text-text-secondary hover:bg-bg-border hover:text-text-primary border border-transparent'
                 }`}
               >
                 {f.label}
@@ -194,14 +194,14 @@ export default function ProjectsIndex({ auth, projects = [] }) {
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 shrink-0">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9CA3AF]" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
               <input 
                 type="text"
                 placeholder="Search projects..."
-                className="bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#3A3A3A] w-full sm:w-64 placeholder:text-[#4A4A4A]"
+                className="bg-bg-base border border-bg-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-text-primary focus:outline-none focus:border-bg-border w-full sm:w-64 placeholder:text-text-secondary"
               />
             </div>
-            <button className="py-2.5 px-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#9CA3AF] hover:text-white transition-colors flex items-center justify-center gap-2">
+            <button className="py-2.5 px-4 bg-bg-base border border-bg-border rounded-xl text-text-secondary hover:text-text-primary transition-colors flex items-center justify-center gap-2">
               <Filter className="w-4 h-4 shrink-0" />
               <span className="text-sm font-bold hidden sm:inline">Filter</span>
             </button>
@@ -212,30 +212,30 @@ export default function ProjectsIndex({ auth, projects = [] }) {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[900px]">
             <thead>
-              <tr className="border-b border-[#2A2A2A] bg-[#0A0A0A]/50">
-                <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] tracking-widest uppercase w-[35%]">Project</th>
-                <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] tracking-widest uppercase w-[20%]">Progress</th>
-                <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] tracking-widest uppercase w-[15%]">Status</th>
-                <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] tracking-widest uppercase w-[20%]">Due Date</th>
-                <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] tracking-widest uppercase w-[10%] text-right">Actions</th>
+              <tr className="border-b border-bg-border bg-bg-base/50">
+                <th className="py-4 px-6 text-xs font-bold text-text-secondary tracking-widest uppercase w-[35%]">Project</th>
+                <th className="py-4 px-6 text-xs font-bold text-text-secondary tracking-widest uppercase w-[20%]">Progress</th>
+                <th className="py-4 px-6 text-xs font-bold text-text-secondary tracking-widest uppercase w-[15%]">Status</th>
+                <th className="py-4 px-6 text-xs font-bold text-text-secondary tracking-widest uppercase w-[20%]">Due Date</th>
+                <th className="py-4 px-6 text-xs font-bold text-text-secondary tracking-widest uppercase w-[10%] text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#2A2A2A]">
+            <tbody className="divide-y divide-bg-border">
               {filteredProjects.map(project => (
-                <tr key={project.id} className="hover:bg-[#151515] transition-colors group">
+                <tr key={project.id} className="hover:bg-bg-border transition-colors group">
                   <td className="py-5 px-6">
                     <div className="flex items-center gap-4">
-                      <div className="w-16 h-12 rounded-lg bg-[#1A1A1A] border border-[#2A2A2A] overflow-hidden shrink-0">
+                      <div className="w-16 h-12 rounded-lg bg-bg-card border border-bg-border overflow-hidden shrink-0">
                         <img src={project.image} alt={project.name} className="w-full h-full object-cover" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-white text-sm group-hover:text-brand-red transition-colors cursor-pointer" onClick={() => setSelectedProject(project)}>{project.name}</h4>
-                        <p className="text-[11px] text-[#9CA3AF] mt-0.5 mb-1">{project.category}</p>
+                        <h4 className="font-bold text-text-primary text-sm group-hover:text-brand-red transition-colors cursor-pointer" onClick={() => setSelectedProject(project)}>{project.name}</h4>
+                        <p className="text-[11px] text-text-secondary mt-0.5 mb-1">{project.category}</p>
                         <div className="flex items-center gap-1.5">
                           <div className="w-4 h-4 rounded-full bg-brand-red flex items-center justify-center text-[8px] font-black text-white shrink-0">
                             {project.manager.charAt(0)}
                           </div>
-                          <p className="text-[10px] text-[#9CA3AF]"><span className="text-gray-300 font-medium">{project.manager}</span> • Project Manager</p>
+                          <p className="text-[10px] text-text-secondary"><span className="text-text-primary font-medium">{project.manager}</span> • Project Manager</p>
                         </div>
                       </div>
                     </div>
@@ -243,7 +243,7 @@ export default function ProjectsIndex({ auth, projects = [] }) {
                   <td className="py-5 px-6">
                     <div className="w-full max-w-[140px]">
                       <span className={`text-xs font-bold block mb-2 ${getStatusColor(project.status)}`}>{project.progress}%</span>
-                      <div className="w-full h-1.5 bg-[#2A2A2A] rounded-full overflow-hidden">
+                      <div className="w-full h-1.5 bg-bg-border rounded-full overflow-hidden">
                         <div className={`h-full rounded-full ${getProgressColor(project.status)}`} style={{ width: `${project.progress}%` }}></div>
                       </div>
                     </div>
@@ -255,9 +255,9 @@ export default function ProjectsIndex({ auth, projects = [] }) {
                   </td>
                   <td className="py-5 px-6">
                     <div className="flex items-start gap-2">
-                      <CalendarDays className="w-4 h-4 text-[#9CA3AF] mt-0.5 shrink-0" />
+                      <CalendarDays className="w-4 h-4 text-text-secondary mt-0.5 shrink-0" />
                       <div>
-                        <p className="text-sm font-medium text-white">
+                        <p className="text-sm font-medium text-text-primary">
                           {new Date(project.deadline).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                         </p>
                         {project.completed ? (
@@ -272,11 +272,11 @@ export default function ProjectsIndex({ auth, projects = [] }) {
                     <div className="flex items-center justify-end gap-3">
                       <button 
                         onClick={() => setSelectedProject(project)}
-                        className="text-xs font-bold text-white hover:text-brand-red transition-colors whitespace-nowrap"
+                        className="text-xs font-bold text-text-primary hover:text-brand-red transition-colors whitespace-nowrap"
                       >
                         View Details
                       </button>
-                      <button className="p-1.5 text-[#9CA3AF] hover:text-white hover:bg-[#2A2A2A] rounded-md transition-colors shrink-0">
+                      <button className="p-1.5 text-text-secondary hover:text-text-primary hover:bg-bg-border rounded-md transition-colors shrink-0">
                         <MoreVertical className="w-4 h-4" />
                       </button>
                     </div>
@@ -288,22 +288,22 @@ export default function ProjectsIndex({ auth, projects = [] }) {
         </div>
 
         {/* Pagination */}
-        <div className="p-4 border-t border-[#2A2A2A] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs font-medium text-[#9CA3AF]">
+        <div className="p-4 border-t border-bg-border flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs font-medium text-text-secondary">
             Showing 1 to {filteredProjects.length} of 8 projects
           </p>
           <div className="flex items-center gap-1">
-            <button className="w-8 h-8 rounded border border-[#2A2A2A] flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-[#1A1A1A] transition-colors disabled:opacity-50">
+            <button className="w-8 h-8 rounded border border-bg-border flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-card transition-colors disabled:opacity-50">
               <span className="sr-only">Previous</span>
               &lt;
             </button>
             <button className="w-8 h-8 rounded border border-brand-red bg-brand-red flex items-center justify-center text-white font-bold transition-colors">
               1
             </button>
-            <button className="w-8 h-8 rounded border border-[#2A2A2A] flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-[#1A1A1A] transition-colors">
+            <button className="w-8 h-8 rounded border border-bg-border flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-card transition-colors">
               2
             </button>
-            <button className="w-8 h-8 rounded border border-[#2A2A2A] flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-[#1A1A1A] transition-colors">
+            <button className="w-8 h-8 rounded border border-bg-border flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-card transition-colors">
               <span className="sr-only">Next</span>
               &gt;
             </button>
