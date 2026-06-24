@@ -63,7 +63,7 @@ export default function AdminLayout({ children }) {
         <div className="h-20 flex items-center px-6 border-b border-bg-border shrink-0 justify-between">
           <div className="flex items-center gap-2">
             <img src={headerLogo} alt="Studio99 Logo" className="w-8 h-8 rounded-lg object-cover" />
-            <span className="font-display font-bold text-xl tracking-tight text-white">Studio99 Admin</span>
+            <span className="font-gilroy font-bold text-xl tracking-tight text-white">Studio99 Admin</span>
           </div>
           <div className="flex items-center gap-2">
             <ThemeToggle className="hidden lg:flex" />
@@ -138,7 +138,7 @@ export default function AdminLayout({ children }) {
             <button className="text-text-secondary" onClick={() => setSidebarOpen(true)}>
               <Menu className="w-6 h-6" />
             </button>
-            <span className="font-display font-bold ml-4">Studio99 Admin</span>
+            <span className="font-gilroy font-bold ml-4">Studio99 Admin</span>
           </div>
           <ThemeToggle />
         </div>

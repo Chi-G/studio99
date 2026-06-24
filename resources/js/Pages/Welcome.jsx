@@ -27,7 +27,7 @@ const RedLabel = ({ children }) => (
 );
 
 const SectionHeading = ({ children }) => (
-  <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight leading-tight">
+  <h2 className="font-gilroy font-bold text-4xl md:text-5xl mb-6 tracking-tight leading-tight">
     {children}
   </h2>
 );
@@ -107,7 +107,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
           <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
             <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
             <div className="hidden sm:flex flex-col justify-center leading-none mt-0.5">
-              <span className="font-black text-lg tracking-tight">
+              <span className="font-gilroy font-bold text-lg tracking-tight">
                 studio<span className="text-brand-red">99</span>
               </span>
               <span className="text-[10px] uppercase text-text-secondary tracking-widest font-sans font-bold -mt-1">
@@ -209,7 +209,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-black leading-[1.1] tracking-tighter text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] mb-6 drop-shadow-2xl text-text-primary"
+            className="font-gilroy font-bold leading-[1.1] tracking-tighter text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] mb-6 drop-shadow-2xl text-text-primary"
           >
             Transform Your Ideas Into <br className="hidden md:block" /> <span className="text-brand-red">Exceptional Digital Experiences</span>
           </motion.h1>
@@ -513,7 +513,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
               <div className="flex items-center gap-2 mb-6">
                 <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
                 <div className="flex flex-col justify-center leading-none mt-0.5">
-                  <span className="font-black text-lg tracking-tight">
+                  <span className="font-gilroy font-bold text-lg tracking-tight">
                     studio<span className="text-brand-red">99</span>
                   </span>
                   <span className="text-[10px] uppercase text-text-secondary tracking-widest font-sans font-bold -mt-1">

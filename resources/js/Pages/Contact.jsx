@@ -21,7 +21,7 @@ const RedLabel = ({ children }) => (
 );
 
 const SectionHeading = ({ children }) => (
-  <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight leading-tight text-text-primary">
+  <h2 className="font-gilroy font-bold text-4xl md:text-5xl mb-6 tracking-tight leading-tight text-text-primary">
     {children}
   </h2>
 );
@@ -68,7 +68,7 @@ export default function Contact({ auth }) {
           <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
             <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
             <div className="hidden sm:flex flex-col justify-center leading-none mt-0.5">
-              <span className="font-black text-lg tracking-tight">
+              <span className="font-gilroy font-bold text-lg tracking-tight">
                 studio<span className="text-brand-red">99</span>
               </span>
               <span className="text-[10px] uppercase text-text-secondary tracking-widest font-sans font-bold -mt-1">
@@ -302,7 +302,7 @@ export default function Contact({ auth }) {
         <div className="max-w-7xl mx-auto px-4 md:px-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
           <div>
             <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
-              <span className="font-black tracking-tight text-xl text-text-primary">studio<span className="text-brand-red">99</span></span>
+              <span className="font-gilroy font-bold tracking-tight text-xl text-text-primary">studio<span className="text-brand-red">99</span></span>
             </div>
             <p className="text-text-secondary text-sm">© {new Date().getFullYear()} Studio99 Digital. All rights reserved.</p>
           </div>

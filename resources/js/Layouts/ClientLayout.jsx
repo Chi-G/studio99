@@ -71,7 +71,7 @@ export default function ClientLayout({ children }) {
         <div className={`h-24 flex items-center border-b border-bg-border shrink-0 ${sidebarCollapsed ? 'justify-center px-0' : 'justify-between px-8'}`}>
           <Link href="/dashboard" className="flex items-center gap-2 hover:opacity-90 transition-opacity" title={sidebarCollapsed ? "Studio99" : undefined}>
             <div className={`flex flex-col justify-center leading-none mt-0.5 ${sidebarCollapsed ? 'items-center' : ''}`}>
-              <span className="font-black text-2xl tracking-tight flex items-center gap-1">
+              <span className="font-gilroy font-bold text-2xl tracking-tight flex items-center gap-1">
                 <img src={logoImage} alt="Studio99" className={`rounded object-cover ${sidebarCollapsed ? 'w-10 h-10' : 'w-8 h-8 mr-1'}`} />
                 {!sidebarCollapsed && (
                   <>studio<span className="text-brand-red font-black tracking-tighter -ml-1.5">99</span></>
@@ -182,7 +182,7 @@ export default function ClientLayout({ children }) {
                 <Menu className="w-5 h-5" />
               </button>
               <div>
-                <h1 className="text-3xl font-black text-text-primary flex items-center gap-2">
+                <h1 className="font-gilroy font-bold text-3xl text-text-primary flex items-center gap-2">
                   Good Morning, {auth.user.name.split(' ')[0]}! <span className="text-2xl">👋</span>
                 </h1>
                 <p className="text-text-secondary text-sm mt-1">Here's what's happening with your projects today.</p>
@@ -230,7 +230,7 @@ export default function ClientLayout({ children }) {
 
         {/* Mobile Title (Since header title is hidden on small screens) */}
         <div className="md:hidden px-6 pt-4 pb-2">
-          <h1 className="text-2xl font-black text-text-primary flex items-center gap-2">
+          <h1 className="font-gilroy font-bold text-2xl text-text-primary flex items-center gap-2">
             Hi, {auth.user.name.split(' ')[0]}! <span className="text-xl">👋</span>
           </h1>
         </div>
