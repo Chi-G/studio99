@@ -47,15 +47,18 @@
     width: 6px;
     height: 6px;
   }
+
   ::-webkit-scrollbar-track {
-    background: var(--bg-base); 
+    background: var(--bg-base);
   }
+
   ::-webkit-scrollbar-thumb {
-    background: var(--bg-border); 
+    background: var(--bg-border);
     border-radius: 10px;
   }
+
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--brand-red); 
+    background: var(--brand-red);
   }
 }
 
@@ -71,6 +74,7 @@
   .hover-glow {
     transition: all 0.3s ease;
   }
+
   .hover-glow:hover {
     box-shadow: 0 0 30px rgba(227, 30, 36, 0.15);
     border-color: rgba(227, 30, 36, 0.3);
