@@ -232,8 +232,19 @@ export default function ClientLayout({ children }) {
           </h1>
         </div>
 
-        <main className="flex-1 p-6 lg:px-10 lg:py-6 overflow-x-hidden overflow-y-auto custom-scrollbar">
-          {children}
+        <main className="flex-1 p-6 lg:px-10 lg:py-6 overflow-x-hidden overflow-y-auto custom-scrollbar flex flex-col">
+          <div className="flex-1">
+            {children}
+          </div>
+          
+          {/* Footer */}
+          <footer className="mt-12 pt-6 border-t border-[#2A2A2A] flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0">
+            <p className="text-[#9CA3AF] text-sm font-medium">© 2025 Studio99 Digital. All rights reserved.</p>
+            <div className="flex items-center gap-6">
+              <Link href="#" className="text-[#9CA3AF] text-sm font-medium hover:text-white transition-colors">Privacy Policy</Link>
+              <Link href="#" className="text-[#9CA3AF] text-sm font-medium hover:text-white transition-colors">Terms of Service</Link>
+            </div>
+          </footer>
         </main>
       </div>
 
