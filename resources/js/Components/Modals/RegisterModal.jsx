@@ -14,6 +14,20 @@ export function RegisterModal({ open, onClose, onSwitchToLogin, intendedUrl }) {
     redirect_to: intendedUrl || '',
   });
 
+  const getPasswordStrength = (pass) => {
+    if (!pass) return { label: '', color: 'bg-bg-border', text: 'text-text-secondary', bars: 0 };
+    let s = 0;
+    if (pass.length > 5) s += 1;
+    if (pass.length > 7) s += 1;
+    if (/[A-Z]/.test(pass)) s += 1;
+    if (/[0-9]/.test(pass)) s += 1;
+    if (/[^A-Za-z0-9]/.test(pass)) s += 1;
+    
+    if (s <= 2) return { label: 'Weak', color: 'bg-red-500', text: 'text-red-500', bars: 1 };
+    if (s <= 4) return { label: 'Medium', color: 'bg-yellow-500', text: 'text-yellow-500', bars: 2 };
+    return { label: 'Strong', color: 'bg-green-500', text: 'text-green-500', bars: 3 };
+  };
+
   useEffect(() => {
     if (open) {
       clearErrors();
@@ -128,7 +142,7 @@ export function RegisterModal({ open, onClose, onSwitchToLogin, intendedUrl }) {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-white">Phone (Optional)</label>
+                    <label className="text-sm font-medium text-white">Phone Number (Optional)</label>
                     <input
                       type="tel"
                       value={data.phone}
@@ -162,6 +176,18 @@ export function RegisterModal({ open, onClose, onSwitchToLogin, intendedUrl }) {
                       </button>
                     </div>
                     {errors.password && <span className="text-brand-red text-xs mt-1 block font-medium">{errors.password}</span>}
+                    {data.password && !errors.password && (
+                      <div className="mt-2">
+                        <div className="flex gap-1 mb-1">
+                          <div className={`h-1 flex-1 rounded-full ${getPasswordStrength(data.password).bars >= 1 ? getPasswordStrength(data.password).color : 'bg-bg-border'}`}></div>
+                          <div className={`h-1 flex-1 rounded-full ${getPasswordStrength(data.password).bars >= 2 ? getPasswordStrength(data.password).color : 'bg-bg-border'}`}></div>
+                          <div className={`h-1 flex-1 rounded-full ${getPasswordStrength(data.password).bars >= 3 ? getPasswordStrength(data.password).color : 'bg-bg-border'}`}></div>
+                        </div>
+                        <span className={`text-xs font-medium ${getPasswordStrength(data.password).text}`}>
+                          {getPasswordStrength(data.password).label}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="space-y-2">
@@ -190,7 +216,7 @@ export function RegisterModal({ open, onClose, onSwitchToLogin, intendedUrl }) {
                 <button 
                   type="submit" 
                   disabled={processing}
-                  className="w-full bg-brand-red text-white py-3.5 rounded-xl font-bold hover:bg-red-700 transition-all flex items-center justify-center mt-6 disabled:opacity-50 shadow-[0_0_20px_rgba(227,30,36,0.2)] hover:shadow-[0_0_30px_rgba(227,30,36,0.4)]"
+                  className="w-full bg-brand-red text-white py-2.5 md:py-3.5 rounded-xl font-bold hover:bg-red-700 transition-all flex items-center justify-center mt-6 disabled:opacity-50 shadow-[0_0_20px_rgba(227,30,36,0.2)] hover:shadow-[0_0_30px_rgba(227,30,36,0.4)]"
                 >
                   {processing ? <Loader2 className="w-5 h-5 animate-spin" /> : "Complete Registration"}
                 </button>

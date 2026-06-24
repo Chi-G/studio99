@@ -61,6 +61,12 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
   }, [flash]);
 
   useEffect(() => {
+    if (auth?.user) {
+      router.visit('/dashboard', { replace: true });
+    }
+  }, [auth?.user]);
+
+  useEffect(() => {
     if (showLogin) setIsLoginModalOpen(true);
     if (showRegister) setIsRegisterModalOpen(true);
   }, [showLogin, showRegister]);
@@ -114,11 +120,12 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             </div>
           </Link>
           <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-text-secondary">
-            <a href="#services" onClick={handleRequestServiceClick} className="hover:text-white transition-colors">Request a Service</a>
-            <a href="#work" className="hover:text-white transition-colors">View Portfolio</a>
-            <a href="#about" className="hover:text-white transition-colors">About</a>
+            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+            <a href="#services" className="hover:text-white transition-colors">Services</a>
+            <a href="#work" className="hover:text-white transition-colors">Portfolio</a>
             <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
-            <a href="#contact" className="hover:text-white transition-colors">Contact Us</a>
+            <a href="#about" className="hover:text-white transition-colors">About</a>
+            <a href="#contact" className="hover:text-white transition-colors">Contact</a>
           </div>
 
           {/* Desktop Auth Buttons */}
@@ -157,16 +164,17 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
           </div>
 
           <div className="flex flex-col gap-6 text-xl font-medium text-text-secondary flex-1">
-            <a href="#services" onClick={(e) => { setIsMobileMenuOpen(false); handleRequestServiceClick(e); }} className="hover:text-white transition-colors">Request a Service</a>
-            <a href="#work" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">View Portfolio</a>
-            <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">About</a>
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Home</Link>
+            <a href="#services" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Services</a>
+            <a href="#work" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Portfolio</a>
             <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Pricing</a>
-            <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Contact Us</a>
+            <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">About</a>
+            <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Contact</a>
           </div>
 
           <div className="flex flex-col gap-4 mt-auto">
             {auth.user ? (
-              <Link href="/dashboard" className="w-full text-center py-4 rounded-full bg-bg-card border border-bg-border text-white font-bold">Go to Dashboard</Link>
+              <Link href="/dashboard" className="w-full text-center py-4 rounded-full bg-bg-card border border-bg-border text-white font-bold">Open Dashboard</Link>
             ) : (
               <>
                 <button onClick={() => { setIsMobileMenuOpen(false); setIsLoginModalOpen(true); }} className="w-full py-4 rounded-full border border-bg-border text-white font-bold hover:bg-bg-card">Login</button>
@@ -201,7 +209,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-black leading-[1.1] tracking-tighter text-5xl md:text-6xl lg:text-[5.5rem] mb-6 drop-shadow-2xl text-white"
+            className="font-black leading-[1.1] tracking-tighter text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] mb-6 drop-shadow-2xl text-white"
           >
             Transform Your Ideas Into <br className="hidden md:block" /> <span className="text-brand-red">Exceptional Digital Experiences</span>
           </motion.h1>
@@ -275,7 +283,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
       <section id="about" className="py-32">
         <div className="max-w-7xl mx-auto px-4 md:px-8 grid lg:grid-cols-2 gap-16 items-center">
           <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
-            <div className="aspect-[4/5] rounded-3xl overflow-hidden border border-bg-border">
+            <div className="aspect-[4/3] md:aspect-[4/5] rounded-3xl overflow-hidden border border-bg-border">
               <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1000&auto=format&fit=crop" alt="Office Workspace" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-[#0A0A0A]/40 mix-blend-overlay"></div>
             </div>
@@ -288,18 +296,18 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
 
           <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <RedLabel>WHO WE ARE</RedLabel>
-            <SectionHeading>Create.Design.<span className="text-brand-red">Grow.</span></SectionHeading>
+            <SectionHeading>Create. Design. <span className="text-brand-red">Grow.</span></SectionHeading>
             <p className="text-text-secondary text-lg mb-8 leading-relaxed font-sans">
               Studio99 Digital provides businesses with an all-in-one digital service platform where clients can request services, track projects, communicate with teams, make payments, and receive completed work seamlessly.
             </p>
 
-            <div className="grid grid-cols-2 gap-6 mb-10">
-              <div className="bg-bg-card p-6 rounded-2xl border border-bg-border">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+              <div className="bg-bg-card p-6 md:p-8 rounded-2xl border border-bg-border">
                 <div className="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center mb-4 text-brand-red"><TrendingUp className="w-5 h-5" /></div>
                 <h4 className="font-bold mb-2">Our Mission</h4>
                 <p className="text-sm text-text-secondary leading-relaxed font-sans">To empower businesses, organizations, professionals, and content creators with innovative digital solutions that drive growth, engagement, and long-term success.</p>
               </div>
-              <div className="bg-bg-card p-6 rounded-2xl border border-bg-border">
+              <div className="bg-bg-card p-6 md:p-8 rounded-2xl border border-bg-border">
                 <div className="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center mb-4 text-brand-red"><Globe className="w-5 h-5" /></div>
                 <h4 className="font-bold mb-2">Our Vision</h4>
                 <p className="text-sm text-text-secondary leading-relaxed font-sans">To become a leading digital services platform recognized for creativity, excellence, and client satisfaction across Africa and beyond.</p>

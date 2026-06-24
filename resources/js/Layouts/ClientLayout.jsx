@@ -11,7 +11,12 @@ import {
   LogOut,
   User,
   Menu,
-  X
+  X,
+  MessageSquare,
+  Bell,
+  FileText,
+  BarChart2,
+  Settings
 } from 'lucide-react';
 import { LogoutConfirmModal } from '@/Components/Modals/LogoutConfirmModal';
 import headerLogo from '../../images/logo.jpeg';
@@ -22,12 +27,16 @@ export default function ClientLayout({ children, onNewRequest }) {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const navigation = [
-    { name: 'Dashboard', href: '/dashboard', icon: Home },
+    { name: 'Dashboard Overview', href: '/dashboard', icon: Home },
     { name: 'My Projects', href: '/client/projects', icon: FolderKanban },
-    { name: 'Payments', href: '/client/invoices', icon: CreditCard },
+    { name: 'Service Requests', href: '/client/requests', icon: FileText },
+    { name: 'Project Progress', href: '/client/progress', icon: BarChart2 },
+    { name: 'Files & Deliverables', href: '/client/files', icon: FolderOpen },
+    { name: 'Invoices & Payments', href: '/client/invoices', icon: CreditCard },
     { name: 'Subscriptions', href: '/client/subscriptions', icon: RefreshCcw },
-    { name: 'File Center', href: '/client/files', icon: FolderOpen },
-    { name: 'Support', href: '/client/support', icon: HeadphonesIcon },
+    { name: 'Messages', href: '/client/messages', icon: MessageSquare },
+    { name: 'Notifications', href: '/client/notifications', icon: Bell },
+    { name: 'Support Tickets', href: '/client/support', icon: HeadphonesIcon },
   ];
 
   return (
@@ -100,8 +109,8 @@ export default function ClientLayout({ children, onNewRequest }) {
             href="/profile"
             className="w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-[#94A3B8] hover:bg-[#1A1A28] hover:text-white transition-colors mb-1"
           >
-            <User className="w-5 h-5 shrink-0" />
-            Profile
+            <Settings className="w-5 h-5 shrink-0" />
+            Account Settings
           </Link>
           <button
             onClick={() => setIsLogoutModalOpen(true)}
