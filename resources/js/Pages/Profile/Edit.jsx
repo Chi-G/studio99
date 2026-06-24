@@ -36,7 +36,7 @@ export default function Edit() {
         company: '',
         job_title: '',
         language: 'English',
-        timezone: '(GMT-05:00) Eastern Time (US & Canada)',
+        timezone: user.timezone || 'Africa/Lagos',
         about: ''
     });
 
@@ -187,9 +187,7 @@ export default function Edit() {
                                 onChange={e => setProfileData('timezone', e.target.value)}
                                 className="w-full bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl px-4 py-3 text-white focus:ring-brand-red focus:border-brand-red transition-colors appearance-none"
                             >
-                                <option>(GMT-05:00) Eastern Time (US & Canada)</option>
-                                <option>(GMT-06:00) Central Time (US & Canada)</option>
-                                <option>(GMT-08:00) Pacific Time (US & Canada)</option>
+                                <option value="Africa/Lagos">Africa/Lagos (West Africa Time)</option>
                             </select>
                         </div>
 
