@@ -3,152 +3,405 @@ import { Head, Link } from '@inertiajs/react';
 import ClientLayout from '@/Layouts/ClientLayout';
 import { AppModal } from '@/Components/ui/app-modal';
 import { 
-  CreditCard, 
-  Download, 
   FileText, 
-  ArrowRight,
-  CheckCircle2,
-  AlertCircle
+  Clock, 
+  CheckCircle2, 
+  XCircle, 
+  Search, 
+  Filter, 
+  MoreVertical,
+  ChevronDown,
+  Download,
+  CreditCard,
+  History,
+  FileBox,
+  Settings,
+  HeadphonesIcon
 } from 'lucide-react';
 
-export default function InvoicesIndex({ auth, invoices = [] }) {
-  const [selectedInvoice, setSelectedInvoice] = useState(null);
+export default function InvoicesIndex() {
+  const [activeFilter, setActiveFilter] = useState('all');
+  
+  // Exact mock data based on the provided reference design
+  const invoicesList = [
+    { id: 'INV-2025-018', number: '#10018', project: 'E-Commerce Website', category: 'Web Development', date: 'May 20, 2025', dueDate: 'May 30, 2025', dueDays: '10 days left', status: 'pending', amount: 850.00 },
+    { id: 'INV-2025-017', number: '#10017', project: 'Brand Identity Design', category: 'Logo & Branding', date: 'May 10, 2025', dueDate: 'May 15, 2025', dueDays: 'Paid', status: 'paid', amount: 650.00 },
+    { id: 'INV-2025-016', number: '#10016', project: 'Social Media Package', category: 'Social Media', date: 'May 05, 2025', dueDate: 'May 20, 2025', dueDays: 'Overdue', status: 'overdue', amount: 400.00 },
+    { id: 'INV-2025-015', number: '#10015', project: 'Mobile App UI Design', category: 'UI/UX Design', date: 'Apr 30, 2025', dueDate: 'May 10, 2025', dueDays: 'Pending', status: 'pending', amount: 750.00 },
+    { id: 'INV-2025-014', number: '#10014', project: 'Website Redesign', category: 'Web Development', date: 'Apr 15, 2025', dueDate: 'Apr 20, 2025', dueDays: 'Paid', status: 'paid', amount: 1200.00 },
+    { id: 'INV-2025-013', number: '#10013', project: 'Content Writing', category: 'Content Creation', date: 'Apr 05, 2025', dueDate: 'Apr 10, 2025', dueDays: 'Paid', status: 'paid', amount: 350.00 },
+    { id: 'INV-2025-012', number: '#10012', project: 'Marketing Campaign', category: 'Digital Marketing', date: 'Mar 28, 2025', dueDate: 'Apr 05, 2025', dueDays: 'Overdue', status: 'overdue', amount: 350.00 },
+    { id: 'INV-2025-011', number: '#10011', project: 'Video Promotion', category: 'Video Editing', date: 'Mar 20, 2025', dueDate: 'Mar 25, 2025', dueDays: 'Paid', status: 'paid', amount: 300.00 },
+  ];
 
-  // Normalize data (Inertia resource collections wrap arrays in a `data` property)
-  const invoicesList = Array.isArray(invoices) ? invoices : invoices.data || invoices || [];
+  const filters = [
+    { id: 'all', label: 'All Invoices' },
+    { id: 'pending', label: 'Pending', count: 4, countColor: 'bg-orange-500' },
+    { id: 'paid', label: 'Paid' },
+    { id: 'overdue', label: 'Overdue', count: 2, countColor: 'bg-brand-red' },
+  ];
 
-  const getStatusBadge = (status) => {
+  const getStatusClass = (status) => {
     switch(status) {
-      case 'paid': return <span className="bg-green-500/10 text-green-400 border border-green-500/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Paid</span>;
-      case 'pending_confirmation': return <span className="bg-purple-500/10 text-purple-400 border border-purple-500/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Verifying</span>;
-      default: return <span className="bg-amber-500/10 text-amber-400 border border-amber-500/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Unpaid</span>;
+      case 'pending': return 'text-orange-500';
+      case 'paid': return 'text-green-500';
+      case 'overdue': return 'text-brand-red';
+      default: return 'text-[#9CA3AF]';
     }
   };
 
-  return (
-    <ClientLayout onNewRequest={() => {}}>
-      <Head title="Payments | Studio99" />
+  const formatAmount = (amount) => {
+    return '$' + amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
 
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+  return (
+    <ClientLayout>
+      <Head title="Payments & Invoices | Studio99" />
+
+      {/* Header Area */}
+      <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-display font-bold text-white mb-2">Payments & Invoices</h1>
-          <p className="text-[#94A3B8]">Manage your billing history and pending payments.</p>
+          <h1 className="text-3xl font-black text-white mb-2 tracking-tight">Payments & Invoices</h1>
+          <div className="flex items-center text-sm font-medium text-[#9CA3AF] gap-2">
+            <Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
+            <span>/</span>
+            <span className="text-brand-red">Payments & Invoices</span>
+          </div>
+          <p className="text-[#9CA3AF] mt-4">View, manage and track all your payments and invoices.</p>
         </div>
       </div>
 
-      <div className="bg-[#111118] border border-[#2A2A3A] rounded-2xl overflow-hidden">
-        {invoicesList.length > 0 ? (
-          <div className="divide-y divide-[#2A2A3A]">
-            {invoicesList.map((invoice) => (
-              <div key={invoice.id} className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-[#1A1A28] transition-colors">
-                <div className="flex flex-col md:flex-row gap-6 md:items-center w-full md:w-auto">
-                  <div className="w-12 h-12 rounded-xl bg-[#1A1A28] flex items-center justify-center border border-[#2A2A3A] shrink-0">
-                    <FileText className="w-6 h-6 text-[#94A3B8]" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-white mb-1">{invoice.description}</h3>
-                    <p className="text-sm text-[#94A3B8] flex items-center gap-2">
-                      <span>INV-{invoice.id.toString().padStart(4, '0')}</span>
-                      <span>•</span>
-                      <span>Due: {invoice.due_date ? new Date(invoice.due_date).toLocaleDateString() : 'N/A'}</span>
-                    </p>
-                  </div>
-                </div>
+      {/* Top Row: Stat Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+        {/* Total Invoices */}
+        <div className="bg-[#111111] border border-[#2A2A2A] p-6 rounded-2xl flex items-center gap-4 hover:border-[#3A3A3A] transition-colors">
+          <div className="w-12 h-12 rounded-xl bg-brand-red flex items-center justify-center text-white shrink-0">
+            <FileText className="w-6 h-6 fill-current opacity-80" />
+          </div>
+          <div>
+            <p className="text-white text-sm font-medium mb-0.5">Total Invoices</p>
+            <h3 className="text-3xl font-black text-white leading-none">18</h3>
+            <p className="text-[11px] text-[#9CA3AF] mt-1">All time</p>
+          </div>
+        </div>
 
-                <div className="flex items-center justify-between md:justify-end w-full md:w-auto gap-8">
-                  <div className="text-left md:text-right">
-                    <p className="text-sm text-[#94A3B8] mb-1">Amount</p>
-                    <p className="text-2xl font-bold font-display text-white">₦{parseFloat(invoice.amount).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                  </div>
-                  
-                  <div className="flex flex-col md:flex-row items-end md:items-center gap-4">
-                    {getStatusBadge(invoice.status)}
-                    
-                    {invoice.status === 'unpaid' ? (
-                      <button 
-                        onClick={() => setSelectedInvoice(invoice)}
-                        className="bg-[#6C3CE1] hover:bg-[#5b32be] text-white px-5 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
-                      >
-                        <CreditCard className="w-4 h-4" /> Pay Now
-                      </button>
-                    ) : (
-                      <button className="text-[#94A3B8] hover:text-white p-2 border border-[#2A2A3A] rounded-lg transition-colors">
-                        <Download className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
+        {/* Pending Payments */}
+        <div className="bg-[#111111] border border-[#2A2A2A] p-6 rounded-2xl flex items-center gap-4 hover:border-[#3A3A3A] transition-colors">
+          <div className="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center text-orange-500 shrink-0 border border-orange-500/30">
+            <Clock className="w-6 h-6" />
           </div>
-        ) : (
-          <div className="text-center py-20">
-            <div className="w-16 h-16 rounded-full bg-[#1A1A28] flex items-center justify-center mx-auto mb-4 border border-[#2A2A3A]">
-              <FileText className="w-8 h-8 text-[#475569]" />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-2">No invoices found</h3>
-            <p className="text-[#94A3B8]">You don't have any pending or past invoices.</p>
+          <div>
+            <p className="text-white text-sm font-medium mb-0.5">Pending Payments</p>
+            <h3 className="text-3xl font-black text-white leading-none">4</h3>
+            <p className="text-[11px] text-orange-500 mt-1">Total: $1,250.00</p>
           </div>
-        )}
+        </div>
+
+        {/* Paid Invoices */}
+        <div className="bg-[#111111] border border-[#2A2A2A] p-6 rounded-2xl flex items-center gap-4 hover:border-[#3A3A3A] transition-colors">
+          <div className="w-12 h-12 rounded-xl bg-green-500 flex items-center justify-center text-white shrink-0">
+            <CheckCircle2 className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="text-white text-sm font-medium mb-0.5">Paid Invoices</p>
+            <h3 className="text-3xl font-black text-white leading-none">12</h3>
+            <p className="text-[11px] text-green-500 mt-1">Total: $4,850.00</p>
+          </div>
+        </div>
+
+        {/* Overdue */}
+        <div className="bg-[#111111] border border-[#2A2A2A] p-6 rounded-2xl flex items-center gap-4 hover:border-[#3A3A3A] transition-colors">
+          <div className="w-12 h-12 rounded-xl bg-purple-600 flex items-center justify-center text-white shrink-0">
+            <XCircle className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="text-white text-sm font-medium mb-0.5">Overdue</p>
+            <h3 className="text-3xl font-black text-white leading-none">2</h3>
+            <p className="text-[11px] text-purple-400 mt-1">Total: $750.00</p>
+          </div>
+        </div>
       </div>
 
-      {/* Pay Invoice Modal */}
-      <AppModal 
-        open={selectedInvoice !== null} 
-        onClose={() => setSelectedInvoice(null)}
-        title="Complete Payment"
-      >
-        {selectedInvoice && (
-          <div className="space-y-6 mt-4">
-            <div className="bg-[#1A1A28] border border-[#2A2A3A] rounded-xl p-5 text-center">
-              <p className="text-[#94A3B8] text-sm mb-2">Total Amount Due</p>
-              <h2 className="text-4xl font-display font-bold text-white mb-2">₦{parseFloat(selectedInvoice.amount).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
-              <p className="text-sm font-medium text-white">{selectedInvoice.description}</p>
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
+        {/* Left Column (Table) */}
+        <div className="xl:col-span-3">
+          <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl overflow-hidden">
+            {/* Filters Header */}
+            <div className="p-4 border-b border-[#2A2A2A] flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+              <div className="flex overflow-x-auto hide-scrollbar gap-2 pb-2 lg:pb-0">
+                {filters.map(f => (
+                  <button
+                    key={f.id}
+                    onClick={() => setActiveFilter(f.id)}
+                    className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 transition-colors ${
+                      activeFilter === f.id 
+                        ? 'text-white border-b-2 border-brand-red rounded-none px-2' 
+                        : 'text-[#9CA3AF] hover:text-white px-2'
+                    }`}
+                  >
+                    {f.label}
+                    {f.count && (
+                      <span className={`w-5 h-5 rounded-full text-white text-[10px] flex items-center justify-center font-black ${f.countColor}`}>
+                        {f.count}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0">
+                <button className="py-2.5 px-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-white hover:border-[#4A4A4A] transition-colors flex items-center justify-between gap-2 min-w-[140px]">
+                  <span className="text-sm font-bold">All Projects</span>
+                  <ChevronDown className="w-4 h-4 text-[#9CA3AF]" />
+                </button>
+                <button className="py-2.5 px-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-white hover:border-[#4A4A4A] transition-colors flex items-center justify-between gap-2 min-w-[100px]">
+                  <Filter className="w-4 h-4 text-[#9CA3AF]" />
+                  <span className="text-sm font-bold">Filter</span>
+                  <ChevronDown className="w-4 h-4 text-[#9CA3AF]" />
+                </button>
+              </div>
             </div>
 
-            <div className="space-y-3">
-              <Link
-                href={`/client/invoices/${selectedInvoice.id}`}
-                className="w-full flex items-center justify-between p-4 rounded-xl border border-[#2A2A3A] hover:border-[#6C3CE1] bg-[#1A1A28] hover:bg-[#1A1A28]/80 transition-colors group"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded bg-[#6C3CE1]/20 flex items-center justify-center">
-                    <CreditCard className="w-5 h-5 text-[#6C3CE1]" />
-                  </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-white">Pay Online</h4>
-                    <p className="text-xs text-[#94A3B8]">Credit Card, Apple Pay (via Paystack)</p>
-                  </div>
-                </div>
-                <ArrowRight className="w-5 h-5 text-[#94A3B8] group-hover:text-white transition-colors" />
-              </Link>
-              
-              <Link
-                href={`/client/invoices/${selectedInvoice.id}`}
-                className="w-full flex items-center justify-between p-4 rounded-xl border border-[#2A2A3A] hover:border-[#6C3CE1] bg-[#1A1A28] hover:bg-[#1A1A28]/80 transition-colors group"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded bg-[#2A2A3A] flex items-center justify-center">
-                    <FileText className="w-5 h-5 text-[#94A3B8]" />
-                  </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-white">Bank Transfer</h4>
-                    <p className="text-xs text-[#94A3B8]">Upload proof of payment</p>
-                  </div>
-                </div>
-                <ArrowRight className="w-5 h-5 text-[#94A3B8] group-hover:text-white transition-colors" />
-              </Link>
+            {/* Table Body */}
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse min-w-[900px]">
+                <thead>
+                  <tr className="border-b border-[#2A2A2A] bg-[#0A0A0A]/50">
+                    <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] uppercase tracking-wider">Invoice</th>
+                    <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] uppercase tracking-wider">Project</th>
+                    <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] uppercase tracking-wider">Date</th>
+                    <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] uppercase tracking-wider">Due Date</th>
+                    <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] uppercase tracking-wider">Status</th>
+                    <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] uppercase tracking-wider">Amount</th>
+                    <th className="py-4 px-6 text-xs font-bold text-[#9CA3AF] uppercase tracking-wider text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#2A2A2A]">
+                  {invoicesList.map(invoice => (
+                    <tr key={invoice.id} className="hover:bg-[#1A1A1A] transition-colors group">
+                      <td className="py-4 px-6">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-8 h-8 rounded bg-brand-red flex items-center justify-center text-[10px] font-black text-white shrink-0`}>
+                            INV
+                          </div>
+                          <div>
+                            <p className="font-bold text-white text-sm">{invoice.id}</p>
+                            <p className="text-[11px] text-[#9CA3AF] mt-0.5">{invoice.number}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <p className="font-medium text-white text-sm">{invoice.project}</p>
+                        <p className="text-[11px] text-[#9CA3AF] mt-0.5">{invoice.category}</p>
+                      </td>
+                      <td className="py-4 px-6">
+                        <p className="font-medium text-white text-sm">{invoice.date}</p>
+                      </td>
+                      <td className="py-4 px-6">
+                        <p className="font-medium text-white text-sm">{invoice.dueDate}</p>
+                        <p className={`text-[11px] font-medium mt-0.5 ${getStatusClass(invoice.status)}`}>{invoice.dueDays}</p>
+                      </td>
+                      <td className="py-4 px-6">
+                        <span className={`text-xs font-bold capitalize ${getStatusClass(invoice.status)}`}>
+                          {invoice.status}
+                        </span>
+                      </td>
+                      <td className="py-4 px-6">
+                        <span className="text-sm font-bold text-white">{formatAmount(invoice.amount)}</span>
+                      </td>
+                      <td className="py-4 px-6 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          {invoice.status === 'overdue' ? (
+                            <button className="bg-brand-red hover:bg-red-600 text-white px-4 py-1.5 rounded text-xs font-bold transition-colors shadow-[0_0_10px_rgba(220,38,38,0.3)]">
+                              Pay Now
+                            </button>
+                          ) : (
+                            <button className="text-[#9CA3AF] hover:text-white px-4 py-1.5 text-xs font-bold transition-colors">
+                              View
+                            </button>
+                          )}
+                          <button className="p-1.5 text-[#9CA3AF] hover:text-white transition-colors">
+                            <MoreVertical className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-            
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 flex gap-3">
-              <AlertCircle className="w-5 h-5 text-blue-400 shrink-0" />
-              <p className="text-xs text-blue-100 leading-relaxed">
-                Transactions are secured and encrypted. Upon successful payment, your project status will automatically update.
-              </p>
+
+            {/* Pagination */}
+            <div className="p-4 border-t border-[#2A2A2A] flex items-center justify-between">
+              <p className="text-xs font-medium text-[#9CA3AF]">Showing 1 to 8 of 18 invoices</p>
+              <div className="flex items-center gap-1">
+                <button className="w-8 h-8 rounded border border-[#2A2A2A] flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-[#1A1A1A] transition-colors disabled:opacity-50">
+                  &lt;
+                </button>
+                <button className="w-8 h-8 rounded border border-brand-red bg-brand-red flex items-center justify-center text-white font-bold transition-colors">
+                  1
+                </button>
+                <button className="w-8 h-8 rounded border border-[#2A2A2A] flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-[#1A1A1A] transition-colors">
+                  2
+                </button>
+                <button className="w-8 h-8 rounded border border-[#2A2A2A] flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-[#1A1A1A] transition-colors">
+                  3
+                </button>
+                <button className="w-8 h-8 rounded border border-[#2A2A2A] flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-[#1A1A1A] transition-colors">
+                  &gt;
+                </button>
+              </div>
             </div>
           </div>
-        )}
-      </AppModal>
+        </div>
+
+        {/* Right Column (Widgets) */}
+        <div className="space-y-6">
+          {/* Payment Summary */}
+          <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6 relative">
+            <h3 className="text-lg font-bold text-white mb-6">Payment Summary</h3>
+            
+            <div className="flex justify-center mb-8">
+              <div className="relative w-48 h-48">
+                {/* Custom SVG Donut Chart for Payment Breakdowns */}
+                <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                  {/* Paid (Green - 79%) */}
+                  <circle 
+                    cx="50" cy="50" r="40" 
+                    fill="transparent" 
+                    stroke="#22C55E" 
+                    strokeWidth="10" 
+                    strokeDasharray="251.2" 
+                    strokeDashoffset="52.75" /* 251.2 - (79% of 251.2) */
+                    className="origin-center"
+                  />
+                  {/* Pending (Orange - 21%) */}
+                  <circle 
+                    cx="50" cy="50" r="40" 
+                    fill="transparent" 
+                    stroke="#F97316" 
+                    strokeWidth="10" 
+                    strokeDasharray="251.2" 
+                    strokeDashoffset="198.45" /* 251.2 - (21% of 251.2) */
+                    className="origin-center"
+                    transform="rotate(284.4 50 50)" /* 79% of 360 */
+                  />
+                  {/* Overdue (Red - 13% - visually overlapping pending in design logic) */}
+                  <circle 
+                    cx="50" cy="50" r="40" 
+                    fill="transparent" 
+                    stroke="#DC2626" 
+                    strokeWidth="10" 
+                    strokeDasharray="251.2" 
+                    strokeDashoffset="218.5" /* 251.2 - (13% of 251.2) */
+                    className="origin-center"
+                    transform="rotate(313 50 50)" /* Visually offset to show small slice */
+                  />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-2xl font-black text-white">$6,100.00</span>
+                  <span className="text-[10px] text-[#9CA3AF]">Total Invoiced</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4 mb-6">
+              <div className="flex justify-between items-center text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded bg-green-500"></div>
+                  <span className="text-[#9CA3AF]">Paid</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-white font-medium">$4,850.00</span>
+                  <span className="text-[#9CA3AF] text-xs ml-1">(79%)</span>
+                </div>
+              </div>
+              <div className="flex justify-between items-center text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded bg-orange-500"></div>
+                  <span className="text-[#9CA3AF]">Pending</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-white font-medium">$1,250.00</span>
+                  <span className="text-[#9CA3AF] text-xs ml-1">(21%)</span>
+                </div>
+              </div>
+              <div className="flex justify-between items-center text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded bg-brand-red"></div>
+                  <span className="text-[#9CA3AF]">Overdue</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-white font-medium">$750.00</span>
+                  <span className="text-[#9CA3AF] text-xs ml-1">(13%)</span>
+                </div>
+              </div>
+            </div>
+
+            <button className="w-full py-3.5 bg-brand-red hover:bg-red-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-colors shadow-[0_4px_14px_rgba(220,38,38,0.25)]">
+              <CreditCard className="w-5 h-5" /> Make a Payment
+            </button>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+            <h3 className="text-lg font-bold text-white mb-4">Quick Actions</h3>
+            <div className="space-y-1">
+              <button className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-[#1A1A1A] text-[#9CA3AF] hover:text-white transition-colors group">
+                <div className="flex items-center gap-3">
+                  <Download className="w-4 h-4" />
+                  <span className="text-sm font-medium">Download All Invoices</span>
+                </div>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity">&gt;</span>
+              </button>
+              <button className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-[#1A1A1A] text-[#9CA3AF] hover:text-white transition-colors group">
+                <div className="flex items-center gap-3">
+                  <History className="w-4 h-4" />
+                  <span className="text-sm font-medium">Payment History</span>
+                </div>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity">&gt;</span>
+              </button>
+              <button className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-[#1A1A1A] text-[#9CA3AF] hover:text-white transition-colors group">
+                <div className="flex items-center gap-3">
+                  <CreditCard className="w-4 h-4" />
+                  <span className="text-sm font-medium">Manage Payment Methods</span>
+                </div>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity">&gt;</span>
+              </button>
+              <button className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-[#1A1A1A] text-[#9CA3AF] hover:text-white transition-colors group">
+                <div className="flex items-center gap-3">
+                  <FileBox className="w-4 h-4" />
+                  <span className="text-sm font-medium">Request Invoice</span>
+                </div>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity">&gt;</span>
+              </button>
+              <button className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-[#1A1A1A] text-[#9CA3AF] hover:text-white transition-colors group">
+                <div className="flex items-center gap-3">
+                  <Settings className="w-4 h-4" />
+                  <span className="text-sm font-medium">Billing Information</span>
+                </div>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity">&gt;</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Need Help Widget */}
+          <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+            <div className="flex items-center gap-3 mb-3">
+              <HeadphonesIcon className="w-5 h-5 text-white" />
+              <h3 className="text-sm font-bold text-white">Need Help?</h3>
+            </div>
+            <p className="text-xs text-[#9CA3AF] leading-relaxed mb-4">
+              If you have any payment issues or questions, our team is here to help.
+            </p>
+            <button className="w-full py-2.5 bg-transparent border border-brand-red text-brand-red hover:bg-brand-red/10 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors">
+              <HeadphonesIcon className="w-4 h-4" /> Contact Support
+            </button>
+          </div>
+
+        </div>
+      </div>
+
     </ClientLayout>
   );
 }

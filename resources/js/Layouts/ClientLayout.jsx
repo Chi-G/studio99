@@ -37,16 +37,14 @@ export default function ClientLayout({ children }) {
   }, []);
 
   const navigation = [
-    { name: 'Dashboard Overview', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'My Projects', href: '/client/projects', icon: FolderKanban },
-    { name: 'Service Requests', href: '/client/requests/create', icon: FilePlus },
-    { name: 'Project Progress', href: '/client/progress', icon: Activity },
+    { name: 'Request Service', href: '/client/requests/create', icon: FilePlus },
     { name: 'Files & Deliverables', href: '/client/files', icon: FolderOpen },
-    { name: 'Invoices & Payments', href: '/client/invoices', icon: CreditCard },
     { name: 'Messages', href: '/client/messages', icon: MessageSquare, badge: 3 },
-    { name: 'Notifications', href: '/client/notifications', icon: Bell, badge: 5 },
     { name: 'Support Tickets', href: '/client/support', icon: HeadphonesIcon },
-    { name: 'Account Settings', href: '/profile', icon: Settings },
+    { name: 'Notifications', href: '/client/notifications', icon: Bell, badge: 5 },
+    { name: 'Profile Settings', href: '/profile', icon: Settings },
   ];
 
   return (
