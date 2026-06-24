@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, usePage } from '@inertiajs/react';
-import { 
-  LayoutDashboard, 
-  FolderKanban, 
-  FilePlus, 
-  Activity, 
-  FolderOpen, 
-  CreditCard, 
+import {
+  LayoutDashboard,
+  FolderKanban,
+  FilePlus,
+  Activity,
+  FolderOpen,
+  CreditCard,
   MessageSquare,
   Bell,
   HeadphonesIcon,
@@ -17,6 +17,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { LogoutConfirmModal } from '@/Components/Modals/LogoutConfirmModal';
+import logoImage from '../../images/logo.jpeg';
 
 export default function ClientLayout({ children }) {
   const { auth } = usePage().props;
@@ -42,6 +43,7 @@ export default function ClientLayout({ children }) {
     { name: 'Request Service', href: '/client/requests/create', icon: FilePlus },
     { name: 'Files & Deliverables', href: '/client/files', icon: FolderOpen },
     { name: 'Messages', href: '/client/messages', icon: MessageSquare, badge: 3 },
+    { name: 'Payments & Invoices', href: '/client/invoices', icon: CreditCard },
     { name: 'Support Tickets', href: '/client/support', icon: HeadphonesIcon },
     { name: 'Notifications', href: '/client/notifications', icon: Bell, badge: 5 },
     { name: 'Profile Settings', href: '/profile', icon: Settings },
@@ -51,7 +53,7 @@ export default function ClientLayout({ children }) {
     <div className="min-h-screen bg-[#0A0A0A] text-[#FFFFFF] font-sans flex overflow-hidden">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/80 lg:hidden backdrop-blur-sm"
           onClick={() => setSidebarOpen(false)}
         />
@@ -67,7 +69,7 @@ export default function ClientLayout({ children }) {
           <Link href="/dashboard" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
             <div className="flex flex-col justify-center leading-none mt-0.5">
               <span className="font-black text-2xl tracking-tight flex items-center gap-1">
-                <div className="w-8 h-8 rounded bg-brand-red flex items-center justify-center font-black text-white text-xs mr-1">S99</div>
+                <img src={logoImage} alt="Studio99" className="w-8 h-8 rounded object-cover mr-1" />
                 studio<span className="text-brand-red">99</span>
               </span>
               <span className="text-[10px] uppercase text-[#9CA3AF] tracking-[0.25em] font-sans font-bold mt-1 ml-10">
@@ -84,15 +86,15 @@ export default function ClientLayout({ children }) {
         <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2 custom-scrollbar">
           {navigation.map((item) => {
             const isActive = window.location.pathname.startsWith(item.href) && item.href !== '#' || window.location.pathname === item.href;
-            
+
             return (
               <Link
                 key={item.name}
                 href={item.href}
                 className={`
                   flex items-center justify-between px-4 py-3.5 rounded-xl font-medium transition-all duration-200 group
-                  ${isActive 
-                    ? 'bg-brand-red text-white shadow-[0_0_20px_rgba(227,30,36,0.2)]' 
+                  ${isActive
+                    ? 'bg-brand-red text-white shadow-[0_0_20px_rgba(227,30,36,0.2)]'
                     : 'text-[#9CA3AF] hover:bg-[#1A1A1A] hover:text-white'}
                 `}
               >
@@ -108,7 +110,7 @@ export default function ClientLayout({ children }) {
               </Link>
             )
           })}
-          
+
           <div className="pt-4 mt-4 border-t border-[#2A2A2A]">
             <button
               onClick={() => setIsLogoutModalOpen(true)}
@@ -166,7 +168,7 @@ export default function ClientLayout({ children }) {
 
             {/* Profile Dropdown */}
             <div className="relative" ref={dropdownRef}>
-              <button 
+              <button
                 className="flex items-center gap-3 hover:opacity-80 transition-opacity"
                 onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
               >
@@ -202,10 +204,10 @@ export default function ClientLayout({ children }) {
           {children}
         </main>
       </div>
-      
-      <LogoutConfirmModal 
-        open={isLogoutModalOpen} 
-        onClose={() => setIsLogoutModalOpen(false)} 
+
+      <LogoutConfirmModal
+        open={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
       />
     </div>
   );

@@ -86,6 +86,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/client/support', function () {
             return Inertia::render('Client/Support/Index');
         })->name('client.support.index');
+
+        Route::get('/client/messages', function () {
+            return Inertia::render('Client/Messages/Index');
+        })->name('client.messages.index');
+
+        Route::get('/client/notifications', function () {
+            return Inertia::render('Client/Notifications/Index');
+        })->name('client.notifications.index');
     });
 
     // Chat endpoints (shared for all authenticated users; authorization happens in controller)

@@ -262,45 +262,10 @@ export default function InvoicesIndex() {
             <h3 className="text-lg font-bold text-white mb-6">Payment Summary</h3>
             
             <div className="flex justify-center mb-8">
-              <div className="relative w-48 h-48">
-                {/* Custom SVG Donut Chart for Payment Breakdowns */}
-                <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                  {/* Paid (Green - 79%) */}
-                  <circle 
-                    cx="50" cy="50" r="40" 
-                    fill="transparent" 
-                    stroke="#22C55E" 
-                    strokeWidth="10" 
-                    strokeDasharray="251.2" 
-                    strokeDashoffset="52.75" /* 251.2 - (79% of 251.2) */
-                    className="origin-center"
-                  />
-                  {/* Pending (Orange - 21%) */}
-                  <circle 
-                    cx="50" cy="50" r="40" 
-                    fill="transparent" 
-                    stroke="#F97316" 
-                    strokeWidth="10" 
-                    strokeDasharray="251.2" 
-                    strokeDashoffset="198.45" /* 251.2 - (21% of 251.2) */
-                    className="origin-center"
-                    transform="rotate(284.4 50 50)" /* 79% of 360 */
-                  />
-                  {/* Overdue (Red - 13% - visually overlapping pending in design logic) */}
-                  <circle 
-                    cx="50" cy="50" r="40" 
-                    fill="transparent" 
-                    stroke="#DC2626" 
-                    strokeWidth="10" 
-                    strokeDasharray="251.2" 
-                    strokeDashoffset="218.5" /* 251.2 - (13% of 251.2) */
-                    className="origin-center"
-                    transform="rotate(313 50 50)" /* Visually offset to show small slice */
-                  />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <div className="relative w-48 h-48 rounded-full" style={{ background: 'conic-gradient(#22C55E 0% 79%, #F97316 79% 87%, #DC2626 87% 100%)' }}>
+                <div className="absolute inset-0 m-auto w-36 h-36 bg-[#111111] rounded-full flex flex-col items-center justify-center shadow-inner">
                   <span className="text-2xl font-black text-white">$6,100.00</span>
-                  <span className="text-[10px] text-[#9CA3AF]">Total Invoiced</span>
+                  <span className="text-[10px] text-[#9CA3AF] mt-1">Total Invoiced</span>
                 </div>
               </div>
             </div>
