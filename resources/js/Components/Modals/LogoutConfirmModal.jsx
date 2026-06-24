@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm } from '@inertiajs/react';
+import { useForm, Link } from '@inertiajs/react';
 import { Dialog, DialogContent, DialogTitle } from '@/Components/ui/dialog';
 import { LogOut, Loader2 } from 'lucide-react';
 
@@ -15,35 +15,55 @@ export function LogoutConfirmModal({ open, onClose }) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-sm bg-bg-card border border-bg-border p-8 shadow-2xl rounded-2xl">
-        <DialogTitle className="sr-only">Confirm Logout</DialogTitle>
+      <DialogContent className="max-w-md bg-[#111111] border border-[#2A2A2A] p-0 shadow-2xl rounded-3xl overflow-hidden">
+        <DialogTitle className="sr-only">Ready to log out?</DialogTitle>
         
-        <div className="flex flex-col items-center text-center">
-          <div className="w-16 h-16 rounded-full bg-brand-red/10 flex items-center justify-center mb-6">
-            <LogOut className="w-8 h-8 text-brand-red" />
-          </div>
-          
-          <h2 className="text-xl font-black text-white mb-2">Ready to leave?</h2>
-          <p className="text-sm text-text-secondary mb-8">
-            Are you sure you want to log out of your Studio99 account?
-          </p>
+        <div className="p-10 text-center">
+            <div className="w-24 h-24 rounded-full bg-[#1A1A1A] border border-[#2A2A2A] flex items-center justify-center mx-auto mb-8">
+                <LogOut className="w-10 h-10 text-brand-red" />
+            </div>
 
-          <div className="flex w-full gap-3">
-            <button
-              onClick={onClose}
-              disabled={processing}
-              className="flex-1 py-3 px-4 rounded-xl border border-bg-border text-white font-bold hover:bg-bg-base transition-colors"
+            <h2 className="text-2xl font-black text-white mb-4">Ready to log out?</h2>
+            
+            <p className="text-[#9CA3AF] text-sm mb-8 leading-relaxed">
+                You will be logged out of your account.<br/>
+                You can log back in anytime to access your projects and data.
+            </p>
+
+            <form onSubmit={handleLogout} className="flex flex-col gap-4">
+                <button 
+                    type="submit" 
+                    disabled={processing}
+                    className="w-full flex items-center justify-center gap-2 py-3.5 bg-brand-red hover:bg-red-600 text-white rounded-xl font-bold transition-all shadow-[0_4px_15px_rgba(227,30,36,0.2)] disabled:opacity-70"
+                >
+                    {processing ? <Loader2 className="w-5 h-5 animate-spin" /> : <LogOut className="w-5 h-5" />}
+                    {processing ? 'Logging out...' : 'Yes, Logout'}
+                </button>
+                
+                <button 
+                    type="button"
+                    onClick={onClose}
+                    className="w-full py-3.5 border border-[#2A2A2A] hover:border-[#4A4A4A] text-white rounded-xl font-bold transition-all bg-[#151515] hover:bg-[#1A1A1A]"
+                >
+                    Cancel
+                </button>
+            </form>
+
+            <div className="mt-8 mb-6 relative">
+                <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-[#2A2A2A]"></div>
+                </div>
+                <div className="relative flex justify-center text-xs">
+                    <span className="bg-[#111111] px-4 text-[#9CA3AF]">or</span>
+                </div>
+            </div>
+
+            <button 
+                onClick={onClose}
+                className="text-sm text-white font-medium hover:text-brand-red transition-colors inline-flex items-center gap-2 group"
             >
-              Cancel
+                <span className="group-hover:-translate-x-1 transition-transform">→</span> Go to Dashboard
             </button>
-            <button
-              onClick={handleLogout}
-              disabled={processing}
-              className="flex-1 py-3 px-4 rounded-xl bg-brand-red text-white font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2"
-            >
-              {processing ? <Loader2 className="w-5 h-5 animate-spin" /> : "Log Out"}
-            </button>
-          </div>
         </div>
       </DialogContent>
     </Dialog>
