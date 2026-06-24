@@ -31,7 +31,7 @@ export default function MessagesIndex() {
                 <p className="text-[#9CA3AF] text-sm">Communicate with our team and stay updated on your projects.</p>
             </div>
 
-            <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-220px)] min-h-[600px]">
+            <div className="flex flex-col lg:flex-row gap-6 flex-1 min-h-[600px] pb-6">
                 
                 {/* Left Sidebar: Conversations List */}
                 <div className="w-full lg:w-[320px] shrink-0 flex flex-col bg-[#111111] border border-[#2A2A2A] rounded-2xl overflow-hidden">
@@ -327,7 +327,7 @@ export default function MessagesIndex() {
                 {/* Right Sidebar: Conversation Info */}
                 <div className="hidden xl:flex w-[280px] shrink-0 flex-col gap-6">
                     {/* Info Card */}
-                    <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+                    <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6 shrink-0">
                         <h3 className="text-white font-bold text-sm uppercase tracking-wider mb-6">Conversation Info</h3>
                         
                         <div className="flex flex-col items-center text-center mb-6 border-b border-[#2A2A2A] pb-6">
@@ -367,13 +367,13 @@ export default function MessagesIndex() {
                     </div>
 
                     {/* Shared Files */}
-                    <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6 flex-1 flex flex-col">
-                        <div className="flex items-center justify-between mb-6">
+                    <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6 flex-1 flex flex-col overflow-hidden min-h-0">
+                        <div className="flex items-center justify-between mb-6 shrink-0">
                             <h3 className="text-white font-bold text-sm uppercase tracking-wider">Shared Files</h3>
                             <button className="text-brand-red text-xs font-bold hover:text-red-400 transition-colors">View All</button>
                         </div>
 
-                        <div className="space-y-4 flex-1">
+                        <div className="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-2">
                             {/* File */}
                             <div className="flex items-start gap-3">
                                 <div className="w-10 h-10 rounded-lg bg-brand-red/10 flex items-center justify-center text-brand-red font-bold text-[10px] shrink-0">PDF</div>
