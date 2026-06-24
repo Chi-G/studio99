@@ -121,7 +121,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             <a href="#work" className="hover:text-text-primary transition-colors">Portfolio</a>
             <a href="#pricing" className="hover:text-text-primary transition-colors">Pricing</a>
             <a href="#about" className="hover:text-text-primary transition-colors">About</a>
-            <a href="#contact" className="hover:text-text-primary transition-colors">Contact</a>
+            <Link href="/contact" className="hover:text-text-primary transition-colors">Contact</Link>
           </div>
 
           {/* Desktop Auth Buttons */}
@@ -169,7 +169,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             <a href="#work" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Portfolio</a>
             <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Pricing</a>
             <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">About</a>
-            <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Contact</a>
+            <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Contact</Link>
           </div>
 
           <div className="flex flex-col gap-4 mt-auto">
@@ -488,9 +488,9 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             <button onClick={handleRequestServiceClick} className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
               Start Your Project Today
             </button>
-            <a href="#contact" className="w-full sm:w-auto px-8 py-4 rounded-full border border-bg-border bg-bg-card hover:bg-bg-border transition-colors font-bold flex items-center justify-center gap-2">
+            <Link href="/contact" className="w-full sm:w-auto px-8 py-4 rounded-full border border-bg-border bg-bg-card hover:bg-bg-border transition-colors font-bold flex items-center justify-center gap-2">
               Contact Us
-            </a>
+            </Link>
           </div>
 
           <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm font-medium text-text-secondary">
