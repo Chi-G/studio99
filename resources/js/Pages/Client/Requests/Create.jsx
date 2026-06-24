@@ -1,159 +1,244 @@
-import React, { useState, useEffect } from 'react';
-import { Head, useForm } from '@inertiajs/react';
+import React, { useState } from 'react';
+import { Head, Link, useForm } from '@inertiajs/react';
+import ClientLayout from '@/Layouts/ClientLayout';
+import { 
+  Monitor, 
+  PenTool, 
+  Smartphone, 
+  Film, 
+  Share2, 
+  Megaphone, 
+  Type, 
+  Star, 
+  MoreHorizontal,
+  CheckCircle2,
+  MessageSquare,
+  ArrowRight,
+  ClipboardList
+} from 'lucide-react';
 
-export default function Create({ auth, services }) {
+export default function Create({ auth, services = [] }) {
     const { data, setData, post, processing, errors } = useForm({
         service_id: '',
-        package_id: '',
         title: '',
         description: '',
         reference_files: [],
     });
 
-    const [availablePackages, setAvailablePackages] = useState([]);
+    const [currentStep, setCurrentStep] = useState(1);
 
-    useEffect(() => {
-        if (data.service_id) {
-            const selectedService = services.find(s => s.id === parseInt(data.service_id));
-            if (selectedService) {
-                setAvailablePackages(selectedService.packages);
-                setData('package_id', '');
-            }
-        } else {
-            setAvailablePackages([]);
-        }
-    }, [data.service_id]);
+    // Mock services if empty, to match the design grid exactly
+    const displayServices = services.length > 0 ? services : [
+      { id: 1, name: 'Web Development', desc: 'Custom websites, web applications and platforms.', icon: 'monitor' },
+      { id: 2, name: 'Graphic Design', desc: 'Logos, branding, social media graphics and more.', icon: 'pen' },
+      { id: 3, name: 'UI/UX Design', desc: 'User interface and experience design for web and mobile.', icon: 'smartphone' },
+      { id: 4, name: 'Video Editing', desc: 'Promo videos, YouTube edits, reels and more.', icon: 'film' },
+      { id: 5, name: 'Social Media Management', desc: 'Content creation, posting, and community management.', icon: 'share' },
+      { id: 6, name: 'Digital Marketing', desc: 'SEO, ads, email marketing, and growth strategies.', icon: 'megaphone' },
+      { id: 7, name: 'Content Writing', desc: 'Blog posts, website content, copies and more.', icon: 'type' },
+      { id: 8, name: 'Branding', desc: 'Brand identity, strategy, and brand guidelines.', icon: 'star' },
+      { id: 9, name: 'Other (Custom Request)', desc: 'Have something specific in mind? Let us know.', icon: 'more' },
+    ];
+
+    const getServiceIcon = (iconStr, isActive) => {
+      const colorClass = isActive ? "text-brand-red" : "text-brand-red";
+      switch(iconStr) {
+        case 'monitor': return <Monitor className={`w-6 h-6 ${colorClass}`} />;
+        case 'pen': return <PenTool className={`w-6 h-6 ${colorClass}`} />;
+        case 'smartphone': return <Smartphone className={`w-6 h-6 ${colorClass}`} />;
+        case 'film': return <Film className={`w-6 h-6 ${colorClass}`} />;
+        case 'share': return <Share2 className={`w-6 h-6 ${colorClass}`} />;
+        case 'megaphone': return <Megaphone className={`w-6 h-6 ${colorClass}`} />;
+        case 'type': return <Type className={`w-6 h-6 ${colorClass}`} />;
+        case 'star': return <Star className={`w-6 h-6 ${colorClass}`} />;
+        default: return <MoreHorizontal className={`w-6 h-6 ${colorClass}`} />;
+      }
+    };
+
+    const steps = [
+      { id: 1, name: 'Select Service' },
+      { id: 2, name: 'Project Details' },
+      { id: 3, name: 'Additional Info' },
+      { id: 4, name: 'Upload Files' },
+      { id: 5, name: 'Review & Submit' }
+    ];
+
+    const selectedServiceDetails = displayServices.find(s => s.id === data.service_id);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         post('/client/requests');
     };
 
+    const handleNext = () => {
+      if (currentStep < 5) setCurrentStep(currentStep + 1);
+    };
+
     return (
-        <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <Head title="Start New Project" />
+        <ClientLayout>
+            <Head title="Request a Service | Studio99" />
 
-            <div className="max-w-3xl mx-auto">
-                <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Start a New Project</h2>
-
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        {/* Service Selection */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">What type of service do you need?</label>
-                            <select
-                                value={data.service_id}
-                                onChange={e => setData('service_id', e.target.value)}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            >
-                                <option value="">Select a service...</option>
-                                {services.map(service => (
-                                    <option key={service.id} value={service.id}>
-                                        {service.name}
-                                    </option>
-                                ))}
-                            </select>
-                            {errors.service_id && <p className="mt-1 text-sm text-red-600">{errors.service_id}</p>}
-                        </div>
-
-                        {/* Package Selection */}
-                        {availablePackages.length > 0 && (
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700">Select a Package</label>
-                                <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                    {availablePackages.map(pkg => (
-                                        <div
-                                            key={pkg.id}
-                                            onClick={() => setData('package_id', pkg.id)}
-                                            className={`relative flex cursor-pointer rounded-lg px-5 py-4 shadow-sm focus:outline-none border ${data.package_id === pkg.id ? 'border-indigo-500 ring-2 ring-indigo-500 bg-indigo-50' : 'border-gray-300 bg-white hover:bg-gray-50'
-                                                }`}
-                                        >
-                                            <div className="flex w-full items-center justify-between">
-                                                <div className="flex items-center">
-                                                    <div className="text-sm">
-                                                        <p className={`font-medium ${data.package_id === pkg.id ? 'text-indigo-900' : 'text-gray-900'}`}>
-                                                            {pkg.name}
-                                                        </p>
-                                                        <div className={`inline-flex mt-1 text-xs ${data.package_id === pkg.id ? 'text-indigo-700' : 'text-gray-500'}`}>
-                                                            ${pkg.price} {pkg.billing_type === 'monthly' ? '/ month' : 'one-time'}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                                {errors.package_id && <p className="mt-1 text-sm text-red-600">{errors.package_id}</p>}
-                            </div>
-                        )}
-
-                        {/* Project Details */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Project Title</label>
-                            <input
-                                type="text"
-                                value={data.title}
-                                onChange={e => setData('title', e.target.value)}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                placeholder="E.g., Redesign our corporate website"
-                            />
-                            {errors.title && <p className="mt-1 text-sm text-red-600">{errors.title}</p>}
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Project Description</label>
-                            <textarea
-                                rows={4}
-                                value={data.description}
-                                onChange={e => setData('description', e.target.value)}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                placeholder="Describe what you need in detail..."
-                            />
-                            {errors.description && <p className="mt-1 text-sm text-red-600">{errors.description}</p>}
-                        </div>
-
-                        {/* Reference Files */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Reference Files (Optional)</label>
-                            <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
-                                <div className="space-y-1 text-center">
-                                    <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                    <div className="flex text-sm text-gray-600 justify-center">
-                                        <label htmlFor="file-upload" className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
-                                            <span>Upload a file</span>
-                                            <input
-                                                id="file-upload"
-                                                name="file-upload"
-                                                type="file"
-                                                multiple
-                                                className="sr-only"
-                                                onChange={e => setData('reference_files', e.target.files)}
-                                            />
-                                        </label>
-                                    </div>
-                                    <p className="text-xs text-gray-500">PNG, JPG, PDF up to 10MB</p>
-                                    {data.reference_files.length > 0 && (
-                                        <p className="text-xs text-green-600 font-medium mt-2">{data.reference_files.length} file(s) selected</p>
-                                    )}
-                                </div>
-                            </div>
-                            {errors.reference_files && <p className="mt-1 text-sm text-red-600">{errors.reference_files}</p>}
-                        </div>
-
-                        <div className="pt-4 flex justify-end">
-                            <button
-                                type="submit"
-                                disabled={processing}
-                                className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
-                            >
-                                {processing ? 'Submitting...' : 'Submit Request'}
-                            </button>
-                        </div>
-                    </form>
-                </div>
+            {/* Header Area */}
+            <div className="mb-8">
+              <h1 className="text-3xl font-black text-white mb-2 tracking-tight">Request a Service</h1>
+              <div className="flex items-center text-sm font-medium text-[#9CA3AF] gap-2 mb-4">
+                <Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
+                <span>/</span>
+                <span className="text-brand-red">Request Service</span>
+              </div>
+              <p className="text-[#9CA3AF]">Fill out the details below to request a service. Our team will review your request and get back to you.</p>
             </div>
-        </div>
+
+            {/* Stepper Progress */}
+            <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6 mb-8 flex items-center justify-between overflow-x-auto hide-scrollbar">
+              {steps.map((step, index) => (
+                <div key={step.id} className="flex items-center flex-shrink-0">
+                  <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold transition-colors ${
+                    currentStep === step.id ? 'bg-brand-red text-white' : 
+                    currentStep > step.id ? 'bg-[#2A2A2A] text-white' : 'bg-[#1A1A1A] text-[#4A4A4A] border border-[#2A2A2A]'
+                  }`}>
+                    {currentStep > step.id ? <CheckCircle2 className="w-5 h-5" /> : step.id}
+                  </div>
+                  <span className={`ml-3 text-sm font-bold whitespace-nowrap ${currentStep === step.id ? 'text-white' : 'text-[#4A4A4A]'}`}>
+                    {step.name}
+                  </span>
+                  {index < steps.length - 1 && (
+                    <div className="w-12 sm:w-24 h-px bg-[#2A2A2A] mx-4"></div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Left Column (Main Content) */}
+              <div className="lg:col-span-2">
+                {currentStep === 1 && (
+                  <div className="animate-in fade-in duration-300">
+                    <div className="mb-6">
+                      <h2 className="text-xl font-bold text-white mb-1">1. Select a Service</h2>
+                      <p className="text-sm text-[#9CA3AF]">Choose the type of service you need.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
+                      {displayServices.map((service) => {
+                        const isActive = data.service_id === service.id;
+                        return (
+                          <div 
+                            key={service.id}
+                            onClick={() => setData('service_id', service.id)}
+                            className={`relative bg-[#111111] border rounded-xl p-5 cursor-pointer transition-all ${
+                              isActive 
+                                ? 'border-brand-red shadow-[0_0_15px_rgba(220,38,38,0.15)] scale-[1.02]' 
+                                : 'border-[#2A2A2A] hover:border-[#4A4A4A]'
+                            }`}
+                          >
+                            {isActive && (
+                              <div className="absolute top-3 right-3 w-5 h-5 bg-brand-red rounded-full flex items-center justify-center">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-white" />
+                              </div>
+                            )}
+                            <div className={`w-12 h-12 rounded-lg mb-4 flex items-center justify-center transition-colors ${
+                              isActive ? 'bg-brand-red/10' : 'bg-[#1A1A1A] group-hover:bg-[#2A2A2A]'
+                            }`}>
+                              {getServiceIcon(service.icon, isActive)}
+                            </div>
+                            <h3 className="text-white font-bold mb-2">{service.name}</h3>
+                            <p className="text-xs text-[#9CA3AF] leading-relaxed">{service.desc}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <button 
+                      onClick={handleNext}
+                      disabled={!data.service_id}
+                      className="bg-brand-red hover:bg-red-600 disabled:bg-[#2A2A2A] disabled:text-[#4A4A4A] text-white px-8 py-3.5 rounded-xl font-bold flex items-center gap-2 transition-colors w-full sm:w-auto justify-center"
+                    >
+                      Next Step <ArrowRight className="w-5 h-5" />
+                    </button>
+                  </div>
+                )}
+
+                {currentStep > 1 && (
+                  <div className="animate-in fade-in duration-300 bg-[#111111] border border-[#2A2A2A] rounded-2xl p-8 text-center py-20">
+                    <ClipboardList className="w-16 h-16 text-[#2A2A2A] mx-auto mb-4" />
+                    <h3 className="text-2xl font-bold text-white mb-2">Step {currentStep} under construction</h3>
+                    <p className="text-[#9CA3AF] mb-6">The remaining steps of the wizard will be implemented based on the backend requirements.</p>
+                    <button 
+                      onClick={() => setCurrentStep(1)}
+                      className="bg-[#1A1A1A] hover:bg-[#2A2A2A] text-white px-6 py-2.5 rounded-xl font-bold transition-colors border border-[#2A2A2A]"
+                    >
+                      Go back to Step 1
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Right Column (Widgets) */}
+              <div className="space-y-6">
+                {/* Request Summary */}
+                <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+                  <h3 className="text-lg font-bold text-white mb-6">Request Summary</h3>
+                  
+                  {selectedServiceDetails ? (
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-4 p-4 bg-[#1A1A1A] rounded-xl border border-[#2A2A2A]">
+                        <div className="w-10 h-10 rounded-lg bg-brand-red/10 flex items-center justify-center shrink-0">
+                          {getServiceIcon(selectedServiceDetails.icon, true)}
+                        </div>
+                        <div>
+                          <h4 className="text-white font-bold">{selectedServiceDetails.name}</h4>
+                          <p className="text-xs text-[#9CA3AF] mt-1">Service Selected</p>
+                        </div>
+                      </div>
+                      
+                      <div className="border-t border-[#2A2A2A] pt-4">
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-[#9CA3AF]">Status</span>
+                          <span className="text-white font-bold">Draft</span>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-center py-8">
+                      <div className="w-16 h-16 rounded-full bg-[#1A1A1A] border border-[#2A2A2A] flex items-center justify-center mx-auto mb-4">
+                        <ClipboardList className="w-6 h-6 text-[#4A4A4A]" />
+                      </div>
+                      <p className="text-white font-bold mb-1">No service selected yet</p>
+                      <p className="text-xs text-[#9CA3AF]">Fill in the details to see<br/>your request summary.</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Need Help */}
+                <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+                  <h3 className="text-lg font-bold text-white mb-2">Need Help?</h3>
+                  <p className="text-sm text-[#9CA3AF] mb-6">If you're not sure which service fits your needs, our team can help you.</p>
+                  <button className="w-full py-2.5 bg-transparent border border-[#4A4A4A] hover:border-white text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-colors">
+                    <MessageSquare className="w-4 h-4" /> Chat with Us
+                  </button>
+                </div>
+
+                {/* Why Choose Studio99 */}
+                <div className="bg-[#111111] border border-[#2A2A2A] rounded-2xl p-6">
+                  <h3 className="text-lg font-bold text-white mb-4">Why Choose Studio99 Digital?</h3>
+                  <ul className="space-y-3">
+                    {[
+                      'Professional & Experienced Team',
+                      'High-Quality Work',
+                      'On-Time Delivery',
+                      '100% Client Satisfaction'
+                    ].map((perk, i) => (
+                      <li key={i} className="flex items-center gap-3 text-sm text-[#9CA3AF]">
+                        <CheckCircle2 className="w-4 h-4 text-brand-red shrink-0" />
+                        {perk}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+        </ClientLayout>
     );
 }

@@ -39,7 +39,7 @@ export default function ClientLayout({ children }) {
   const navigation = [
     { name: 'Dashboard Overview', href: '/dashboard', icon: LayoutDashboard },
     { name: 'My Projects', href: '/client/projects', icon: FolderKanban },
-    { name: 'Service Requests', href: '/client/requests', icon: FilePlus },
+    { name: 'Service Requests', href: '/client/requests/create', icon: FilePlus },
     { name: 'Project Progress', href: '/client/progress', icon: Activity },
     { name: 'Files & Deliverables', href: '/client/files', icon: FolderOpen },
     { name: 'Invoices & Payments', href: '/client/invoices', icon: CreditCard },
