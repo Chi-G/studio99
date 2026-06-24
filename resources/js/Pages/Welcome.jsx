@@ -200,21 +200,21 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
         </div>
 
         <div className="max-w-5xl mx-auto px-4 md:px-8 w-full z-10 relative flex flex-col items-center text-center mt-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/50 backdrop-blur-md mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-bg-border bg-bg-card/50 backdrop-blur-md mb-8">
             <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
-            <span className="text-xs font-black tracking-widest text-white uppercase">Premium Digital Agency</span>
+            <span className="text-xs font-black tracking-widest text-text-primary uppercase">Premium Digital Agency</span>
           </div>
 
           <motion.h1
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-black leading-[1.1] tracking-tighter text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] mb-6 drop-shadow-2xl text-white"
+            className="font-black leading-[1.1] tracking-tighter text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] mb-6 drop-shadow-2xl text-text-primary"
           >
             Transform Your Ideas Into <br className="hidden md:block" /> <span className="text-brand-red">Exceptional Digital Experiences</span>
           </motion.h1>
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 1 }} className="text-gray-200 text-lg md:text-xl max-w-3xl leading-relaxed mb-10 font-sans drop-shadow-lg">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 1 }} className="text-text-secondary text-lg md:text-xl max-w-3xl leading-relaxed mb-10 font-sans drop-shadow-lg">
             <p>
               Studio99 Digital empowers businesses, organizations, professionals, and content creators with premium graphics design, video editing, website development, and social media management services - all in one place.
             </p>
@@ -224,7 +224,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             <button onClick={handleRequestServiceClick} className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-red text-white font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(227,30,36,0.3)]">
               Request a Service <ArrowRight className="w-5 h-5" />
             </button>
-            <a href="#work" className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/20 bg-black/40 backdrop-blur-md text-white font-bold hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+            <a href="#work" className="w-full sm:w-auto px-8 py-4 rounded-full border border-bg-border bg-bg-card/40 backdrop-blur-md text-text-primary font-bold hover:bg-bg-border transition-colors flex items-center justify-center gap-2">
               <Play className="w-4 h-4" /> View Portfolio
             </a>
           </motion.div>
