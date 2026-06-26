@@ -183,24 +183,3 @@ Route::middleware(['auth'])->group(function () {
         })->name('users.index');
     });
 });
-
-// Temporary Route to Seed Team User on Live Database
-Route::get('/setup-team-user', function () {
-    \App\Models\User::updateOrCreate(
-        ['email' => 'dev@studio99.com'],
-        [
-            'name' => 'Team User',
-            'password' => \Illuminate\Support\Facades\Hash::make('password'),
-            'role' => 'team',
-            'email_verified_at' => now(),
-        ]
-    );
-
-    return response()->json([
-        'message' => 'Team user created and verified successfully!',
-        'email' => 'dev@studio99.com',
-        'password' => 'password',
-        'role' => 'team',
-        'warning' => 'IMPORTANT: Please remove this route from routes/web.php after use for security reasons.'
-    ]);
-});
