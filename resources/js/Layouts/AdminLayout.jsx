@@ -25,7 +25,7 @@ export default function AdminLayout({ children }) {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const navigation = [
-    { name: 'Dashboard', href: '/dashboard/admin', icon: Home },
+    { name: 'Dashboard', href: '/admin/dashboard', icon: Home },
     { name: 'Users', href: '/admin/users', icon: Users },
     { name: 'Projects', href: '/admin/projects', icon: Briefcase },
     {
@@ -152,10 +152,10 @@ export default function AdminLayout({ children }) {
           {children}
         </motion.main>
       </div>
-      
-      <LogoutConfirmModal 
-        open={isLogoutModalOpen} 
-        onClose={() => setIsLogoutModalOpen(false)} 
+
+      <LogoutConfirmModal
+        open={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
       />
     </div>
   );
