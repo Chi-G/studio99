@@ -334,7 +334,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
 
           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
             {/* Graphics Design (Large left) */}
-            <motion.div variants={fadeUpVariant} className="md:col-span-2 md:row-span-2 relative rounded-3xl overflow-hidden group hover-glow border border-bg-border">
+            <motion.div variants={fadeUpVariant} className="row-span-2 md:col-span-2 relative rounded-3xl overflow-hidden group hover-glow border border-bg-border">
               <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1200&auto=format&fit=crop" alt="Graphics" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-bg-base via-bg-base/80 to-bg-base/20"></div>
               <div className="absolute inset-0 p-8 flex flex-col justify-between">
