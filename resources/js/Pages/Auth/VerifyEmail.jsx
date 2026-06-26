@@ -18,7 +18,7 @@ export default function VerifyEmail({ status }) {
             <div className="max-w-md w-full space-y-8 bg-bg-card border border-bg-border p-8 rounded-2xl text-center">
                 <div className="flex flex-col items-center">
                     <img src={headerLogo} alt="Studio99 Logo" className="h-12 w-auto rounded-sm mb-4" />
-                    <h2 className="text-3xl font-black text-white">
+                    <h2 className="text-3xl font-black text-text-primary">
                         Verify Your Email
                     </h2>
                 </div>
@@ -35,7 +35,7 @@ export default function VerifyEmail({ status }) {
                 )}
 
                 <form onSubmit={submit} className="mt-8 flex flex-col items-center justify-between gap-4">
-                    <p className="text-sm font-medium text-white">Didn't receive the email?</p>
+                    <p className="text-sm font-medium text-text-primary">Didn't receive the email?</p>
                     <button
                         type="submit"
                         disabled={processing}
@@ -48,7 +48,7 @@ export default function VerifyEmail({ status }) {
                         href="/logout"
                         method="post"
                         as="button"
-                        className="text-sm text-text-secondary hover:text-white underline underline-offset-4 transition-colors mt-2"
+                        className="text-sm text-text-secondary hover:text-text-primary underline underline-offset-4 transition-colors mt-2"
                     >
                         Log Out
                     </Link>
