@@ -111,11 +111,11 @@
     background: transparent;
   }
   .admin-sidebar-scroll::-webkit-scrollbar-thumb {
-    background: transparent;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
   }
   .admin-sidebar-scroll:hover::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
   }
   .admin-sidebar-scroll::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.2);

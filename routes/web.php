@@ -133,6 +133,24 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/team/projects/{project}/files', [FileController::class, 'store'])->name('team.projects.files.store');
 
         // Mock Team Pages
+        Route::get('/team/tasks', function () {
+            return Inertia::render('Team/AssignedTasks');
+        })->name('team.tasks');
+        Route::get('/team/deliverables', function () {
+            return Inertia::render('Team/UploadDeliverables');
+        })->name('team.deliverables');
+        Route::get('/team/progress', function () {
+            return Inertia::render('Team/ProgressUpdates');
+        })->name('team.progress');
+        Route::get('/team/activity-logs', function () {
+            return Inertia::render('Team/ActivityLogs');
+        })->name('team.activity_logs');
+        Route::get('/team/notifications', function () {
+            return Inertia::render('Team/Notifications');
+        })->name('team.notifications');
+        Route::get('/team/profile', function () {
+            return Inertia::render('Team/Profile');
+        })->name('team.profile');
         Route::get('/team/time', function () {
             return Inertia::render('Team/Time');
         })->name('team.time');

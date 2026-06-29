@@ -43,13 +43,13 @@ export default function TeamLayout({ children }) {
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard/team', icon: LayoutDashboard },
-    { name: 'Assigned Tasks', href: '#', icon: CheckSquare, comingSoon: true },
-    { name: 'Upload Deliverables', href: '#', icon: UploadCloud, comingSoon: true },
-    { name: 'Progress Updates', href: '#', icon: Activity, comingSoon: true },
-    { name: 'Activity Logs', href: '#', icon: FileText, comingSoon: true },
+    { name: 'Assigned Tasks', href: '/team/tasks', icon: CheckSquare },
+    { name: 'Upload Deliverables', href: '/team/deliverables', icon: UploadCloud },
+    { name: 'Progress Updates', href: '/team/progress', icon: Activity },
+    { name: 'Activity Logs', href: '/team/activity-logs', icon: FileText },
     { name: 'Messages', href: '/team/messages', icon: MessageSquare, badge: 3 },
-    { name: 'Notifications', href: '#', icon: Bell, badge: 5, comingSoon: true },
-    { name: 'Profile', href: '/profile', icon: User },
+    { name: 'Notifications', href: '/team/notifications', icon: Bell, badge: 5 },
+    { name: 'Profile', href: '/team/profile', icon: User },
   ];
 
   return (
@@ -93,7 +93,7 @@ export default function TeamLayout({ children }) {
         </div>
 
         {/* Navigation Links */}
-        <nav className={`flex-1 overflow-y-auto py-6 space-y-1 custom-scrollbar ${sidebarCollapsed ? 'px-3' : 'px-4'}`}>
+        <nav className={`flex-1 overflow-y-auto py-6 space-y-1 admin-sidebar-scroll ${sidebarCollapsed ? 'px-3' : 'px-4'}`}>
           {navigation.map((item) => {
             const isActive = window.location.pathname.startsWith(item.href) && item.href !== '#' || window.location.pathname === item.href;
 
@@ -252,7 +252,7 @@ export default function TeamLayout({ children }) {
               {/* Dropdown Menu */}
               {isProfileDropdownOpen && (
                 <div className="absolute right-0 mt-3 w-48 bg-bg-card border border-bg-border rounded-xl shadow-2xl py-2 z-50">
-                  <Link href="/profile" className="block px-4 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-bg-border font-medium">Account Settings</Link>
+                  <Link href="/team/profile" className="block px-4 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-bg-border font-medium">Account Settings</Link>
                   <button onClick={() => { setIsProfileDropdownOpen(false); setIsLogoutModalOpen(true); }} className="block w-full text-left px-4 py-2 text-sm text-brand-red hover:bg-bg-border font-medium">Log Out</button>
                 </div>
               )}
@@ -272,8 +272,19 @@ export default function TeamLayout({ children }) {
           </div>
         </div>
 
-        <main className="flex-1 p-6 lg:p-8 overflow-x-hidden overflow-y-auto">
-          {children}
+        <main className="flex-1 p-6 lg:p-8 overflow-x-hidden overflow-y-auto custom-scrollbar flex flex-col">
+          <div className="flex-1 w-full max-w-[1400px] mx-auto">
+            {children}
+          </div>
+          
+          {/* Footer */}
+          <footer className="mt-12 pt-6 border-t border-bg-border flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0 max-w-[1400px] w-full mx-auto">
+            <p className="text-text-secondary text-sm font-medium">© 2025 Studio99 Digital. All rights reserved.</p>
+            <div className="flex items-center gap-6">
+              <Link href="#" className="text-text-secondary text-sm font-medium hover:text-text-primary transition-colors">Privacy Policy</Link>
+              <Link href="#" className="text-text-secondary text-sm font-medium hover:text-text-primary transition-colors">Terms of Service</Link>
+            </div>
+          </footer>
         </main>
       </div>
       
