@@ -168,7 +168,7 @@ export default function TeamMembers() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Total Members</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">24</h3>
                 <span className="text-[11px] font-medium text-text-secondary mb-0.5">All Team Members</span>
               </div>
@@ -183,7 +183,7 @@ export default function TeamMembers() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Active Members</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">21</h3>
                 <span className="text-[11px] font-bold text-emerald-500 mb-0.5">87.5%</span>
               </div>
@@ -198,7 +198,7 @@ export default function TeamMembers() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">On Leave</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">2</h3>
                 <span className="text-[11px] font-bold text-amber-500 mb-0.5">8.3%</span>
               </div>
@@ -213,7 +213,7 @@ export default function TeamMembers() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Invited</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">1</h3>
                 <span className="text-[11px] font-bold text-purple-500 mb-0.5">4.2%</span>
               </div>

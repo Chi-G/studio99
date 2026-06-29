@@ -112,7 +112,7 @@ export default function Services() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Total Services</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">5</h3>
                 <span className="text-[11px] font-medium text-text-secondary mb-0.5">All Categories</span>
               </div>
@@ -127,7 +127,7 @@ export default function Services() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Active Services</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">4</h3>
                 <span className="text-[11px] font-bold text-emerald-500 mb-0.5">80%</span>
               </div>
@@ -142,7 +142,7 @@ export default function Services() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Drafts</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">1</h3>
                 <span className="text-[11px] font-medium text-text-secondary mb-0.5">Needs Review</span>
               </div>

@@ -188,7 +188,7 @@ export default function ActivityLogs() {
             </div>
             <div>
               <p className="text-text-secondary text-[11px] font-medium mb-1">Total Activities</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-xl font-gilroy font-bold text-text-primary leading-none">1,248</h3>
                 <span className="text-[10px] font-medium text-text-secondary mb-0.5 whitespace-nowrap">All Time</span>
               </div>
@@ -203,7 +203,7 @@ export default function ActivityLogs() {
             </div>
             <div>
               <p className="text-text-secondary text-[11px] font-medium mb-1">User Activities</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-xl font-gilroy font-bold text-text-primary leading-none">842</h3>
                 <span className="text-[10px] font-bold text-emerald-500 mb-0.5 whitespace-nowrap">67.6% of total</span>
               </div>
@@ -218,7 +218,7 @@ export default function ActivityLogs() {
             </div>
             <div>
               <p className="text-text-secondary text-[11px] font-medium mb-1">System Activities</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-xl font-gilroy font-bold text-text-primary leading-none">256</h3>
                 <span className="text-[10px] font-bold text-purple-500 mb-0.5 whitespace-nowrap">20.5% of total</span>
               </div>
@@ -233,7 +233,7 @@ export default function ActivityLogs() {
             </div>
             <div>
               <p className="text-text-secondary text-[11px] font-medium mb-1">Data Changes</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-xl font-gilroy font-bold text-text-primary leading-none">98</h3>
                 <span className="text-[10px] font-bold text-amber-500 mb-0.5 whitespace-nowrap">7.8% of total</span>
               </div>
@@ -248,7 +248,7 @@ export default function ActivityLogs() {
             </div>
             <div>
               <p className="text-text-secondary text-[11px] font-medium mb-1">Security Events</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-xl font-gilroy font-bold text-text-primary leading-none">52</h3>
                 <span className="text-[10px] font-bold text-brand-red mb-0.5 whitespace-nowrap">4.1% of total</span>
               </div>

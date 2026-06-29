@@ -122,7 +122,7 @@ export default function Tasks() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Total Tasks</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">128</h3>
                 <span className="text-[11px] font-medium text-text-secondary mb-0.5">All Time</span>
               </div>
@@ -137,7 +137,7 @@ export default function Tasks() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">In Progress</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">45</h3>
                 <span className="text-[11px] font-bold text-text-secondary mb-0.5">35%</span>
               </div>
@@ -152,7 +152,7 @@ export default function Tasks() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Overdue</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">8</h3>
                 <span className="text-[11px] font-bold text-brand-red mb-0.5">Needs Attention</span>
               </div>
@@ -167,7 +167,7 @@ export default function Tasks() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Completed</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">75</h3>
                 <span className="text-[11px] font-bold text-emerald-500 mb-0.5">This Month</span>
               </div>

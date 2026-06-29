@@ -173,7 +173,7 @@ export default function Projects() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Total Projects</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">48</h3>
                 <span className="text-[11px] font-medium text-text-secondary mb-0.5">All Time</span>
               </div>
@@ -188,7 +188,7 @@ export default function Projects() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">In Progress</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">24</h3>
                 <span className="text-[11px] font-bold text-text-secondary mb-0.5">50%</span>
               </div>
@@ -203,7 +203,7 @@ export default function Projects() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Completed</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">18</h3>
                 <span className="text-[11px] font-bold text-text-secondary mb-0.5">38%</span>
               </div>
@@ -218,7 +218,7 @@ export default function Projects() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">On Hold</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-2xl font-gilroy font-bold text-text-primary leading-none">6</h3>
                 <span className="text-[11px] font-bold text-text-secondary mb-0.5">12%</span>
               </div>

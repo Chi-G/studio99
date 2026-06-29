@@ -183,7 +183,7 @@ export default function Payments() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Total Payments</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-xl font-gilroy font-bold text-text-primary leading-none">₦12,680,000</h3>
                 <span className="text-[11px] font-medium text-text-secondary mb-0.5 whitespace-nowrap">All Time</span>
               </div>
@@ -198,7 +198,7 @@ export default function Payments() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Received This Month</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-xl font-gilroy font-bold text-text-primary leading-none">₦2,450,000</h3>
                 <span className="text-[11px] font-bold text-emerald-500 mb-0.5 whitespace-nowrap">+18.6% vs last month</span>
               </div>
@@ -213,7 +213,7 @@ export default function Payments() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Pending Payments</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-xl font-gilroy font-bold text-text-primary leading-none">₦1,320,000</h3>
                 <span className="text-[11px] font-bold text-amber-500 mb-0.5 whitespace-nowrap">6 Invoices</span>
               </div>
@@ -228,7 +228,7 @@ export default function Payments() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Completed Payments</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-xl font-gilroy font-bold text-text-primary leading-none">₦11,360,000</h3>
                 <span className="text-[11px] font-bold text-text-secondary mb-0.5 whitespace-nowrap">89.6%</span>
               </div>
@@ -243,7 +243,7 @@ export default function Payments() {
             </div>
             <div>
               <p className="text-text-secondary text-sm font-medium mb-1">Refunds</p>
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className="text-xl font-gilroy font-bold text-text-primary leading-none">₦120,000</h3>
                 <span className="text-[11px] font-bold text-brand-red mb-0.5 whitespace-nowrap">5 Transactions</span>
               </div>
