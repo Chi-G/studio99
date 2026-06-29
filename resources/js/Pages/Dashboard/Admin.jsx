@@ -1,185 +1,373 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
-import { LineChart, Line, ResponsiveContainer, Tooltip } from 'recharts';
-import { 
-  TrendingUp, 
-  Briefcase, 
-  Users, 
-  CreditCard, 
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from 'recharts';
+import {
+  Briefcase,
+  Users,
+  CreditCard,
+  Plus,
+  UserPlus,
+  FileText,
+  MoreVertical,
   Activity,
-  ArrowUpRight,
-  ArrowDownRight,
-  ChevronRight
+  MessageSquare
 } from 'lucide-react';
 
-const revenueData = [
-  { name: 'Mon', value: 4000 },
-  { name: 'Tue', value: 3000 },
-  { name: 'Wed', value: 5000 },
-  { name: 'Thu', value: 2780 },
-  { name: 'Fri', value: 8900 },
-  { name: 'Sat', value: 2390 },
-  { name: 'Sun', value: 3490 },
+const projectsOverviewData = [
+  { name: 'In Progress', value: 12, color: '#E31E24' },
+  { name: 'Review', value: 5, color: '#F59E0B' },
+  { name: 'Completed', value: 7, color: '#10B981' },
+  { name: 'On Hold', value: 4, color: '#3B82F6' },
+];
+
+const tasksOverviewData = [
+  { name: 'To Do', value: 45, color: '#64748B' },
+  { name: 'In Progress', value: 63, color: '#E31E24' },
+  { name: 'Review', value: 25, color: '#F59E0B' },
+  { name: 'Completed', value: 23, color: '#10B981' },
 ];
 
 export default function AdminDashboard({ auth }) {
-  
-  const activities = [
-    { id: 1, user: 'John Doe', action: 'uploaded proof of payment for', target: 'Acme Rebrand', time: '10 mins ago', type: 'payment' },
-    { id: 2, user: 'Alex Morgan', action: 'completed milestone on', target: 'Promo Video', time: '1 hour ago', type: 'project' },
-    { id: 3, user: 'Jane Smith', action: 'requested a new project', target: 'Landing Page', time: '3 hours ago', type: 'request' },
-    { id: 4, user: 'System', action: 'generated invoice INV-0042 for', target: 'Jane Smith', time: '5 hours ago', type: 'system' },
+
+  const recentProjects = [
+    { id: 'PRJ-001', name: 'Brand Identity Design', client: 'SparkPoint Ltd', progress: 70, deadline: '20 Jun, 2025', status: 'In Progress' },
+    { id: 'PRJ-002', name: 'Corporate Website', client: 'Quick Capital Ltd', progress: 40, deadline: '25 Jun, 2025', status: 'In Progress' },
+    { id: 'PRJ-003', name: 'Promotional Video', client: 'Coach Vinah', progress: 90, deadline: '18 Jun, 2025', status: 'Review' },
+    { id: 'PRJ-004', name: 'Social Media Mgmt.', client: 'YZ Cleaning Services', progress: 30, deadline: '30 Jun, 2025', status: 'In Progress' },
+    { id: 'PRJ-005', name: 'E-commerce Website', client: 'Onestop.ng', progress: 15, deadline: '10 Jul, 2025', status: 'In Progress' },
+  ];
+
+  const recentActivity = [
+    { id: 1, action: 'New project "Brand Identity Design" created', user: 'Admin User', time: '2 mins ago', icon: Briefcase, color: 'bg-brand-red text-white' },
+    { id: 2, action: 'Team member John Doe added to project SparkPoint Ltd', user: '', time: '15 mins ago', icon: UserPlus, color: 'bg-amber-500 text-white' },
+    { id: 3, action: 'Project "Promotional Video" moved to Review', user: 'Admin User', time: '1 hour ago', icon: Activity, color: 'bg-emerald-500 text-white' },
+    { id: 4, action: 'Payment of ₦850,000 received from Quick Capital Ltd', user: '', time: '2 hours ago', icon: CreditCard, color: 'bg-blue-500 text-white' },
+    { id: 5, action: 'New message from Coach Vinah regarding project update', user: '', time: '3 hours ago', icon: MessageSquare, color: 'bg-purple-500 text-white' },
   ];
 
   return (
     <AdminLayout>
       <Head title="Admin Dashboard | Studio99" />
 
+      {/* Page Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-white mb-2">Overview</h1>
-        <p className="text-[#94A3B8]">Here's what's happening with Studio99 today.</p>
+        <h1 className="text-3xl font-gilroy font-bold text-text-primary mb-2">Overview</h1>
+        <div className="flex items-center gap-2">
+          <p className="text-text-primary font-medium">Welcome back, {auth.user.name.split(' ')[0]} <span className="text-xl">👋</span></p>
+        </div>
+        <p className="text-text-secondary text-sm mt-1">Here's what's happening with your agency today.</p>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 mb-8">
-        {/* Revenue Card with Sparkline */}
-        <div className="col-span-1 xl:col-span-2 bg-[#111118] border border-[#2A2A3A] rounded-2xl p-6 hover:-translate-y-1 hover:shadow-lg transition-transform group">
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <p className="text-[#94A3B8] text-sm font-medium mb-1">Monthly Revenue</p>
-              <h3 className="text-3xl font-display font-bold text-white">₦2.4M</h3>
-            </div>
-            <div className="bg-green-500/10 text-green-400 px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
-              <ArrowUpRight className="w-3 h-3" /> 12.5%
-            </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4 gap-6 mb-8">
+        {/* Monthly Revenue */}
+        <div className="bg-bg-surface border border-bg-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-text-secondary text-sm font-medium">Monthly Revenue</p>
+            <MoreVertical className="w-5 h-5 text-text-secondary cursor-pointer" />
           </div>
-          <div className="h-16 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={revenueData}>
-                <Tooltip 
-                  contentStyle={{ backgroundColor: '#1A1A28', border: '1px solid #2A2A3A', borderRadius: '8px' }}
-                  itemStyle={{ color: '#F8FAFC' }}
-                  cursor={false}
-                />
-                <Line type="monotone" dataKey="value" stroke="#10B981" strokeWidth={3} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-brand-red/10 flex items-center justify-center shrink-0">
+              <CreditCard className="w-6 h-6 text-brand-red" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-gilroy font-bold text-text-primary">₦12,450,000</h3>
+              <p className="text-emerald-500 text-xs font-bold mt-1">↑ 18.6% <span className="text-text-secondary font-medium">vs last month</span></p>
+            </div>
           </div>
         </div>
 
         {/* Active Projects */}
-        <div className="bg-[#111118] border border-[#2A2A3A] rounded-2xl p-6 hover:-translate-y-1 hover:shadow-lg transition-transform flex flex-col justify-between">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-10 h-10 rounded-lg bg-[#6C3CE1]/10 flex items-center justify-center">
-              <Briefcase className="w-5 h-5 text-[#6C3CE1]" />
-            </div>
-            <div className="bg-green-500/10 text-green-400 px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
-              <ArrowUpRight className="w-3 h-3" /> 4.2%
-            </div>
+        <div className="bg-bg-surface border border-bg-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-text-secondary text-sm font-medium">Active Projects</p>
+            <MoreVertical className="w-5 h-5 text-text-secondary cursor-pointer" />
           </div>
-          <div>
-            <h3 className="text-3xl font-display font-bold text-white">24</h3>
-            <p className="text-[#94A3B8] text-sm font-medium">Active Projects</p>
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-brand-red/10 flex items-center justify-center shrink-0">
+              <Briefcase className="w-6 h-6 text-brand-red" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-gilroy font-bold text-text-primary">28</h3>
+              <p className="text-emerald-500 text-xs font-bold mt-1">↑ 12.5% <span className="text-text-secondary font-medium">vs last month</span></p>
+            </div>
           </div>
         </div>
 
         {/* New Clients */}
-        <div className="bg-[#111118] border border-[#2A2A3A] rounded-2xl p-6 hover:-translate-y-1 hover:shadow-lg transition-transform flex flex-col justify-between">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-              <Users className="w-5 h-5 text-blue-400" />
-            </div>
-            <div className="bg-red-500/10 text-red-400 px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
-              <ArrowDownRight className="w-3 h-3" /> 2.1%
-            </div>
+        <div className="bg-bg-surface border border-bg-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-text-secondary text-sm font-medium">New Clients</p>
+            <MoreVertical className="w-5 h-5 text-text-secondary cursor-pointer" />
           </div>
-          <div>
-            <h3 className="text-3xl font-display font-bold text-white">8</h3>
-            <p className="text-[#94A3B8] text-sm font-medium">New Clients (Week)</p>
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-brand-red/10 flex items-center justify-center shrink-0">
+              <UserPlus className="w-6 h-6 text-brand-red" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-gilroy font-bold text-text-primary">14</h3>
+              <p className="text-emerald-500 text-xs font-bold mt-1">↑ 7.2% <span className="text-text-secondary font-medium">vs last month</span></p>
+            </div>
           </div>
         </div>
 
-        {/* Pending Approvals */}
-        <div className="bg-[#111118] border border-red-500/30 rounded-2xl p-6 hover:-translate-y-1 hover:shadow-[0_0_20px_-5px_rgba(239,68,68,0.2)] transition-transform flex flex-col justify-between relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-red-500/10 rounded-full blur-xl -translate-y-1/2 translate-x-1/2" />
-          <div className="flex items-start justify-between mb-4 relative z-10">
-            <div className="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center">
-              <CreditCard className="w-5 h-5 text-red-400" />
-            </div>
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-            </span>
+        {/* Pending Payments */}
+        <div className="bg-bg-surface border border-bg-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-text-secondary text-sm font-medium">Pending Payments</p>
+            <MoreVertical className="w-5 h-5 text-text-secondary cursor-pointer" />
           </div>
-          <div className="relative z-10">
-            <h3 className="text-3xl font-display font-bold text-white">5</h3>
-            <p className="text-red-300 text-sm font-medium">Pending Approvals</p>
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-brand-red flex items-center justify-center shrink-0 shadow-lg shadow-brand-red/20">
+              <CreditCard className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-gilroy font-bold text-text-primary">7</h3>
+              <p className="text-amber-500 text-xs font-bold mt-1">₦2,850,000 <span className="text-text-secondary font-medium">awaiting</span></p>
+            </div>
           </div>
         </div>
-
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Activity Feed */}
-        <div className="lg:col-span-2 bg-[#111118] border border-[#2A2A3A] rounded-2xl p-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6 mb-8">
+        {/* Recent Projects */}
+        <div className="xl:col-span-2 bg-bg-surface border border-bg-border rounded-2xl p-6 flex flex-col">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-white">Recent Activity</h2>
-            <button className="text-sm text-[#6C3CE1] font-medium hover:text-[#5b32be] transition-colors">View All</button>
+            <h2 className="text-lg font-bold text-text-primary">Recent Projects</h2>
+            <Link href="/admin/projects" className="text-sm font-bold text-brand-red hover:underline">View all</Link>
           </div>
-          
-          <div className="space-y-6">
-            {activities.map((activity) => (
-              <div key={activity.id} className="flex gap-4">
-                <div className="mt-1 relative">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 border border-[#2A2A3A] ${
-                    activity.type === 'payment' ? 'bg-green-500/10' :
-                    activity.type === 'project' ? 'bg-[#6C3CE1]/10' :
-                    activity.type === 'request' ? 'bg-amber-500/10' : 'bg-[#1A1A28]'
-                  }`}>
-                    {activity.type === 'payment' ? <CreditCard className="w-3.5 h-3.5 text-green-400" /> :
-                     activity.type === 'project' ? <Briefcase className="w-3.5 h-3.5 text-[#6C3CE1]" /> :
-                     activity.type === 'request' ? <TrendingUp className="w-3.5 h-3.5 text-amber-400" /> :
-                     <Activity className="w-3.5 h-3.5 text-[#94A3B8]" />}
-                  </div>
-                  {activity.id !== activities[activities.length - 1].id && (
-                    <div className="absolute top-8 bottom-0 left-1/2 -translate-x-1/2 w-px h-8 bg-[#2A2A3A]" />
-                  )}
+
+          <div className="overflow-x-auto flex-1">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b border-bg-border">
+                  <th className="pb-3 text-xs font-bold text-text-secondary uppercase tracking-wider">Project</th>
+                  <th className="pb-3 text-xs font-bold text-text-secondary uppercase tracking-wider">Client</th>
+                  <th className="pb-3 text-xs font-bold text-text-secondary uppercase tracking-wider">Progress</th>
+                  <th className="pb-3 text-xs font-bold text-text-secondary uppercase tracking-wider">Deadline</th>
+                  <th className="pb-3 text-xs font-bold text-text-secondary uppercase tracking-wider">Status</th>
+                  <th className="pb-3"></th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-bg-border">
+                {recentProjects.map((project, idx) => (
+                  <tr key={idx} className="hover:bg-bg-base/50 transition-colors">
+                    <td className="py-4 pr-4">
+                      <p className="text-sm font-bold text-text-primary">{project.name}</p>
+                      <p className="text-xs text-text-secondary mt-0.5">{project.id}</p>
+                    </td>
+                    <td className="py-4 pr-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-bg-border flex items-center justify-center text-[10px] font-bold text-text-primary">
+                          {project.client.charAt(0)}
+                        </div>
+                        <span className="text-sm font-medium text-text-secondary">{project.client}</span>
+                      </div>
+                    </td>
+                    <td className="py-4 pr-4">
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm font-medium text-text-primary w-8">{project.progress}%</span>
+                        <div className="flex-1 h-1.5 bg-bg-border rounded-full overflow-hidden max-w-[100px]">
+                          <div
+                            className="h-full bg-brand-red rounded-full"
+                            style={{ width: `${project.progress}%` }}
+                          />
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-4 pr-4">
+                      <span className="text-sm text-text-secondary">{project.deadline}</span>
+                    </td>
+                    <td className="py-4">
+                      <span className={`px-2.5 py-1 text-[10px] font-bold rounded border ${project.status === 'In Progress' ? 'bg-brand-red/10 text-brand-red border-brand-red/20' :
+                          project.status === 'Review' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
+                            'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
+                        }`}>
+                        {project.status}
+                      </span>
+                    </td>
+                    <td className="py-4 text-right">
+                      <button className="text-text-secondary hover:text-text-primary">
+                        <MoreVertical className="w-5 h-5" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Recent Activity */}
+        <div className="bg-bg-surface border border-bg-border rounded-2xl p-6 flex flex-col">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg font-bold text-text-primary">Recent Activity</h2>
+            <Link href="/admin/activity-logs" className="text-sm font-bold text-brand-red hover:underline">View all logs</Link>
+          </div>
+
+          <div className="space-y-6 flex-1">
+            {recentActivity.map((activity, idx) => (
+              <div key={idx} className="flex gap-4">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${activity.color}`}>
+                  <activity.icon className="w-4 h-4" />
                 </div>
-                <div>
-                  <p className="text-sm text-white">
-                    <span className="font-bold">{activity.user}</span> {activity.action} <span className="font-bold text-[#94A3B8]">{activity.target}</span>
+                <div className="flex-1">
+                  <p className="text-sm text-text-primary leading-snug">
+                    {activity.action} {activity.user && <span className="text-text-secondary">by {activity.user}</span>}
                   </p>
-                  <p className="text-xs text-[#475569] mt-1">{activity.time}</p>
+                </div>
+                <div className="text-xs font-medium text-text-secondary whitespace-nowrap shrink-0">
+                  {activity.time}
                 </div>
               </div>
             ))}
           </div>
         </div>
-
-        {/* Team Productivity */}
-        <div className="bg-[#1A1A28] border border-[#2A2A3A] rounded-2xl p-6 flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-white">Team Productivity</h2>
-              <Activity className="w-5 h-5 text-[#94A3B8]" />
-            </div>
-            <div className="flex items-baseline gap-2 mb-2">
-              <h3 className="text-5xl font-display font-bold text-white">92</h3>
-              <span className="text-[#94A3B8] font-medium">/ 100</span>
-            </div>
-            <p className="text-sm text-[#94A3B8] leading-relaxed mb-8">
-              Your team is performing highly efficiently this week. Average task completion time is down by 1.2 days.
-            </p>
-          </div>
-          
-          <Link href="/admin/users" className="w-full py-3 bg-[#111118] border border-[#2A2A3A] hover:border-[#6C3CE1]/50 hover:bg-[#2A2A3A] text-white rounded-xl text-sm font-medium transition-colors flex items-center justify-between px-4 group">
-            View Team Metrics
-            <ChevronRight className="w-4 h-4 text-[#94A3B8] group-hover:text-white transition-colors" />
-          </Link>
-        </div>
       </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
+        {/* Projects Overview Chart */}
+        <div className="bg-bg-surface border border-bg-border rounded-2xl p-6 flex flex-col">
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-lg font-bold text-text-primary">Projects Overview</h2>
+            <Link href="/admin/reports" className="text-sm font-bold text-brand-red hover:underline">View report</Link>
+          </div>
+
+          <div className="flex items-center justify-between mt-4">
+            <div className="relative w-32 h-32">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={projectsOverviewData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={45}
+                    outerRadius={60}
+                    paddingAngle={2}
+                    dataKey="value"
+                    stroke="none"
+                  >
+                    {projectsOverviewData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <RechartsTooltip
+                    contentStyle={{ backgroundColor: 'var(--color-bg-surface)', border: '1px solid var(--color-bg-border)', borderRadius: '8px' }}
+                    itemStyle={{ color: 'var(--color-text-primary)' }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                <span className="text-2xl font-gilroy font-bold text-text-primary">28</span>
+                <span className="text-[10px] text-text-secondary font-medium">Total Projects</span>
+              </div>
+            </div>
+
+            <div className="flex-1 ml-6 space-y-3">
+              {projectsOverviewData.map((item, idx) => (
+                <div key={idx} className="flex items-center justify-between text-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }}></div>
+                    <span className="text-text-secondary font-medium">{item.name}</span>
+                  </div>
+                  <span className="text-text-primary font-bold">
+                    {item.value} <span className="text-text-secondary font-normal text-xs ml-1">({Math.round((item.value / 28) * 100)}%)</span>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Tasks Overview Chart */}
+        <div className="bg-bg-surface border border-bg-border rounded-2xl p-6 flex flex-col">
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-lg font-bold text-text-primary">Tasks Overview</h2>
+            <Link href="/admin/reports" className="text-sm font-bold text-brand-red hover:underline">View all</Link>
+          </div>
+
+          <div className="flex items-center justify-between mt-4">
+            <div className="relative w-32 h-32">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={tasksOverviewData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={45}
+                    outerRadius={60}
+                    paddingAngle={2}
+                    dataKey="value"
+                    stroke="none"
+                  >
+                    {tasksOverviewData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <RechartsTooltip
+                    contentStyle={{ backgroundColor: 'var(--color-bg-surface)', border: '1px solid var(--color-bg-border)', borderRadius: '8px' }}
+                    itemStyle={{ color: 'var(--color-text-primary)' }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                <span className="text-2xl font-gilroy font-bold text-text-primary">156</span>
+                <span className="text-[10px] text-text-secondary font-medium">Total Tasks</span>
+              </div>
+            </div>
+
+            <div className="flex-1 ml-6 space-y-3">
+              {tasksOverviewData.map((item, idx) => (
+                <div key={idx} className="flex items-center justify-between text-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }}></div>
+                    <span className="text-text-secondary font-medium">{item.name}</span>
+                  </div>
+                  <span className="text-text-primary font-bold">
+                    {item.value} <span className="text-text-secondary font-normal text-xs ml-1">({Math.round((item.value / 156) * 100)}%)</span>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="lg:col-span-2 xl:col-span-2 2xl:col-span-1 bg-bg-surface border border-bg-border rounded-2xl p-6 flex flex-col">
+          <h2 className="text-lg font-bold text-text-primary mb-6">Quick Actions</h2>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-2 gap-4">
+            <button className="flex flex-col items-center gap-3 p-4 rounded-xl border border-bg-border hover:border-brand-red/50 hover:bg-brand-red/5 transition-all group">
+              <div className="w-10 h-10 rounded-full border border-bg-border flex items-center justify-center group-hover:border-brand-red group-hover:text-brand-red text-text-secondary transition-colors">
+                <Plus className="w-5 h-5" />
+              </div>
+              <span className="text-xs font-bold text-text-primary text-center">New Project</span>
+            </button>
+
+            <button className="flex flex-col items-center gap-3 p-4 rounded-xl border border-bg-border hover:border-brand-red/50 hover:bg-brand-red/5 transition-all group">
+              <div className="w-10 h-10 rounded-full border border-bg-border flex items-center justify-center group-hover:border-brand-red group-hover:text-brand-red text-text-secondary transition-colors">
+                <UserPlus className="w-5 h-5" />
+              </div>
+              <span className="text-xs font-bold text-text-primary text-center">Add Client</span>
+            </button>
+
+            <button className="flex flex-col items-center gap-3 p-4 rounded-xl border border-bg-border hover:border-brand-red/50 hover:bg-brand-red/5 transition-all group">
+              <div className="w-10 h-10 rounded-full border border-bg-border flex items-center justify-center group-hover:border-brand-red group-hover:text-brand-red text-text-secondary transition-colors">
+                <Users className="w-5 h-5" />
+              </div>
+              <span className="text-xs font-bold text-text-primary text-center">Add Team Member</span>
+            </button>
+
+            <button className="flex flex-col items-center gap-3 p-4 rounded-xl border border-bg-border hover:border-brand-red/50 hover:bg-brand-red/5 transition-all group">
+              <div className="w-10 h-10 rounded-full border border-bg-border flex items-center justify-center group-hover:border-brand-red group-hover:text-brand-red text-text-secondary transition-colors">
+                <FileText className="w-5 h-5" />
+              </div>
+              <span className="text-xs font-bold text-text-primary text-center">Generate Report</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </AdminLayout>
   );
 }

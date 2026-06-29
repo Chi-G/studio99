@@ -1,82 +1,94 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, usePage } from '@inertiajs/react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Home,
+  LayoutDashboard,
   Users,
-  Briefcase,
+  UserCircle,
+  FolderKanban,
+  FileText,
+  Layers,
+  CheckSquare,
   CreditCard,
-  FolderOpen,
-  Megaphone,
   BarChart2,
+  Activity,
   Settings,
   LogOut,
-  User,
   Menu,
-  X
+  X,
+  ChevronDown,
+  Bell,
+  MessageSquare,
+  Search
 } from 'lucide-react';
 import { LogoutConfirmModal } from '@/Components/Modals/LogoutConfirmModal';
 import { ThemeToggle } from '@/Components/ThemeToggle';
-import headerLogo from '../../images/logo.jpeg';
+import logoImage from '../../images/logo.jpeg';
 
 export default function AdminLayout({ children }) {
-  const { auth, pendingPaymentsCount = 0 } = usePage().props;
+  const { auth } = usePage().props;
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsProfileDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const navigation = [
-    { name: 'Dashboard', href: '/admin/dashboard', icon: Home },
-    { name: 'Users', href: '/admin/users', icon: Users },
-    { name: 'Projects', href: '/admin/projects', icon: Briefcase },
-    {
-      name: 'Payments',
-      href: '/admin/payments',
-      icon: CreditCard,
-      badge: pendingPaymentsCount > 0 ? pendingPaymentsCount : null
-    },
-    { name: 'Portfolio', href: '/admin/portfolio', icon: FolderOpen },
-    { name: 'Content', href: '/admin/content', icon: Megaphone },
-    { name: 'Analytics', href: '/admin/analytics', icon: BarChart2 },
+    { name: 'Overview', href: '/admin/dashboard', icon: LayoutDashboard },
+    { name: 'Clients', href: '/admin/clients', icon: Users },
+    { name: 'Team Members', href: '/admin/team-members', icon: UserCircle },
+    { name: 'Projects', href: '/admin/projects', icon: FolderKanban },
+    { name: 'Requests', href: '/admin/requests', icon: FileText },
+    { name: 'Services', href: '/admin/services', icon: Layers },
+    { name: 'Tasks', href: '/admin/tasks', icon: CheckSquare },
+    { name: 'Payments', href: '/admin/payments', icon: CreditCard },
+    { name: 'Reports', href: '/admin/reports', icon: BarChart2 },
+    { name: 'Activity Logs', href: '/admin/activity-logs', icon: Activity },
     { name: 'Settings', href: '/admin/settings', icon: Settings },
   ];
 
   return (
-    <div className="min-h-screen bg-bg-base text-text-primary font-sans flex">
+    <div className="min-h-screen bg-bg-base text-text-primary font-sans flex overflow-hidden">
       {/* Mobile Sidebar Overlay */}
-      <AnimatePresence>
-        {sidebarOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-black/80 lg:hidden"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/80 lg:hidden backdrop-blur-sm"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-      {/* Sidebar */}
+      {/* Sidebar - Strictly Dark Mode */}
       <div className={`
-        fixed inset-y-0 left-0 z-50 w-64 bg-bg-surface border-r border-bg-border transform transition-transform duration-300 lg:translate-x-0 flex flex-col
-        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        fixed inset-y-0 left-0 z-50 bg-[#0F0F13] border-r border-white/5 transform transition-all duration-300 flex flex-col h-full w-[280px]
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
-        <div className="h-20 flex items-center px-6 border-b border-bg-border shrink-0 justify-between">
-          <div className="flex items-center gap-2">
-            <img src={headerLogo} alt="Studio99 Logo" className="w-8 h-8 rounded-lg object-cover" />
-            <span className="font-gilroy font-bold text-xl tracking-tight text-white">Studio99 Admin</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <ThemeToggle className="hidden lg:flex" />
-            <button
-              className="lg:hidden text-text-secondary hover:text-white"
-              onClick={() => setSidebarOpen(false)}
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
+        {/* Logo Area */}
+        <div className="h-24 flex items-center px-8 border-b border-white/5 shrink-0">
+          <Link href="/admin/dashboard" className="flex flex-col hover:opacity-90 transition-opacity">
+            <span className="font-gilroy font-bold text-2xl tracking-tight text-white flex items-center gap-1">
+              <img src={logoImage} alt="Studio99" className="rounded object-cover w-8 h-8 mr-1" />
+              studio<span className="text-brand-red font-black tracking-tighter -ml-1.5">99</span>
+            </span>
+            <span className="text-[10px] uppercase text-zinc-500 tracking-[0.25em] font-sans font-bold mt-1 ml-10">
+              — Digital —
+            </span>
+          </Link>
+          <button className="lg:hidden text-zinc-400 hover:text-white ml-auto" onClick={() => setSidebarOpen(false)}>
+            <X className="w-6 h-6" />
+          </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+        {/* Navigation Links */}
+        <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-1.5 admin-sidebar-scroll">
           {navigation.map((item) => {
             const isActive = window.location.pathname.startsWith(item.href) && item.href !== '#' || window.location.pathname === item.href;
 
@@ -85,72 +97,130 @@ export default function AdminLayout({ children }) {
                 key={item.name}
                 href={item.href}
                 className={`
-                  flex items-center justify-between px-3 py-2.5 rounded-lg font-medium transition-colors
-                  ${isActive ? 'bg-[#EC4899]/10 text-[#EC4899]' : 'text-text-secondary hover:bg-bg-card hover:text-white'}
+                  flex items-center justify-between px-4 py-3 rounded-xl font-medium transition-all duration-200 group
+                  ${isActive
+                    ? 'bg-brand-red text-white shadow-[0_0_15px_rgba(227,30,36,0.15)]'
+                    : 'text-zinc-400 hover:bg-white/5 hover:text-white'}
                 `}
               >
-                <div className="flex items-center gap-3">
-                  <item.icon className="w-5 h-5 shrink-0" />
-                  {item.name}
+                <div className="flex items-center gap-3.5">
+                  <item.icon className={`w-5 h-5 shrink-0 transition-colors ${isActive ? 'text-white' : 'text-zinc-500 group-hover:text-white'}`} />
+                  <span className="text-sm font-semibold tracking-wide">{item.name}</span>
                 </div>
-                {item.badge && (
-                  <span className="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                    {item.badge}
-                  </span>
-                )}
               </Link>
             )
           })}
         </nav>
 
-        <div className="p-4 border-t border-bg-border shrink-0">
-          <div className="flex items-center gap-3 mb-4 px-3">
-            <div className="w-10 h-10 rounded-full bg-bg-border flex items-center justify-center font-bold text-sm overflow-hidden shrink-0">
-              {auth.user.name.charAt(0)}
-            </div>
-            <div className="truncate">
-              <p className="font-medium text-sm text-white truncate">{auth.user.name}</p>
-              <p className="text-xs text-text-secondary truncate">System Admin</p>
-            </div>
-          </div>
-          <Link
-            href="/profile"
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-text-secondary hover:bg-bg-card hover:text-white transition-colors mb-1"
-          >
-            <User className="w-5 h-5 shrink-0" />
-            Profile
-          </Link>
+        <div className="p-4 mt-auto border-t border-white/5 shrink-0">
           <button
             onClick={() => setIsLogoutModalOpen(true)}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-text-secondary hover:bg-bg-card hover:text-white transition-colors"
+            className="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-zinc-400 hover:bg-white/5 hover:text-white transition-all duration-200 group"
           >
-            <LogOut className="w-5 h-5 shrink-0" />
-            Log Out
+            <LogOut className="w-5 h-5 shrink-0 text-zinc-500 group-hover:text-white transition-colors" />
+            <span className="text-sm font-semibold tracking-wide">Logout</span>
           </button>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 lg:ml-64 flex flex-col min-h-screen relative max-w-full">
-        {/* Mobile Header */}
-        <div className="lg:hidden h-16 flex items-center justify-between px-4 border-b border-bg-border bg-bg-surface shrink-0">
-          <div className="flex items-center">
-            <button className="text-text-secondary" onClick={() => setSidebarOpen(true)}>
+      <div className="flex-1 flex flex-col min-h-screen relative max-w-full overflow-hidden bg-bg-base transition-all duration-300 lg:ml-[280px]">
+        {/* Header */}
+        <header className="h-20 flex items-center justify-between px-6 lg:px-10 shrink-0 sticky top-0 z-30 bg-bg-base/80 backdrop-blur-md border-b border-bg-border">
+          <div className="flex items-center gap-4 flex-1">
+            <button className="lg:hidden text-text-secondary hover:text-text-primary" onClick={() => setSidebarOpen(true)}>
               <Menu className="w-6 h-6" />
             </button>
-            <span className="font-gilroy font-bold ml-4">Studio99 Admin</span>
+            
+            {/* Search Bar */}
+            <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-bg-surface border border-bg-border rounded-xl w-64 lg:w-96 focus-within:border-brand-red/50 focus-within:ring-1 focus-within:ring-brand-red/50 transition-all">
+              <Search className="w-4 h-4 text-text-secondary shrink-0" />
+              <input 
+                type="text" 
+                placeholder="Search anything..." 
+                className="bg-transparent border-none outline-none text-sm text-text-primary w-full placeholder-text-secondary/50 focus:ring-0 p-0"
+              />
+              <div className="flex items-center gap-1 text-[10px] text-text-secondary font-medium bg-bg-base px-2 py-0.5 rounded border border-bg-border shrink-0">
+                <span>Ctrl</span>
+                <span>K</span>
+              </div>
+            </div>
           </div>
-          <ThemeToggle />
+
+          <div className="flex items-center gap-5">
+            <ThemeToggle />
+
+            <div className="flex items-center gap-4">
+              <button className="relative text-text-secondary hover:text-text-primary transition-colors">
+                <Bell className="w-5 h-5" />
+                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-brand-red flex items-center justify-center text-[8px] font-bold text-white ring-2 ring-bg-base">
+                  4
+                </span>
+              </button>
+              
+              <button className="relative text-text-secondary hover:text-text-primary transition-colors">
+                <MessageSquare className="w-5 h-5" />
+                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-brand-red flex items-center justify-center text-[8px] font-bold text-white ring-2 ring-bg-base">
+                  3
+                </span>
+              </button>
+            </div>
+
+            <div className="w-px h-8 bg-bg-border mx-2 hidden sm:block"></div>
+
+            {/* Profile Dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+                onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+              >
+                <div className="text-right hidden sm:block">
+                  <p className="text-sm font-bold text-text-primary">{auth.user.name}</p>
+                  <p className="text-[11px] text-text-secondary">Super Admin</p>
+                </div>
+                <div className="w-10 h-10 rounded-full bg-bg-card flex items-center justify-center font-bold text-text-primary overflow-hidden border border-bg-border">
+                  {auth.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
+                </div>
+                <ChevronDown className={`w-4 h-4 text-text-secondary transition-transform ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Dropdown Menu */}
+              {isProfileDropdownOpen && (
+                <div className="absolute right-0 mt-3 w-48 bg-bg-card border border-bg-border rounded-xl shadow-2xl py-2 z-50">
+                  <Link href="/profile" className="block px-4 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-bg-border font-medium">Account Settings</Link>
+                  <button onClick={() => { setIsProfileDropdownOpen(false); setIsLogoutModalOpen(true); }} className="block w-full text-left px-4 py-2 text-sm text-brand-red hover:bg-bg-border font-medium">Log Out</button>
+                </div>
+              )}
+            </div>
+          </div>
+        </header>
+
+        {/* Mobile Search (Shows only on mobile) */}
+        <div className="md:hidden px-6 pt-4">
+          <div className="flex items-center gap-2 px-4 py-2.5 bg-bg-surface border border-bg-border rounded-xl w-full">
+            <Search className="w-4 h-4 text-text-secondary" />
+            <input 
+              type="text" 
+              placeholder="Search anything..." 
+              className="bg-transparent border-none outline-none text-sm text-text-primary w-full placeholder-text-secondary/50 focus:ring-0 p-0"
+            />
+          </div>
         </div>
 
-        <motion.main
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="flex-1 p-4 md:p-8 overflow-x-hidden"
-        >
-          {children}
-        </motion.main>
+        <main className="flex-1 p-6 lg:p-10 overflow-x-hidden overflow-y-auto custom-scrollbar flex flex-col">
+          <div className="flex-1 w-full max-w-[1400px] mx-auto">
+            {children}
+          </div>
+          
+          {/* Footer */}
+          <footer className="mt-12 pt-6 border-t border-bg-border flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0 max-w-[1400px] w-full mx-auto">
+            <p className="text-text-secondary text-sm font-medium">© 2025 Studio99 Digital. All rights reserved.</p>
+            <div className="flex items-center gap-6">
+              <Link href="#" className="text-text-secondary text-sm font-medium hover:text-text-primary transition-colors">Privacy Policy</Link>
+              <Link href="#" className="text-text-secondary text-sm font-medium hover:text-text-primary transition-colors">Terms of Service</Link>
+            </div>
+          </footer>
+        </main>
       </div>
 
       <LogoutConfirmModal

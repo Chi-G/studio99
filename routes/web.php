@@ -155,31 +155,50 @@ Route::middleware(['auth'])->group(function () {
             return Inertia::render('Dashboard/Admin');
         })->name('dashboard');
 
-        Route::get('/requests', [AdminRequestController::class, 'index'])->name('requests.index');
-        Route::get('/requests/{projectRequest}', [AdminRequestController::class, 'show'])->name('requests.show');
-        Route::post('/requests/{projectRequest}/convert', [AdminRequestController::class, 'convertToProject'])->name('requests.convert');
+        Route::get('/clients', function () {
+            return Inertia::render('Admin/Clients');
+        })->name('clients.index');
+
+        Route::get('/team-members', function () {
+            return Inertia::render('Admin/TeamMembers');
+        })->name('team_members.index');
 
         Route::get('/projects', function () {
             return Inertia::render('Admin/Projects');
         })->name('projects.index');
+
+        Route::get('/requests', [AdminRequestController::class, 'index'])->name('requests.index');
+        Route::get('/requests/{projectRequest}', [AdminRequestController::class, 'show'])->name('requests.show');
+        Route::post('/requests/{projectRequest}/convert', [AdminRequestController::class, 'convertToProject'])->name('requests.convert');
+
+        Route::get('/services', function () {
+            return Inertia::render('Admin/Services');
+        })->name('services.index');
+
+        Route::get('/tasks', function () {
+            return Inertia::render('Admin/Tasks');
+        })->name('tasks.index');
+
         Route::get('/payments', function () {
             return Inertia::render('Admin/Payments');
         })->name('payments.index');
-        Route::get('/portfolio', function () {
-            return Inertia::render('Admin/Portfolio');
-        })->name('portfolio.index');
-        Route::get('/content', function () {
-            return Inertia::render('Admin/Content');
-        })->name('content.index');
-        Route::get('/analytics', function () {
-            return Inertia::render('Admin/Analytics');
-        })->name('analytics.index');
+
+        Route::get('/reports', function () {
+            return Inertia::render('Admin/Reports');
+        })->name('reports.index');
+
+        Route::get('/activity-logs', function () {
+            return Inertia::render('Admin/ActivityLogs');
+        })->name('activity_logs.index');
+
         Route::get('/settings', function () {
             return Inertia::render('Admin/Settings');
         })->name('settings.index');
-
-        Route::get('/users', function () {
-            return Inertia::render('Admin/Users');
-        })->name('users.index');
+        
+        // Keep these if linked elsewhere, otherwise they are superseded
+        Route::get('/portfolio', function () { return Inertia::render('Admin/Portfolio'); })->name('portfolio.index');
+        Route::get('/content', function () { return Inertia::render('Admin/Content'); })->name('content.index');
+        Route::get('/analytics', function () { return Inertia::render('Admin/Analytics'); })->name('analytics.index');
+        Route::get('/users', function () { return Inertia::render('Admin/Users'); })->name('users.index');
     });
 });
