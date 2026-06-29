@@ -27,6 +27,7 @@ import logoImage from '../../images/logo.jpeg';
 export default function AdminLayout({ children }) {
   const { auth } = usePage().props;
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -68,27 +69,36 @@ export default function AdminLayout({ children }) {
 
       {/* Sidebar - Strictly Dark Mode */}
       <div className={`
-        fixed inset-y-0 left-0 z-50 bg-[#0F0F13] border-r border-white/5 transform transition-all duration-300 flex flex-col h-full w-[280px]
-        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        fixed inset-y-0 left-0 z-50 bg-[#0F0F13] border-r border-white/5 transform transition-all duration-300 flex flex-col h-full
+        ${sidebarOpen ? 'translate-x-0 w-[280px]' : '-translate-x-full lg:translate-x-0'}
+        ${sidebarCollapsed ? 'lg:w-[88px]' : 'lg:w-[280px] w-[280px]'}
       `}>
         {/* Logo Area */}
-        <div className="h-24 flex items-center px-8 border-b border-white/5 shrink-0">
-          <Link href="/admin/dashboard" className="flex flex-col hover:opacity-90 transition-opacity">
-            <span className="font-gilroy font-bold text-2xl tracking-tight text-white flex items-center gap-1">
-              <img src={logoImage} alt="Studio99" className="rounded object-cover w-8 h-8 mr-1" />
-              studio<span className="text-brand-red font-black tracking-tighter -ml-1.5">99</span>
-            </span>
-            <span className="text-[10px] uppercase text-zinc-500 tracking-[0.25em] font-sans font-bold mt-1 ml-10">
-              — Digital —
-            </span>
+        <div className={`h-24 flex items-center border-b border-white/5 shrink-0 ${sidebarCollapsed ? 'justify-center px-0' : 'justify-between px-8'}`}>
+          <Link href="/admin/dashboard" className="flex items-center gap-2 hover:opacity-90 transition-opacity" title={sidebarCollapsed ? "Studio99" : undefined}>
+            <div className={`flex flex-col justify-center leading-none mt-0.5 ${sidebarCollapsed ? 'items-center' : ''}`}>
+              <span className="font-gilroy font-bold text-2xl tracking-tight text-white flex items-center gap-1">
+                <img src={logoImage} alt="Studio99" className={`rounded object-cover ${sidebarCollapsed ? 'w-10 h-10' : 'w-8 h-8 mr-1'}`} />
+                {!sidebarCollapsed && (
+                  <>studio<span className="text-brand-red font-black tracking-tighter -ml-1.5">99</span></>
+                )}
+              </span>
+              {!sidebarCollapsed && (
+                <span className="text-[10px] uppercase text-zinc-500 tracking-[0.25em] font-sans font-bold mt-1 ml-10">
+                  — Digital —
+                </span>
+              )}
+            </div>
           </Link>
-          <button className="lg:hidden text-zinc-400 hover:text-white ml-auto" onClick={() => setSidebarOpen(false)}>
-            <X className="w-6 h-6" />
-          </button>
+          {!sidebarCollapsed && (
+            <button className="lg:hidden text-zinc-400 hover:text-white" onClick={() => setSidebarOpen(false)}>
+              <X className="w-6 h-6" />
+            </button>
+          )}
         </div>
 
         {/* Navigation Links */}
-        <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-1.5 admin-sidebar-scroll">
+        <nav className={`flex-1 overflow-y-auto py-6 space-y-1 admin-sidebar-scroll ${sidebarCollapsed ? 'px-3' : 'px-4'}`}>
           {navigation.map((item) => {
             const isActive = window.location.pathname.startsWith(item.href) && item.href !== '#' || window.location.pathname === item.href;
 
@@ -96,8 +106,9 @@ export default function AdminLayout({ children }) {
               <Link
                 key={item.name}
                 href={item.href}
+                title={sidebarCollapsed ? item.name : undefined}
                 className={`
-                  flex items-center justify-between px-4 py-3 rounded-xl font-medium transition-all duration-200 group
+                  flex items-center ${sidebarCollapsed ? 'justify-center px-0 py-3' : 'justify-between px-4 py-2.5'} rounded-xl font-medium transition-all duration-200 group relative
                   ${isActive
                     ? 'bg-brand-red text-white shadow-[0_0_15px_rgba(227,30,36,0.15)]'
                     : 'text-zinc-400 hover:bg-white/5 hover:text-white'}
@@ -105,31 +116,41 @@ export default function AdminLayout({ children }) {
               >
                 <div className="flex items-center gap-3.5">
                   <item.icon className={`w-5 h-5 shrink-0 transition-colors ${isActive ? 'text-white' : 'text-zinc-500 group-hover:text-white'}`} />
-                  <span className="text-sm font-semibold tracking-wide">{item.name}</span>
+                  {!sidebarCollapsed && (
+                    <span className="text-sm font-semibold tracking-wide">{item.name}</span>
+                  )}
                 </div>
               </Link>
             )
           })}
         </nav>
 
-        <div className="p-4 mt-auto border-t border-white/5 shrink-0">
+        <div className={`mt-auto border-t border-white/5 shrink-0 ${sidebarCollapsed ? 'p-3' : 'p-4'}`}>
           <button
             onClick={() => setIsLogoutModalOpen(true)}
-            className="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-zinc-400 hover:bg-white/5 hover:text-white transition-all duration-200 group"
+            title={sidebarCollapsed ? "Logout" : undefined}
+            className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center px-0 py-3' : 'gap-3.5 px-4 py-2.5'} rounded-xl font-medium text-zinc-400 hover:bg-white/5 hover:text-white transition-all duration-200 group`}
           >
             <LogOut className="w-5 h-5 shrink-0 text-zinc-500 group-hover:text-white transition-colors" />
-            <span className="text-sm font-semibold tracking-wide">Logout</span>
+            {!sidebarCollapsed && <span className="text-sm font-semibold tracking-wide">Logout</span>}
           </button>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-h-screen relative max-w-full overflow-hidden bg-bg-base transition-all duration-300 lg:ml-[280px]">
+      <div className={`flex-1 flex flex-col min-h-screen relative max-w-full overflow-hidden bg-bg-base transition-all duration-300 ${sidebarCollapsed ? 'lg:ml-[88px]' : 'lg:ml-[280px]'}`}>
         {/* Header */}
         <header className="h-20 flex items-center justify-between px-6 lg:px-10 shrink-0 sticky top-0 z-30 bg-bg-base/80 backdrop-blur-md border-b border-bg-border">
           <div className="flex items-center gap-4 flex-1">
             <button className="lg:hidden text-text-secondary hover:text-text-primary" onClick={() => setSidebarOpen(true)}>
               <Menu className="w-6 h-6" />
+            </button>
+
+            <button 
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="hidden lg:flex items-center justify-center w-10 h-10 rounded-xl bg-bg-surface border border-bg-border text-text-secondary hover:text-text-primary hover:border-bg-border transition-all shadow-sm"
+            >
+              <Menu className="w-5 h-5" />
             </button>
             
             {/* Search Bar */}

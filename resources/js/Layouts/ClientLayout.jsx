@@ -92,7 +92,7 @@ export default function ClientLayout({ children }) {
         </div>
 
         {/* Navigation Links */}
-        <nav className={`flex-1 overflow-y-auto py-6 space-y-2 custom-scrollbar ${sidebarCollapsed ? 'px-3' : 'px-4'}`}>
+        <nav className={`flex-1 overflow-y-auto py-6 space-y-1 custom-scrollbar ${sidebarCollapsed ? 'px-3' : 'px-4'}`}>
           {navigation.map((item) => {
             const isActive = window.location.pathname.startsWith(item.href) && item.href !== '#' || window.location.pathname === item.href;
 
@@ -102,7 +102,7 @@ export default function ClientLayout({ children }) {
                 href={item.href}
                 title={sidebarCollapsed ? item.name : undefined}
                 className={`
-                  flex items-center ${sidebarCollapsed ? 'justify-center px-0 py-4' : 'justify-between px-4 py-3.5'} rounded-xl font-medium transition-all duration-200 group relative
+                  flex items-center ${sidebarCollapsed ? 'justify-center px-0 py-3' : 'justify-between px-4 py-2.5'} rounded-xl font-medium transition-all duration-200 group relative
                   ${isActive
                     ? 'bg-brand-red text-white shadow-[0_0_20px_rgba(227,30,36,0.2)]'
                     : 'text-text-secondary hover:bg-bg-border hover:text-text-primary'}
@@ -131,7 +131,7 @@ export default function ClientLayout({ children }) {
             <button
               onClick={() => setIsLogoutModalOpen(true)}
               title={sidebarCollapsed ? "Logout" : undefined}
-              className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center px-0 py-4' : 'gap-3.5 px-4 py-3.5'} rounded-xl font-medium text-text-secondary hover:bg-bg-border hover:text-text-primary transition-all duration-200 group`}
+              className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center px-0 py-3' : 'gap-3.5 px-4 py-2.5'} rounded-xl font-medium text-text-secondary hover:bg-bg-border hover:text-text-primary transition-all duration-200 group`}
             >
               <LogOut className="w-5 h-5 shrink-0 transition-colors text-text-secondary group-hover:text-text-primary" />
               {!sidebarCollapsed && <span className="text-sm font-bold tracking-wide">Logout</span>}
