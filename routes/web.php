@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminRequestController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
@@ -7,6 +8,18 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\Client\InvoiceController;
+use App\Http\Controllers\Client\PaymentController;
+use App\Http\Controllers\Client\ProjectController;
+use App\Http\Controllers\Client\ProjectRequestController;
+use App\Http\Controllers\Client\SubscriptionController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Team\FileController;
+use App\Http\Controllers\Team\ProjectUpdateController;
+use App\Http\Controllers\Webhook\PaystackWebhookController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -37,20 +50,6 @@ Route::middleware('guest')->group(function () {
 
 // Paystack Webhook (Unauthenticated)
 Route::post('/api/v1/billing/webhook', [PaystackWebhookController::class, 'handle'])->name('webhook.paystack');
-
-use App\Http\Controllers\Admin\AdminRequestController;
-use App\Http\Controllers\ChatController;
-use App\Http\Controllers\Client\InvoiceController;
-use App\Http\Controllers\Client\PaymentController;
-use App\Http\Controllers\Client\ProjectController;
-use App\Http\Controllers\Client\ProjectRequestController;
-use App\Http\Controllers\Client\SubscriptionController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Team\FileController;
-use App\Http\Controllers\Team\ProjectUpdateController;
-use App\Http\Controllers\Webhook\PaystackWebhookController;
-use Illuminate\Http\Request;
 
 Route::middleware(['auth'])->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -212,11 +211,19 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/settings', function () {
             return Inertia::render('Admin/Settings');
         })->name('settings.index');
-        
+
         // Keep these if linked elsewhere, otherwise they are superseded
-        Route::get('/portfolio', function () { return Inertia::render('Admin/Portfolio'); })->name('portfolio.index');
-        Route::get('/content', function () { return Inertia::render('Admin/Content'); })->name('content.index');
-        Route::get('/analytics', function () { return Inertia::render('Admin/Analytics'); })->name('analytics.index');
-        Route::get('/users', function () { return Inertia::render('Admin/Users'); })->name('users.index');
+        Route::get('/portfolio', function () {
+            return Inertia::render('Admin/Portfolio');
+        })->name('portfolio.index');
+        Route::get('/content', function () {
+            return Inertia::render('Admin/Content');
+        })->name('content.index');
+        Route::get('/analytics', function () {
+            return Inertia::render('Admin/Analytics');
+        })->name('analytics.index');
+        Route::get('/users', function () {
+            return Inertia::render('Admin/Users');
+        })->name('users.index');
     });
 });
