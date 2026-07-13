@@ -1,7 +1,7 @@
 import React from 'react';
 import { Head, useForm, Link } from '@inertiajs/react';
 import { Loader2 } from 'lucide-react';
-import headerLogo from '../../../images/logo.jpeg';
+import { Logo } from '@/Components/Logo';
 
 export default function VerifyEmail({ status }) {
     const { post, processing } = useForm({});
@@ -17,7 +17,7 @@ export default function VerifyEmail({ status }) {
 
             <div className="max-w-md w-full space-y-8 bg-bg-card border border-bg-border p-8 rounded-2xl text-center">
                 <div className="flex flex-col items-center">
-                    <img src={headerLogo} alt="Studio99 Logo" className="h-12 w-auto rounded-sm mb-4" />
+                    <Logo className="h-12 w-auto rounded-sm mb-4" />
                     <h2 className="text-3xl font-black text-text-primary">
                         Verify Your Email
                     </h2>

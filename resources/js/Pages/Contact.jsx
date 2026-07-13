@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-import headerLogo from '../../images/logo.jpeg';
+import { Logo } from '@/Components/Logo';
 import {
   Menu, X, Mail, MapPin, Phone, Send, Loader2
 } from 'lucide-react';
@@ -66,21 +66,12 @@ export default function Contact({ auth }) {
       <nav className="w-full z-50 bg-bg-base border-b border-bg-border py-4 shrink-0">
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
-            <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
-            <div className="hidden sm:flex flex-col justify-center leading-none mt-0.5">
-              <span className="font-gilroy font-bold text-lg tracking-tight">
-                studio<span className="text-brand-red">99</span>
-              </span>
-              <span className="text-[10px] uppercase text-text-secondary tracking-widest font-sans font-bold -mt-1">
-                Digital
-              </span>
-            </div>
+            <Logo className="h-10 w-auto object-contain rounded-sm" />
           </Link>
           <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-text-secondary">
             <Link href="/" className="hover:text-text-primary transition-colors">Home</Link>
             <Link href="/#services" className="hover:text-text-primary transition-colors">Services</Link>
             <Link href="/#work" className="hover:text-text-primary transition-colors">Portfolio</Link>
-            <Link href="/#pricing" className="hover:text-text-primary transition-colors">Pricing</Link>
             <Link href="/#about" className="hover:text-text-primary transition-colors">About</Link>
             <Link href="/contact" className="text-brand-red font-bold transition-colors">Contact</Link>
           </div>
@@ -112,7 +103,7 @@ export default function Contact({ auth }) {
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-[60] bg-bg-base flex flex-col px-6 py-8">
           <div className="flex items-center justify-between mb-12">
-            <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
+            <Logo className="h-10 w-auto object-contain rounded-sm" />
             <div className="flex items-center gap-4">
               <ThemeToggle />
               <button
@@ -128,7 +119,6 @@ export default function Contact({ auth }) {
             <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Home</Link>
             <Link href="/#services" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Services</Link>
             <Link href="/#work" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Portfolio</Link>
-            <Link href="/#pricing" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Pricing</Link>
             <Link href="/#about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">About</Link>
             <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="text-brand-red transition-colors">Contact</Link>
           </div>
@@ -148,7 +138,7 @@ export default function Contact({ auth }) {
 
       {/* Main Content */}
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20 lg:py-24">
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeUpVariant}
@@ -163,7 +153,7 @@ export default function Contact({ auth }) {
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
           {/* Contact Information */}
-          <motion.div 
+          <motion.div
             initial="hidden"
             animate="visible"
             variants={fadeUpVariant}
@@ -216,14 +206,14 @@ export default function Contact({ auth }) {
           </motion.div>
 
           {/* Contact Form */}
-          <motion.div 
+          <motion.div
             initial="hidden"
             animate="visible"
             variants={fadeUpVariant}
             className="bg-bg-card border border-bg-border p-8 rounded-3xl shadow-xl"
           >
             <h3 className="text-2xl font-bold mb-6 text-text-primary">Send a Message</h3>
-            
+
             <form onSubmit={submit} className="space-y-5">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-text-primary mb-2">Full Name</label>
@@ -301,8 +291,8 @@ export default function Contact({ auth }) {
       <footer className="mt-auto border-t border-bg-border bg-bg-card py-12">
         <div className="max-w-7xl mx-auto px-4 md:px-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
           <div>
-            <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
-              <span className="font-gilroy font-bold tracking-tight text-xl text-text-primary">studio<span className="text-brand-red">99</span></span>
+            <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
+              <Logo className="h-8 w-auto object-contain rounded-sm" />
             </div>
             <p className="text-text-secondary text-sm">© {new Date().getFullYear()} Studio99 Digital. All rights reserved.</p>
           </div>
@@ -315,19 +305,19 @@ export default function Contact({ auth }) {
       </footer>
 
       {/* Auth Modals */}
-      <LoginModal 
-        open={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)} 
+      <LoginModal
+        open={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
         onSwitchToRegister={() => { setIsLoginModalOpen(false); setIsRegisterModalOpen(true); }}
         onSwitchToForgotPassword={() => { setIsLoginModalOpen(false); setIsForgotPasswordModalOpen(true); }}
       />
-      
-      <RegisterModal 
-        open={isRegisterModalOpen} 
-        onClose={() => setIsRegisterModalOpen(false)} 
+
+      <RegisterModal
+        open={isRegisterModalOpen}
+        onClose={() => setIsRegisterModalOpen(false)}
         onSwitchToLogin={() => { setIsRegisterModalOpen(false); setIsLoginModalOpen(true); }}
       />
-      
+
       <ForgotPasswordModal
         open={isForgotPasswordModalOpen}
         onClose={() => setIsForgotPasswordModalOpen(false)}

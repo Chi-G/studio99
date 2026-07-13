@@ -164,7 +164,7 @@ export default function Dashboard({ auth, projects = [], projectRequests = [], i
                   <div className="flex items-center gap-4 mb-4 sm:mb-0">
                     <div className="w-16 h-12 rounded-lg bg-bg-card border border-bg-border overflow-hidden shrink-0">
                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=200&auto=format&fit=crop" className="w-full h-full object-cover" alt="Logo" />
-                    </div>
+                    </div> 
                     <div>
                       <h4 className="font-bold text-text-primary text-sm">Brand Identity Design</h4>
                       <p className="text-xs text-text-secondary mt-0.5">Logo & Branding</p>

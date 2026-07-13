@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
-import headerLogo from '../../../images/logo.jpeg';
+import { Logo } from '@/Components/Logo';
 
 export default function ResetPassword({ token, email }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -39,7 +39,7 @@ export default function ResetPassword({ token, email }) {
 
             <div className="max-w-md w-full space-y-8 bg-bg-card border border-bg-border p-8 rounded-2xl">
                 <div className="flex flex-col items-center">
-                    <img src={headerLogo} alt="Studio99 Logo" className="h-12 w-auto rounded-sm mb-4" />
+                    <Logo className="h-12 w-auto rounded-sm mb-4" />
                     <h2 className="text-center text-3xl font-black text-white">
                         Create New Password
                     </h2>

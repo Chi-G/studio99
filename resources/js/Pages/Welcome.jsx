@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import heroImg1 from '../../images/landing_hero1.png';
 import heroImg2 from '../../images/landing_hero2.png';
-import headerLogo from '../../images/logo.jpeg';
+import { Logo } from '@/Components/Logo';
 import {
   ArrowRight, Play, Globe, PenTool,
   Video, Share2, Layers, Briefcase, Clock, ShieldCheck, Mail, MapPin,
@@ -105,21 +105,12 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
       <nav className="fixed top-0 w-full z-50 bg-bg-base border-b border-bg-border py-4">
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
-            <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
-            <div className="hidden sm:flex flex-col justify-center leading-none mt-0.5">
-              <span className="font-gilroy font-bold text-lg tracking-tight">
-                studio<span className="text-brand-red">99</span>
-              </span>
-              <span className="text-[10px] uppercase text-text-secondary tracking-widest font-sans font-bold -mt-1">
-                Digital
-              </span>
-            </div>
+            <Logo className="h-10 w-auto object-contain rounded-sm" />
           </Link>
           <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-text-secondary">
             <Link href="/" className="hover:text-text-primary transition-colors">Home</Link>
             <a href="#services" className="hover:text-text-primary transition-colors">Services</a>
             <a href="#work" className="hover:text-text-primary transition-colors">Portfolio</a>
-            <a href="#pricing" className="hover:text-text-primary transition-colors">Pricing</a>
             <a href="#about" className="hover:text-text-primary transition-colors">About</a>
             <Link href="/contact" className="hover:text-text-primary transition-colors">Contact</Link>
           </div>
@@ -151,7 +142,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-[60] bg-bg-base flex flex-col px-6 py-8">
           <div className="flex items-center justify-between mb-12">
-            <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
+            <Logo className="h-10 w-auto object-contain rounded-sm" />
             <div className="flex items-center gap-4">
               <ThemeToggle />
               <button
@@ -167,7 +158,6 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Home</Link>
             <a href="#services" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Services</a>
             <a href="#work" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Portfolio</a>
-            <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Pricing</a>
             <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">About</a>
             <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Contact</Link>
           </div>
@@ -511,15 +501,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div className="md:col-span-1">
               <div className="flex items-center gap-2 mb-6">
-                <img src={headerLogo} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
-                <div className="flex flex-col justify-center leading-none mt-0.5">
-                  <span className="font-gilroy font-bold text-lg tracking-tight">
-                    studio<span className="text-brand-red">99</span>
-                  </span>
-                  <span className="text-[10px] uppercase text-text-secondary tracking-widest font-sans font-bold -mt-1">
-                    Digital
-                  </span>
-                </div>
+                <Logo className="h-10 w-auto object-contain rounded-sm" />
               </div>
               <p className="text-text-secondary text-sm mb-8 leading-relaxed">
                 Premium digital solutions for businesses ready to build stronger brands and grow online.
@@ -556,7 +538,6 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
               <ul className="space-y-4 text-sm text-text-secondary">
                 <li><a href="#" className="hover:text-white transition-colors">Portfolio</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="#pricing" className="hover:text-white transition-colors">Pricing</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
               </ul>

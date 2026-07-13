@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from '@inertiajs/react';
 import { Dialog, DialogContent, DialogTitle } from '@/Components/ui/dialog';
 import { Loader2, Briefcase, Users, Lock, ChevronRight, Eye, EyeOff } from 'lucide-react';
-import logoImage from '../../../images/logo.jpeg';
+import { Logo } from '@/Components/Logo';
 
 export function RegisterModal({ open, onClose, onSwitchToLogin, intendedUrl }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -60,7 +60,7 @@ export function RegisterModal({ open, onClose, onSwitchToLogin, intendedUrl }) {
             <div className="relative z-10 flex flex-col h-full">
               <div className="mb-10">
                 <div className="flex items-center gap-2 mb-4">
-                  <img src={logoImage} alt="Studio99 Logo" className="h-10 w-auto object-contain rounded-sm" />
+                  <Logo className="h-10 w-auto object-contain rounded-sm" />
                 </div>
                 <p className="text-text-secondary text-sm">Join the platform redefining digital delivery</p>
               </div>

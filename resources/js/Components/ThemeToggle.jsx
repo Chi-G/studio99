@@ -5,9 +5,10 @@ export function ThemeToggle({ className = '' }) {
   const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
-    // Initialize state based on the presence of the 'dark' class on the HTML element
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    setIsDark(isDarkMode);
+    const stored = localStorage.getItem('theme');
+    const shouldBeDark = stored ? stored === 'dark' : document.documentElement.classList.contains('dark');
+    setIsDark(shouldBeDark);
+    document.documentElement.classList.toggle('dark', shouldBeDark);
   }, []);
 
   const toggleTheme = () => {

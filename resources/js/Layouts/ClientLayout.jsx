@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { LogoutConfirmModal } from '@/Components/Modals/LogoutConfirmModal';
 import { ThemeToggle } from '@/Components/ThemeToggle';
-import logoImage from '../../images/logo.jpeg';
+import { Logo } from '@/Components/Logo';
 
 export default function ClientLayout({ children }) {
   const { auth } = usePage().props;
@@ -70,25 +70,15 @@ export default function ClientLayout({ children }) {
         {/* Logo Area */}
         <div className={`h-24 flex items-center border-b border-bg-border shrink-0 ${sidebarCollapsed ? 'justify-center px-0' : 'justify-between px-8'}`}>
           <Link href="/dashboard" className="flex items-center gap-2 hover:opacity-90 transition-opacity" title={sidebarCollapsed ? "Studio99" : undefined}>
-            <div className={`flex flex-col justify-center leading-none mt-0.5 ${sidebarCollapsed ? 'items-center' : ''}`}>
-              <span className="font-gilroy font-bold text-2xl tracking-tight flex items-center gap-1">
-                <img src={logoImage} alt="Studio99" className={`rounded object-cover ${sidebarCollapsed ? 'w-10 h-10' : 'w-8 h-8 mr-1'}`} />
-                {!sidebarCollapsed && (
-                  <>studio<span className="text-brand-red font-black tracking-tighter -ml-1.5">99</span></>
-                )}
-              </span>
-              {!sidebarCollapsed && (
-                <span className="text-[10px] uppercase text-text-secondary tracking-[0.25em] font-sans font-bold mt-1 ml-10">
-                  — Digital —
-                </span>
-              )}
+            <div className={`flex justify-center items-center ${sidebarCollapsed ? 'w-10 h-10' : 'h-10'}`}>
+              <Logo className={`object-contain ${sidebarCollapsed ? 'h-8 w-auto' : 'h-10 w-auto'}`} />
             </div>
           </Link>
           {!sidebarCollapsed && (
             <button className="lg:hidden text-text-secondary hover:text-text-primary" onClick={() => setSidebarOpen(false)}>
               <X className="w-6 h-6" />
             </button>
-          )}
+          )} 
         </div>
 
         {/* Navigation Links */}
