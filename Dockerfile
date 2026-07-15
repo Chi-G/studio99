@@ -47,7 +47,8 @@ RUN setcap -r /usr/local/bin/frankenphp
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Startup Hook
-COPY docker-entrypoint.sh /docker-entrypoint.d/99-laravel-setup.sh
-RUN chmod +x /docker-entrypoint.d/99-laravel-setup.sh
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 # Run FrankenPHP
 CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]

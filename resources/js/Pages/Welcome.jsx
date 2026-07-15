@@ -58,6 +58,7 @@ export default function Welcome({ auth, services = [], showLogin = false, showRe
   const [selectedProject, setSelectedProject] = useState(null);
   const [intendedUrl, setIntendedUrl] = useState('');
   const [currentHeroImg, setCurrentHeroImg] = useState(0);
+  const [activeSection, setActiveSection] = useState('home');
   const heroImages = [heroImg2, heroImg1];
 
   const handleRequestServiceClick = (e) => {
@@ -69,6 +70,23 @@ export default function Welcome({ auth, services = [], showLogin = false, showRe
     setIsRequestModalOpen(false);
     setIntendedUrl('/dashboard?action=new-request');
     setIsRegisterModalOpen(true);
+  };
+
+  const handleScrollToSection = (e, sectionId) => {
+    if (e) e.preventDefault();
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 80;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
   };
 
   useEffect(() => {
@@ -98,6 +116,37 @@ export default function Welcome({ auth, services = [], showLogin = false, showRe
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const handleScrollSpy = () => {
+      const sections = ['services', 'work', 'about'];
+      const scrollPosition = window.scrollY + 120;
+
+      if (window.scrollY < 100) {
+        setActiveSection('home');
+        return;
+      }
+
+      let currentActive = 'home';
+      for (const sectionId of sections) {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            currentActive = sectionId;
+            break;
+          }
+        }
+      }
+      setActiveSection(currentActive);
+    };
+
+    window.addEventListener('scroll', handleScrollSpy);
+    handleScrollSpy();
+
+    return () => window.removeEventListener('scroll', handleScrollSpy);
+  }, []);
+
   const fadeUpVariant = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
@@ -123,12 +172,41 @@ export default function Welcome({ auth, services = [], showLogin = false, showRe
           <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
             <Logo className="h-10 w-auto object-contain rounded-sm" />
           </Link>
-          <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-text-secondary">
-            <Link href="/" className="hover:text-text-primary transition-colors">Home</Link>
-            <a href="#services" className="hover:text-text-primary transition-colors">Services</a>
-            <a href="#work" className="hover:text-text-primary transition-colors">Portfolio</a>
-            <a href="#about" className="hover:text-text-primary transition-colors">About</a>
-            <Link href="/contact" className="hover:text-text-primary transition-colors">Contact</Link>
+          <div className="hidden lg:flex items-center gap-8 text-sm font-medium">
+            <Link 
+              href="/" 
+              onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              className={`${activeSection === 'home' ? 'text-brand-red font-bold' : 'text-text-secondary hover:text-text-primary'} transition-colors`}
+            >
+              Home
+            </Link>
+            <a 
+              href="#services" 
+              onClick={(e) => handleScrollToSection(e, 'services')} 
+              className={`${activeSection === 'services' ? 'text-brand-red font-bold' : 'text-text-secondary hover:text-text-primary'} transition-colors`}
+            >
+              Services
+            </a>
+            <a 
+              href="#work" 
+              onClick={(e) => handleScrollToSection(e, 'work')} 
+              className={`${activeSection === 'work' ? 'text-brand-red font-bold' : 'text-text-secondary hover:text-text-primary'} transition-colors`}
+            >
+              Portfolio
+            </a>
+            <a 
+              href="#about" 
+              onClick={(e) => handleScrollToSection(e, 'about')} 
+              className={`${activeSection === 'about' ? 'text-brand-red font-bold' : 'text-text-secondary hover:text-text-primary'} transition-colors`}
+            >
+              About
+            </a>
+            <Link 
+              href="/contact" 
+              className="text-text-secondary hover:text-text-primary transition-colors"
+            >
+              Contact
+            </Link>
           </div>
 
           {/* Desktop Auth Buttons */}
@@ -170,12 +248,42 @@ export default function Welcome({ auth, services = [], showLogin = false, showRe
             </div>
           </div>
 
-          <div className="flex flex-col gap-6 text-xl font-medium text-text-secondary flex-1">
-            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Home</Link>
-            <a href="#services" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Services</a>
-            <a href="#work" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Portfolio</a>
-            <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">About</a>
-            <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-text-primary transition-colors">Contact</Link>
+          <div className="flex flex-col gap-6 text-xl font-medium flex-1">
+            <Link 
+              href="/" 
+              onClick={() => { setIsMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }} 
+              className={`${activeSection === 'home' ? 'text-brand-red font-bold' : 'text-text-secondary hover:text-text-primary'} transition-colors`}
+            >
+              Home
+            </Link>
+            <a 
+              href="#services" 
+              onClick={(e) => { setIsMobileMenuOpen(false); handleScrollToSection(e, 'services'); }} 
+              className={`${activeSection === 'services' ? 'text-brand-red font-bold' : 'text-text-secondary hover:text-text-primary'} transition-colors`}
+            >
+              Services
+            </a>
+            <a 
+              href="#work" 
+              onClick={(e) => { setIsMobileMenuOpen(false); handleScrollToSection(e, 'work'); }} 
+              className={`${activeSection === 'work' ? 'text-brand-red font-bold' : 'text-text-secondary hover:text-text-primary'} transition-colors`}
+            >
+              Portfolio
+            </a>
+            <a 
+              href="#about" 
+              onClick={(e) => { setIsMobileMenuOpen(false); handleScrollToSection(e, 'about'); }} 
+              className={`${activeSection === 'about' ? 'text-brand-red font-bold' : 'text-text-secondary hover:text-text-primary'} transition-colors`}
+            >
+              About
+            </a>
+            <Link 
+              href="/contact" 
+              onClick={() => setIsMobileMenuOpen(false)} 
+              className="text-text-secondary hover:text-text-primary transition-colors"
+            >
+              Contact
+            </Link>
           </div>
 
           <div className="flex flex-col gap-4 mt-auto">

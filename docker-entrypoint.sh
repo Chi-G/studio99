@@ -19,4 +19,5 @@ echo "Seeding necessary initial data..."
 php artisan db:seed --class=ServiceSeeder --force
 
 # Start the main process
+exec "$@"
 
