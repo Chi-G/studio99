@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ProjectController extends Controller
@@ -20,6 +19,7 @@ class ProjectController extends Controller
             'projects' => $projects,
         ]);
     }
+
     public function show(Project $project)
     {
         // Ensure client owns the project

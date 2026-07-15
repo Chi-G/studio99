@@ -38,12 +38,12 @@ class ProjectAssigned extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->subject('New Project Assigned: ' . $this->project->name)
-                    ->greeting('Hello ' . $notifiable->name . '!')
-                    ->line('You have been assigned a new project from ' . $this->project->client->name . '.')
-                    ->line('Service requested: ' . $this->project->service_type)
-                    ->action('View Project Workspace', url('/team/projects/' . $this->project->id))
-                    ->line('Please review the client request details and post an update.');
+            ->subject('New Project Assigned: '.$this->project->name)
+            ->greeting('Hello '.$notifiable->name.'!')
+            ->line('You have been assigned a new project from '.$this->project->client->name.'.')
+            ->line('Service requested: '.$this->project->service_type)
+            ->action('View Project Workspace', url('/team/projects/'.$this->project->id))
+            ->line('Please review the client request details and post an update.');
     }
 
     /**
@@ -55,7 +55,7 @@ class ProjectAssigned extends Notification implements ShouldQueue
     {
         return [
             'project_id' => $this->project->id,
-            'message' => 'You have been assigned to ' . $this->project->name,
+            'message' => 'You have been assigned to '.$this->project->name,
         ];
     }
 }

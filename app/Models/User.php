@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\QueuedResetPassword;
+use App\Notifications\QueuedVerifyEmail;
 use Database\Factories\UserFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -70,7 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new \App\Notifications\QueuedVerifyEmail);
+        $this->notify(new QueuedVerifyEmail);
     }
 
     /**
@@ -78,6 +80,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new \App\Notifications\QueuedResetPassword($token));
+        $this->notify(new QueuedResetPassword($token));
     }
 }

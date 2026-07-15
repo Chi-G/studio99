@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Team;
 
 use App\Http\Controllers\Controller;
-use App\Models\Project;
 use App\Models\File;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class FileController extends Controller

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\SubscriptionPlan;
 use App\Models\Subscription;
+use App\Models\SubscriptionPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
@@ -15,7 +15,7 @@ class SubscriptionController extends Controller
     {
         $plans = SubscriptionPlan::all();
         $user = auth()->user();
-        
+
         $activeSubscription = Subscription::with('plan')
             ->where('user_id', $user->id)
             ->where('status', 'active')
@@ -41,14 +41,14 @@ class SubscriptionController extends Controller
 
         if ($response->successful() && $response->json('data.status') === 'success') {
             $data = $response->json('data');
-            
+
             // Note: If a plan was passed during checkout, Paystack handles recurring billing.
             // But we will record the subscription locally.
             // Ideally, the real subscription_code comes via webhook. We'll set a placeholder
             // or see if it's available in the transaction data.
-            
+
             $paystackPlanCode = $data['plan']['plan_code'] ?? null;
-            
+
             // Mark existing active subscriptions for this user as canceled/replaced
             Subscription::where('user_id', auth()->id())->where('status', 'active')->update(['status' => 'replaced']);
 

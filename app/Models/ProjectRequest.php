@@ -17,6 +17,16 @@ class ProjectRequest extends Model
         'budget',
         'reference_files',
         'admin_notes',
+        'company_name',
+        'website',
+        'preferred_contact',
+        'business_goals',
+        'existing_branding',
+        'reference_links',
+        'timeline',
+        'budget_range',
+        'hear_about_us',
+        'additional_info',
     ];
 
     protected function casts(): array
@@ -39,5 +49,10 @@ class ProjectRequest extends Model
     public function package()
     {
         return $this->belongsTo(Package::class);
+    }
+
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class, 'project_request_id');
     }
 }

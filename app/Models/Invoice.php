@@ -10,6 +10,7 @@ class Invoice extends Model
         'client_id',
         'project_id',
         'subscription_id',
+        'project_request_id',
         'amount',
         'description',
         'status',
@@ -33,5 +34,10 @@ class Invoice extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function projectRequest()
+    {
+        return $this->belongsTo(ProjectRequest::class, 'project_request_id');
     }
 }

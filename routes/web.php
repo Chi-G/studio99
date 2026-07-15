@@ -14,22 +14,30 @@ use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\ProjectController;
 use App\Http\Controllers\Client\ProjectRequestController;
 use App\Http\Controllers\Client\SubscriptionController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Team\FileController;
 use App\Http\Controllers\Team\ProjectUpdateController;
 use App\Http\Controllers\Webhook\PaystackWebhookController;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome');
+    $services = Service::with('packages')->where('is_active', true)->get();
+
+    return Inertia::render('Welcome', [
+        'services' => $services,
+    ]);
 });
 
 Route::get('/contact', function () {
     return Inertia::render('Contact');
 })->name('contact');
+
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
@@ -50,6 +58,7 @@ Route::middleware('guest')->group(function () {
 
 // Paystack Webhook (Unauthenticated)
 Route::post('/api/v1/billing/webhook', [PaystackWebhookController::class, 'handle'])->name('webhook.paystack');
+Route::post('/client/requests', [ProjectRequestController::class, 'store'])->name('client.requests.store');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -79,7 +88,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['auth', 'verified', 'role:client'])->group(function () {
         Route::get('/client/requests/create', [ProjectRequestController::class, 'create'])->name('client.requests.create');
-        Route::post('/client/requests', [ProjectRequestController::class, 'store'])->name('client.requests.store');
 
         // Invoices and Payments
         Route::get('/client/invoices', [InvoiceController::class, 'index'])->name('client.invoices.index');
@@ -187,6 +195,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/requests', [AdminRequestController::class, 'index'])->name('requests.index');
         Route::get('/requests/{projectRequest}', [AdminRequestController::class, 'show'])->name('requests.show');
         Route::post('/requests/{projectRequest}/convert', [AdminRequestController::class, 'convertToProject'])->name('requests.convert');
+        Route::post('/requests/{projectRequest}/quotation', [AdminRequestController::class, 'sendQuotation'])->name('requests.quotation');
 
         Route::get('/services', function () {
             return Inertia::render('Admin/Services');

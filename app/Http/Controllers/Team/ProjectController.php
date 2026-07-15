@@ -30,7 +30,7 @@ class ProjectController extends Controller
         }
 
         $request->validate([
-            'status' => 'required|in:pending,in_progress,review,completed'
+            'status' => 'required|in:pending,in_progress,review,completed',
         ]);
 
         $project->update([

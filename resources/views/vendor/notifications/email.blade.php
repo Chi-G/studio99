@@ -15,7 +15,7 @@
 {{ $line }}
 
 @endforeach
-
+ 
 {{-- Action Button --}}
 @isset($actionText)
 <?php

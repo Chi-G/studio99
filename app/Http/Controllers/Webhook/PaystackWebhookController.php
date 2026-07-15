@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Webhook;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invoice;
+use App\Models\Payment;
+use App\Models\Subscription;
+use App\Models\SubscriptionPlan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Models\Subscription;
-use App\Models\Payment;
-use App\Models\Invoice;
 
 class PaystackWebhookController extends Controller
 {
@@ -16,11 +18,12 @@ class PaystackWebhookController extends Controller
         // 1. Verify Signature
         $signature = $request->header('x-paystack-signature');
         $secret = env('PAYSTACK_SECRET_KEY');
-        
+
         $computedSignature = hash_hmac('sha512', $request->getContent(), $secret);
 
         if ($signature !== $computedSignature) {
             Log::warning('Paystack Webhook: Invalid Signature');
+
             return response()->json(['status' => 'error', 'message' => 'Invalid signature'], 400);
         }
 
@@ -52,7 +55,7 @@ class PaystackWebhookController extends Controller
             $invoice = Invoice::find($invoiceId);
             if ($invoice && $invoice->status !== 'paid') {
                 $invoice->update(['status' => 'paid']);
-                
+
                 Payment::updateOrCreate(
                     ['reference' => $data['reference']],
                     [
@@ -65,11 +68,11 @@ class PaystackWebhookController extends Controller
                 );
             }
         }
-        
+
         // Next, check if this charge is part of a subscription
         if (isset($data['plan']) && isset($data['customer'])) {
             // Find subscription based on email
-            $user = \App\Models\User::where('email', $data['customer']['email'])->first();
+            $user = User::where('email', $data['customer']['email'])->first();
             if ($user) {
                 $subscription = Subscription::where('user_id', $user->id)->where('status', 'active')->first();
                 if ($subscription) {
@@ -83,9 +86,9 @@ class PaystackWebhookController extends Controller
 
     protected function handleSubscriptionCreate($data)
     {
-        $user = \App\Models\User::where('email', $data['customer']['email'])->first();
+        $user = User::where('email', $data['customer']['email'])->first();
         if ($user) {
-            $plan = \App\Models\SubscriptionPlan::where('paystack_plan_code', $data['plan']['plan_code'])->first();
+            $plan = SubscriptionPlan::where('paystack_plan_code', $data['plan']['plan_code'])->first();
             if ($plan) {
                 // Find pending or active subscription to update its codes
                 $subscription = Subscription::where('user_id', $user->id)

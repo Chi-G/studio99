@@ -15,7 +15,7 @@ return new class extends Migration
             $table->foreignId('subscription_plan_id')->nullable()->after('user_id')->constrained('subscription_plans')->nullOnDelete();
             $table->string('paystack_subscription_code')->nullable()->after('subscription_plan_id');
             $table->string('paystack_email_token')->nullable()->after('paystack_subscription_code');
-            
+
             // Drop the old package enum as we use plan relations now
             $table->dropColumn('package');
         });

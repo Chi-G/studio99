@@ -1,7 +1,7 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
-import { 
+import {
   Briefcase,
   FolderOpen,
   CheckCircle2,
@@ -69,7 +69,7 @@ export default function Projects() {
       id: 'PRJ-2402',
       name: 'Event Promo Video',
       client: 'Studio X Conference',
-      service: 'Video Production',
+      service: 'Video Editing',
       assignedTo: ['https://i.pravatar.cc/150?u=8', 'https://i.pravatar.cc/150?u=9'],
       extraAssignees: 2,
       deadline: 'May 25, 2025',
@@ -141,22 +141,22 @@ export default function Projects() {
           <h1 className="text-3xl font-gilroy font-bold text-text-primary mb-2">Projects</h1>
           <p className="text-text-secondary text-sm">View and manage all ongoing and completed projects.</p>
         </div>
-        
+
         <div className="flex flex-wrap items-center gap-3 w-full xl:w-auto mt-4 xl:mt-0">
           <div className="relative flex items-center w-full sm:w-auto">
             <Search className="absolute left-3 w-4 h-4 text-text-secondary" />
-            <input 
-              type="text" 
-              placeholder="Search projects..." 
+            <input
+              type="text"
+              placeholder="Search projects..."
               className="pl-9 pr-4 py-2.5 bg-bg-surface border border-bg-border rounded-xl text-sm w-full sm:w-[260px] focus:ring-1 focus:ring-brand-red/50 focus:border-brand-red/50 outline-none transition-all"
             />
           </div>
-          
+
           <button className="flex items-center gap-2 px-4 py-2.5 bg-bg-surface border border-bg-border rounded-xl text-sm font-medium text-text-primary hover:bg-bg-border transition-colors">
             <Filter className="w-4 h-4" />
             Filters
           </button>
-          
+
           <button className="flex items-center gap-2 px-4 py-2.5 bg-brand-red text-white rounded-xl text-sm font-bold hover:bg-brand-red/90 transition-colors shadow-sm shadow-brand-red/20">
             <Plus className="w-4 h-4" />
             New Project
@@ -229,7 +229,7 @@ export default function Projects() {
 
       {/* Main Content Area */}
       <div className="bg-bg-surface border border-bg-border rounded-2xl flex flex-col overflow-hidden">
-        
+
         {/* Table Header / Toolbar */}
         <div className="p-4 border-b border-bg-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-6 overflow-x-auto custom-scrollbar pb-2 sm:pb-0">
@@ -239,7 +239,7 @@ export default function Projects() {
             <button className="text-sm font-medium text-text-secondary hover:text-text-primary pb-1 whitespace-nowrap border-b-2 border-transparent transition-colors">On Hold</button>
             <button className="text-sm font-medium text-text-secondary hover:text-text-primary pb-1 whitespace-nowrap border-b-2 border-transparent transition-colors">Cancelled</button>
           </div>
-          
+
           <div className="flex items-center gap-3 shrink-0">
             <button className="flex items-center gap-2 text-sm font-medium text-text-secondary hover:text-text-primary transition-colors">
               Sort by: Latest <ChevronDown className="w-4 h-4" />
@@ -305,12 +305,11 @@ export default function Projects() {
                     <p className={`text-[11px] mt-0.5 font-bold ${project.deadlineColor}`}>{project.deadlineSub}</p>
                   </td>
                   <td className="py-4 px-6">
-                    <span className={`px-2.5 py-1 text-[11px] font-bold rounded-full border ${
-                      project.status === 'In Progress' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
-                      project.status === 'Review' ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' :
-                      project.status === 'On Hold' ? 'bg-zinc-500/10 text-text-secondary border-bg-border' :
-                      'bg-bg-border text-text-secondary border-transparent'
-                    }`}>
+                    <span className={`px-2.5 py-1 text-[11px] font-bold rounded-full border ${project.status === 'In Progress' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
+                        project.status === 'Review' ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' :
+                          project.status === 'On Hold' ? 'bg-zinc-500/10 text-text-secondary border-bg-border' :
+                            'bg-bg-border text-text-secondary border-transparent'
+                      }`}>
                       {project.status}
                     </span>
                   </td>
@@ -318,8 +317,8 @@ export default function Projects() {
                     <div className="flex items-center gap-3">
                       <span className="text-sm font-bold text-text-primary w-8">{project.progress}%</span>
                       <div className="flex-1 h-1.5 bg-bg-border rounded-full overflow-hidden">
-                        <div 
-                          className={`h-full rounded-full ${project.progressColor}`} 
+                        <div
+                          className={`h-full rounded-full ${project.progressColor}`}
                           style={{ width: `${project.progress}%` }}
                         />
                       </div>

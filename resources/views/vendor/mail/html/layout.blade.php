@@ -1,3 +1,10 @@
+@php
+    // Use the live production domain when testing locally so that Mailtrap can retrieve the images online
+    $baseUrl = config('app.url') === 'http://localhost' ? 'https://studio99-web.onrender.com' : config('app.url');
+    $logoBlack = $baseUrl . '/logo_black.png';
+    $logoWhite = $baseUrl . '/logo_white.png';
+    $heroImage = $baseUrl . '/mail-template.jpeg';
+@endphp
 <!DOCTYPE html>
 <html>
 
@@ -20,6 +27,7 @@
         }
 
         .container {
+            width: 100%;
             max-width: 600px;
             margin: 0 auto;
             background-color: #ffffff;
@@ -30,38 +38,41 @@
 
         /* ---- Header ---- */
         .header {
-            padding: 32px 16px 8px 16px;
+            padding: 24px;
             border-bottom: 1px solid #f0e8e8;
             text-align: left;
         }
 
         .header img {
-            height: 36px;
+            height: 32px;
             width: auto;
+            display: block;
+            border: 0;
         }
 
         /* ---- Hero banner ---- */
         .hero {
-            width: 600px;
-            height: 392px;
+            width: 100%;
+            max-width: 600px;
+            height: auto;
             background-color: #fcf6f5;
             text-align: center;
-            border-radius: 16px;
             overflow: hidden;
             margin: 0 auto;
         }
         .hero img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
             display: block;
-            border-radius: 16px;
+            border: 0;
         }
 
         /* ---- Body content ---- */
         .content {
-            padding: 16px 32px 16px 48px;
-            width: 600px;
+            padding: 32px 24px;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
         }
 
         h1 {
@@ -107,10 +118,12 @@
         /* ---- Footer ---- */
         .footer {
             background-color: #600A0A;
-            padding: 32px 16px;
+            padding: 32px 24px;
             text-align: left;
             color: #ffffff;
-            width: 600px;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
         }
 
         .footer-logo {
@@ -118,8 +131,10 @@
         }
 
         .footer-logo img {
-            height: 30px;
+            height: 28px;
             width: auto;
+            display: block;
+            border: 0;
         }
 
         .footer p {
@@ -138,6 +153,27 @@
         .footer-bottom {
             font-size: 11px;
             color: #d4a0a0;
+            margin: 0;
+        }
+
+        /* ---- Media Queries ---- */
+        @media only screen and (max-width: 600px) {
+            .wrapper {
+                padding: 12px 0 !important;
+            }
+            .container {
+                border-radius: 0 !important;
+                box-shadow: none !important;
+            }
+            .header {
+                padding: 16px !important;
+            }
+            .content {
+                padding: 24px 16px !important;
+            }
+            .footer {
+                padding: 24px 16px !important;
+            }
         }
     </style>
 </head>
@@ -147,31 +183,28 @@
         <div class="container">
             <!-- Header -->
             <div class="header">
-                <img src="data:image/jpeg;base64,{{ base64_encode(file_get_contents(resource_path('images/logo.jpeg'))) }}"
-                    alt="STUDIO99" style="vertical-align: middle; margin-right: 8px; border-radius: 50%;" />
-                <span style="font-size: 24px; font-weight: 900; color: #5B1013; vertical-align: middle;">STUDIO99</span>
+                <a href="{{ config('app.url') }}" style="display: inline-block; text-decoration: none;">
+                    <img src="{{ $logoBlack }}" alt="" />
+                </a>
             </div>
 
             <!-- Hero image -->
             <div class="hero">
-                <img src="data:image/jpeg;base64,{{ base64_encode(file_get_contents(resource_path('images/mail-template.jpeg'))) }}"
-                    alt="STUDIO99 Hero" />
+                <img src="{{ $heroImage }}" alt="" />
             </div>
 
             <!-- Main content -->
-            <div class="content" style="padding: 32px 32px 32px 48px; box-sizing: border-box; width: 600px;">
+            <div class="content" style="box-sizing: border-box; width: 100%; max-width: 600px;">
                 {!! Illuminate\Mail\Markdown::parse($slot) !!}
                 {!! $subcopy ?? '' !!}
             </div>
 
             <!-- Footer -->
             <div class="footer">
-                <div style="margin-bottom: 16px; white-space: nowrap;">
-                    <img src="data:image/jpeg;base64,{{ base64_encode(file_get_contents(resource_path('images/logo.jpeg'))) }}"
-                        alt="STUDIO99"
-                        style="height: 30px; width: auto; vertical-align: middle; margin-right: 8px; border-radius: 50%;" />
-                    <span
-                        style="font-size: 20px; font-weight: 900; color: #FFFFFF; vertical-align: middle;">STUDIO99</span>
+                <div class="footer-logo">
+                    <a href="{{ config('app.url') }}" style="display: inline-block; text-decoration: none;">
+                        <img src="{{ $logoWhite }}" alt="" />
+                    </a>
                 </div>
                 <div style="text-align: left;">
                     <p style="margin-top: 0;">If you'd rather not receive this kind of email, you can unsubscribe or manage your email preferences.</p>

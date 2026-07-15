@@ -27,6 +27,12 @@ export function AppModal({
       <DialogContent 
         className={`
           ${sizeMap[size]} 
+          w-[calc(100%-2rem)]
+          sm:w-full
+          max-h-[90vh]
+          overflow-y-auto
+          p-4
+          sm:p-6
           bg-bg-card 
           border border-bg-border 
           text-text-primary

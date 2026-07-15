@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class ProcessNewUserRegistration implements ShouldQueue
 {
@@ -18,9 +19,7 @@ class ProcessNewUserRegistration implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public readonly User $user)
-    {
-    }
+    public function __construct(public readonly User $user) {}
 
     /**
      * Execute the job.
@@ -28,6 +27,6 @@ class ProcessNewUserRegistration implements ShouldQueue
     public function handle(): void
     {
         // Simulate sending a welcome email, provisioning remote folders, etc.
-        \Illuminate\Support\Facades\Log::info("Processing new registration for: {$this->user->email}");
+        Log::info("Processing new registration for: {$this->user->email}");
     }
 }

@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PaymentResource;
+use App\Http\Resources\ProjectResource;
+use App\Services\DashboardService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Services\DashboardService;
-use App\Http\Resources\ProjectResource;
-use App\Http\Resources\PaymentResource;
 
 class DashboardController extends Controller
 {
-    public function __construct(private readonly DashboardService $dashboardService)
-    {
-    }
+    public function __construct(private readonly DashboardService $dashboardService) {}
 
     public function clientDashboard(Request $request)
     {

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\User;
-use App\Models\Project;
+use App\Models\Invoice;
 use App\Models\Payment;
+use App\Models\Project;
+use App\Models\ProjectRequest;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 
 class DashboardService
@@ -20,8 +22,8 @@ class DashboardService
     {
         return [
             'projects' => Project::where('client_id', $user->id)->get(),
-            'projectRequests' => \App\Models\ProjectRequest::where('client_id', $user->id)->with(['service', 'package'])->latest()->get(),
-            'invoices' => \App\Models\Invoice::where('client_id', $user->id)->latest()->get(),
+            'projectRequests' => ProjectRequest::where('client_id', $user->id)->with(['service', 'package'])->latest()->get(),
+            'invoices' => Invoice::where('client_id', $user->id)->latest()->get(),
             'payments' => Payment::where('user_id', $user->id)->get(),
         ];
     }
@@ -46,7 +48,7 @@ class DashboardService
         $projects = Project::with('client')->latest()->get();
         $usersCount = User::count();
         $revenue = Payment::where('status', 'approved')->sum('amount');
-        $requests = \App\Models\ProjectRequest::with(['client', 'service', 'package'])->latest()->take(5)->get();
+        $requests = ProjectRequest::with(['client', 'service', 'package'])->latest()->take(5)->get();
 
         return [
             'total_projects' => $projects->count(),

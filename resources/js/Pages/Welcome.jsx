@@ -4,6 +4,20 @@ import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import heroImg1 from '../../images/landing_hero1.png';
 import heroImg2 from '../../images/landing_hero2.png';
+import heroGraphicsDesign from '../../images/hero-graphics-design.avif';
+import heroWebsiteDevelopment from '../../images/herp-web-development.avif';
+import heroVideoEditing from '../../images/hero-video-editing.avif';
+import heroSocialMedia from '../../images/hero-social-media.avif';
+import officeWorkspace from '../../images/office-workspace.avif';
+import offerGraphicsDesign from '../../images/offer-graphic-design.avif';
+import offerSocialMediaManagement from '../../images/offer-social-media.avif';
+import offerVideoEditing from '../../images/offer-video-editing.avif';
+import offerWebsiteDevelopment from '../../images/offer-web-development.avif';
+import projectBranding from '../../images/project-branding.avif';
+import projectGraphicsDesign from '../../images/project-graphic-design.avif';
+import projectVideoEditing from '../../images/project-video-edit.avif';
+import projectWebsiteDevelopment from '../../images/project-web-dev.avif';
+import projectMobileApp from '../../images/project-mobile-app.avif';
 import { Logo } from '@/Components/Logo';
 import {
   ArrowRight, Play, Globe, PenTool,
@@ -17,6 +31,7 @@ import { ForgotPasswordModal } from '@/Components/Modals/ForgotPasswordModal';
 
 import { NewRequestModal } from '@/Components/Modals/NewRequestModal';
 import { ThemeToggle } from '@/Components/ThemeToggle';
+import { AppModal } from '@/Components/ui/app-modal';
 
 // Shared Components
 const RedLabel = ({ children }) => (
@@ -32,7 +47,7 @@ const SectionHeading = ({ children }) => (
   </h2>
 );
 
-export default function Welcome({ auth, showLogin = false, showRegister = false }) {
+export default function Welcome({ auth, services = [], showLogin = false, showRegister = false }) {
   const { flash } = usePage().props;
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(showLogin);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(showRegister);
@@ -40,6 +55,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
   const [intendedUrl, setIntendedUrl] = useState('');
   const [currentHeroImg, setCurrentHeroImg] = useState(0);
   const heroImages = [heroImg2, heroImg1];
@@ -224,10 +240,10 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
         <div className="max-w-7xl mx-auto px-4 md:px-8 w-full mt-20 relative z-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { title: "Graphics Design", icon: PenTool, img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop" },
-              { title: "Website Development", icon: MonitorSmartphone, img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&auto=format&fit=crop" },
-              { title: "Video Editing", icon: Video, img: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=600&auto=format&fit=crop" },
-              { title: "Social Media", icon: Share2, img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=600&auto=format&fit=crop" }
+              { title: "Graphics Design", icon: PenTool, img: heroGraphicsDesign },
+              { title: "Website Development", icon: MonitorSmartphone, img: heroWebsiteDevelopment },
+              { title: "Video Editing", icon: Video, img: heroVideoEditing },
+              { title: "Social Media", icon: Share2, img: heroSocialMedia }
             ].map((s, i) => (
               <motion.div key={i} whileHover={{ y: -5 }} className="relative h-32 md:h-40 rounded-xl overflow-hidden group cursor-pointer hover-glow border border-bg-border">
                 <img src={s.img} alt={s.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
@@ -274,7 +290,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
         <div className="max-w-7xl mx-auto px-4 md:px-8 grid lg:grid-cols-2 gap-16 items-center">
           <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
             <div className="aspect-[4/3] md:aspect-[4/5] rounded-3xl overflow-hidden border border-bg-border">
-              <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1000&auto=format&fit=crop" alt="Office Workspace" className="w-full h-full object-cover" />
+              <img src={officeWorkspace} alt="Office Workspace" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-bg-base/40 mix-blend-overlay"></div>
             </div>
             {/* Floating Badge */}
@@ -325,7 +341,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
             {/* Graphics Design (Large left) */}
             <motion.div variants={fadeUpVariant} className="row-span-2 md:col-span-2 relative rounded-3xl overflow-hidden group hover-glow border border-bg-border">
-              <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1200&auto=format&fit=crop" alt="Graphics" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={offerGraphicsDesign} alt="Graphics" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-bg-base via-bg-base/80 to-bg-base/20"></div>
               <div className="absolute inset-0 p-8 flex flex-col justify-between">
                 <span className="text-brand-red font-black text-2xl">01</span>
@@ -341,7 +357,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
 
             {/* Video Editing (Top right) */}
             <motion.div variants={fadeUpVariant} className="relative rounded-3xl overflow-hidden group hover-glow border border-bg-border">
-              <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=600&auto=format&fit=crop" alt="Video" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={offerVideoEditing} alt="Video" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-bg-base via-bg-base/80 to-bg-base/20"></div>
               <div className="absolute inset-0 p-8 flex flex-col justify-between">
                 <span className="text-brand-red font-black text-xl">02</span>
@@ -357,7 +373,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
 
             {/* Web Dev (Middle right) */}
             <motion.div variants={fadeUpVariant} className="relative rounded-3xl overflow-hidden group hover-glow border border-bg-border">
-              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&auto=format&fit=crop" alt="Web" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={offerWebsiteDevelopment} alt="Web" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-bg-base via-bg-base/80 to-bg-base/20"></div>
               <div className="absolute inset-0 p-8 flex flex-col justify-between">
                 <span className="text-brand-red font-black text-xl">03</span>
@@ -373,7 +389,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
 
             {/* Social Media (Bottom right) */}
             <motion.div variants={fadeUpVariant} className="md:col-span-3 relative rounded-3xl overflow-hidden group hover-glow border border-bg-border h-[250px] md:h-auto">
-              <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1200&auto=format&fit=crop" alt="Social" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={offerSocialMediaManagement} alt="Social" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-bg-base via-bg-base/80 to-bg-base/20"></div>
               <div className="absolute inset-0 p-8 flex flex-col justify-between">
                 <span className="text-brand-red font-black text-xl">04</span>
@@ -434,15 +450,62 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { title: "Luxury Brand Identity", tag: "Branding", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" },
-              { title: "Restaurant Flyer Campaign", tag: "Graphics Design", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800&auto=format&fit=crop" },
-              { title: "Corporate Website", tag: "Web Development", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" },
-              { title: "Product Advertisement", tag: "Video Production", img: "https://images.unsplash.com/photo-1601506521937-0121a7fc2a6b?q=80&w=800&auto=format&fit=crop" },
-              { title: "Company Profile Design", tag: "Print & Branding", img: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?q=80&w=800&auto=format&fit=crop" },
-              { title: "Mobile App Interface", tag: "UI/UX Design", img: "https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=800&auto=format&fit=crop" }
+              {
+                title: "Luxury Brand Identity",
+                tag: "Branding",
+                img: projectBranding,
+                client: "Vesper Paris",
+                scope: "Brand Strategy, Visual Identity, Packaging, Stationery",
+                year: "2025",
+                description: "A complete, high-end branding project for a luxury lifestyle and fashion label. We designed the visual system, stationery suite, brand book guidelines, and packaging solutions to express elegance and minimalism."
+              },
+              {
+                title: "Creative Flyer Campaign",
+                tag: "Graphics Design",
+                img: projectGraphicsDesign,
+                client: "Zenith Art Gallery",
+                scope: "Poster Design, Social Media Graphics, Event Collateral",
+                year: "2025",
+                description: "A vibrant, contemporary print and digital flyer campaign for an art exhibition. The layout uses modern geometric elements, bold typography, and visual assets designed to attract art enthusiasts."
+              },
+              {
+                title: "Corporate E-commerce Website",
+                tag: "Website Development",
+                img: projectWebsiteDevelopment,
+                client: "Alpha Tech NG",
+                scope: "Frontend Development, Paystack Integration, UX/UI Design",
+                year: "2026",
+                description: "A fast, responsive, and search-optimized e-commerce platform built to streamline online orders. Features integration with local payment gateways, inventory sync, and a premium product customizer."
+              },
+              {
+                title: "Product Advertisement Promo",
+                tag: "Video Editing",
+                img: projectVideoEditing,
+                client: "Studio X Gadgets",
+                scope: "Video Editing, Motion Graphics, Sound Design",
+                year: "2025",
+                description: "A cinematic promotional video and short-form reels for a premium gadget launch. Includes transitions, color grading, sound design, and custom text animation for social media platforms."
+              },
+              {
+                title: "Fintech Mobile Application",
+                tag: "Mobile App",
+                img: projectMobileApp,
+                client: "PayPulse Africa",
+                scope: "Mobile UX Research, Interface Design, Interactive Prototype",
+                year: "2026",
+                description: "A secure and intuitive peer-to-peer payment and savings mobile application interface. We created user flows, interactive prototypes, and UI elements focused on simplicity and trust."
+              }
             ].map((p, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="group cursor-pointer">
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4 border border-bg-border hover-glow">
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className={`group cursor-pointer ${i === 0 ? 'lg:col-span-2' : ''}`}
+                onClick={() => setSelectedProject(p)}
+              >
+                <div className="relative rounded-2xl overflow-hidden mb-4 border border-bg-border hover-glow w-full aspect-[4/3] lg:aspect-auto lg:h-[360px]">
                   <img src={p.img} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-bg-base/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute bottom-4 left-4">
@@ -507,17 +570,19 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
                 Premium digital solutions for businesses ready to build stronger brands and grow online.
               </p>
               <div className="flex gap-3">
-                <a href="#" className="w-10 h-10 rounded-full bg-bg-card border border-bg-border flex items-center justify-center text-text-secondary hover:text-white hover:bg-brand-red hover:border-brand-red transition-all">
+                <a href="https://www.instagram.com/studio99digital?" className="w-10 h-10 rounded-full bg-bg-card border border-bg-border flex items-center justify-center text-text-secondary hover:text-white hover:bg-brand-red hover:border-brand-red transition-all">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-bg-card border border-bg-border flex items-center justify-center text-text-secondary hover:text-white hover:bg-brand-red hover:border-brand-red transition-all">
+                <a href="https://x.com/studio99digita?s=11" className="w-10 h-10 rounded-full bg-bg-card border border-bg-border flex items-center justify-center text-text-secondary hover:text-white hover:bg-brand-red hover:border-brand-red transition-all">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" /></svg>
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-bg-card border border-bg-border flex items-center justify-center text-text-secondary hover:text-white hover:bg-brand-red hover:border-brand-red transition-all">
+                <a href=" https://www.linkedin.com/company/studio99digital/" className="w-10 h-10 rounded-full bg-bg-card border border-bg-border flex items-center justify-center text-text-secondary hover:text-white hover:bg-brand-red hover:border-brand-red transition-all">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-bg-card border border-bg-border flex items-center justify-center text-text-secondary hover:text-white hover:bg-brand-red hover:border-brand-red transition-all">
-                  <Briefcase className="w-4 h-4" />
+                <a href="https://www.tiktok.com/@studio99digital?" className="w-10 h-10 rounded-full bg-bg-card border border-bg-border flex items-center justify-center text-text-secondary hover:text-white hover:bg-brand-red hover:border-brand-red transition-all">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                  </svg>
                 </a>
               </div>
             </div>
@@ -528,7 +593,6 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
                 <li><a href="#" className="hover:text-white transition-colors">Graphics Design</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Video Editing</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Website Development</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Printing & Branding</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Social Media Management</a></li>
               </ul>
             </div>
@@ -536,8 +600,8 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
             <div>
               <h4 className="font-bold text-white mb-6">Company</h4>
               <ul className="space-y-4 text-sm text-text-secondary">
-                <li><a href="#" className="hover:text-white transition-colors">Portfolio</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
+                <li><a href="#work" className="hover:text-white transition-colors">Portfolio</a></li>
+                <li><a href="#about" className="hover:text-white transition-colors">About Us</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
               </ul>
@@ -548,7 +612,7 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
               <ul className="space-y-4 text-sm text-text-secondary">
                 <li className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded bg-bg-card flex items-center justify-center border border-bg-border"><Mail className="w-3 h-3 text-brand-red" /></div>
-                  <a href="mailto:hello@studio99.digital" className="hover:text-white transition-colors">hello@studio99.digital</a>
+                  <a href="mailto:studio99digitalng@gmail.com" className="hover:text-white transition-colors">studio99digitalng@gmail.com</a>
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded bg-bg-card flex items-center justify-center border border-bg-border"><MapPin className="w-3 h-3 text-brand-red" /></div>
@@ -596,7 +660,75 @@ export default function Welcome({ auth, showLogin = false, showRegister = false 
         open={isRequestModalOpen}
         onClose={() => setIsRequestModalOpen(false)}
         onSubmitRequest={handleRequestSubmit}
+        services={services}
       />
+
+      <AppModal
+        open={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+        title=""
+        size="lg"
+      >
+        {selectedProject && (
+          <div className="space-y-6 pt-4 text-text-primary">
+            {/* Header Title with spacing for the close button */}
+            <div className="pr-12">
+              <span className="px-2.5 py-1 bg-brand-red/10 border border-brand-red/20 text-brand-red text-[10px] font-black uppercase tracking-wider rounded-md">
+                Project Showcase
+              </span>
+              <h3 className="text-2xl font-black text-text-primary mt-2">
+                {selectedProject.title}
+              </h3>
+            </div>
+
+            {/* Image Container with moderate height */}
+            <div className="relative h-[180px] md:h-[220px] w-full rounded-2xl overflow-hidden border border-bg-border">
+              <img src={selectedProject.img} alt={selectedProject.title} className="w-full h-full object-cover" />
+            </div>
+
+            {/* Content Details Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="md:col-span-2 space-y-3">
+                <h5 className="font-bold text-xs uppercase text-text-secondary tracking-widest">Project Overview</h5>
+                <p className="text-text-secondary text-sm leading-relaxed whitespace-pre-line">
+                  {selectedProject.description}
+                </p>
+              </div>
+              <div className="space-y-4 bg-bg-surface/50 p-4 rounded-2xl border border-bg-border h-fit">
+                <h5 className="font-bold text-xs uppercase text-text-secondary tracking-widest border-b border-bg-border pb-2">Project Info</h5>
+                <div className="space-y-2 text-xs text-text-secondary">
+                  <div className="flex justify-between border-b border-bg-border pb-2">
+                    <span className="font-medium text-text-secondary">Category:</span>
+                    <span className="font-bold text-brand-red">{selectedProject.tag}</span>
+                  </div>
+                  <div className="flex justify-between border-b border-bg-border pb-2">
+                    <span className="font-medium text-text-secondary">Client:</span>
+                    <span className="font-bold text-text-primary">{selectedProject.client}</span>
+                  </div>
+                  <div className="flex justify-between border-b border-bg-border pb-2">
+                    <span className="font-medium text-text-secondary">Services:</span>
+                    <span className="font-bold text-text-primary text-right">{selectedProject.scope}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-text-secondary">Year:</span>
+                    <span className="font-bold text-text-primary">{selectedProject.year}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer with a Close Window button for better UX */}
+            <div className="flex justify-end pt-2 !mt-2 border-t border-bg-border">
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="px-6 py-2 bg-bg-card hover:bg-bg-border border border-bg-border text-text-primary text-xs font-bold rounded-xl transition-colors"
+              >
+                Close Window
+              </button>
+            </div>
+          </div>
+        )}
+      </AppModal>
     </div>
   );
 }

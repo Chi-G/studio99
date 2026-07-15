@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Service;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class ServiceSeeder extends Seeder
 {
@@ -14,95 +15,176 @@ class ServiceSeeder extends Seeder
     public function run(): void
     {
         $services = [
+            // ONE-OFF SERVICES
             [
-                'name' => 'Web Development',
-                'slug' => 'web-development',
-                'description' => 'Custom websites, web applications and platforms.',
-                'icon' => 'monitor',
+                'name' => 'Logo Design',
+                'slug' => 'logo-design',
+                'category' => 'one_off',
+                'description' => 'Standalone logo creation.',
+                'icon' => 'star',
                 'packages' => [
-                    ['name' => 'Landing Page', 'price' => 750000, 'billing_type' => 'one_time'],
-                    ['name' => 'Corporate Website', 'price' => 2250000, 'billing_type' => 'one_time'],
-                    ['name' => 'E-Commerce Store', 'price' => 4500000, 'billing_type' => 'one_time'],
+                    [
+                        'name' => 'Logo Design',
+                        'price' => 10000.00,
+                        'billing_type' => 'one_time',
+                        'features' => ['Custom logo options', 'Source files', 'Vector formats'],
+                    ],
+                ],
+            ],
+            [
+                'name' => 'Brand Identity',
+                'slug' => 'brand-identity',
+                'category' => 'one_off',
+                'description' => 'Complete branding package (logo, colours, typography, brand guidelines, business card, social media kit, etc.).',
+                'icon' => 'pen',
+                'packages' => [
+                    [
+                        'name' => 'Brand Identity',
+                        'price' => 25000.00,
+                        'billing_type' => 'one_time',
+                        'features' => ['Logo design', 'Brand color palette & typography', 'Brand guidelines', 'Business card design', 'Social media kit'],
+                    ],
                 ],
             ],
             [
                 'name' => 'Graphic Design',
                 'slug' => 'graphic-design',
-                'description' => 'Logos, branding, social media graphics and more.',
+                'category' => 'one_off',
+                'description' => 'Flyers, posters, brochures, banners, presentations, social media graphics, and other design requests.',
                 'icon' => 'pen',
                 'packages' => [
-                    ['name' => 'Logo & Branding Kit', 'price' => 1200000, 'billing_type' => 'one_time'],
-                    ['name' => 'Social Media Templates', 'price' => 450000, 'billing_type' => 'one_time'],
+                    [
+                        'name' => 'Graphic Design',
+                        'price' => 1500.00,
+                        'billing_type' => 'one_time',
+                        'features' => ['Flyers & Posters', 'Social media graphics', 'Banners & Business cards', 'Other marketing materials'],
+                    ],
                 ],
             ],
             [
-                'name' => 'UI/UX Design',
-                'slug' => 'ui-ux-design',
-                'description' => 'User interface and experience design for web and mobile.',
+                'name' => 'Website Development',
+                'slug' => 'web-development',
+                'category' => 'one_off',
+                'description' => 'Website design and development.',
+                'icon' => 'monitor',
+                'packages' => [
+                    [
+                        'name' => 'WordPress Website (Starter)',
+                        'price' => 40000.00,
+                        'billing_type' => 'one_time',
+                        'features' => ['Up to 5 pages', 'Mobile responsive', 'Contact form', 'Basic SEO', 'Social media integration'],
+                    ],
+                ],
+            ],
+            [
+                'name' => 'Mobile App Development',
+                'slug' => 'mobile-app',
+                'category' => 'one_off',
+                'description' => 'Mobile application design and development.',
                 'icon' => 'smartphone',
                 'packages' => [
-                    ['name' => 'Mobile App UI', 'price' => 1500000, 'billing_type' => 'one_time'],
-                    ['name' => 'Web Dashboard UX', 'price' => 2000000, 'billing_type' => 'one_time'],
+                    [
+                        'name' => 'Mobile App',
+                        'price' => 150000.00,
+                        'billing_type' => 'one_time',
+                        'features' => ['iOS & Android support', 'UI/UX design', 'Store deployment assistance'],
+                    ],
                 ],
             ],
             [
                 'name' => 'Video Editing',
                 'slug' => 'video-editing',
-                'description' => 'Promo videos, YouTube edits, reels and more.',
+                'category' => 'one_off',
+                'description' => 'Editing videos for marketing, social media, and promotional purposes.',
                 'icon' => 'film',
                 'packages' => [
-                    ['name' => 'Short Form (TikTok/Reels)', 'price' => 150000, 'billing_type' => 'one_time'],
-                    ['name' => 'YouTube Long Form', 'price' => 525000, 'billing_type' => 'one_time'],
-                    ['name' => 'Monthly Retainer (10 videos)', 'price' => 2250000, 'billing_type' => 'monthly'],
+                    [
+                        'name' => 'Video Editing',
+                        'price' => 2000.00,
+                        'billing_type' => 'one_time',
+                        'features' => ['Short-form videos (Reels/TikTok)', 'Promotional videos', 'Basic transitions & captions'],
+                    ],
                 ],
             ],
+
+            // MONTHLY SERVICES
             [
                 'name' => 'Social Media Management',
-                'slug' => 'social-media',
-                'description' => 'Content creation, posting, and community management.',
+                'slug' => 'social-media-management',
+                'category' => 'monthly',
+                'description' => 'Monthly SMM, content creation, scheduling, community engagement, and analytics.',
                 'icon' => 'share',
                 'packages' => [
-                    ['name' => 'Starter Monthly', 'price' => 750000, 'billing_type' => 'monthly'],
-                    ['name' => 'Pro Monthly', 'price' => 1800000, 'billing_type' => 'monthly'],
+                    [
+                        'name' => 'Social Media Management',
+                        'price' => 10000.00,
+                        'billing_type' => 'monthly',
+                        'features' => ['Content creation', 'Scheduling & Posting', 'Community engagement', 'Basic analytics'],
+                    ],
                 ],
             ],
             [
                 'name' => 'Digital Marketing',
                 'slug' => 'digital-marketing',
-                'description' => 'SEO, ads, email marketing, and growth strategies.',
+                'category' => 'monthly',
+                'description' => 'Lead generation and growth through SEO, paid advertising, email marketing, and digital marketing strategies.',
                 'icon' => 'megaphone',
                 'packages' => [
-                    ['name' => 'SEO Audit & Setup', 'price' => 850000, 'billing_type' => 'one_time'],
-                    ['name' => 'Ads Management', 'price' => 1200000, 'billing_type' => 'monthly'],
+                    [
+                        'name' => 'Digital Marketing',
+                        'price' => 15000.00,
+                        'billing_type' => 'monthly',
+                        'features' => ['Search Engine Optimization (SEO)', 'Paid advertising campaign setup', 'Email marketing strategy', 'Growth analytics'],
+                    ],
                 ],
             ],
+
+            // BUSINESS PACKAGES
             [
-                'name' => 'Content Writing',
-                'slug' => 'content-writing',
-                'description' => 'Blog posts, website content, copies and more.',
-                'icon' => 'type',
+                'name' => 'Business Packages',
+                'slug' => 'business-packages',
+                'category' => 'business_package',
+                'description' => 'Bundled solutions for businesses that need multiple services.',
+                'icon' => 'package',
                 'packages' => [
-                    ['name' => 'Blog Post (1500 words)', 'price' => 150000, 'billing_type' => 'one_time'],
-                    ['name' => 'Website Copywriting', 'price' => 950000, 'billing_type' => 'one_time'],
-                ],
-            ],
-            [
-                'name' => 'Branding',
-                'slug' => 'branding',
-                'description' => 'Brand identity, strategy, and brand guidelines.',
-                'icon' => 'star',
-                'packages' => [
-                    ['name' => 'Brand Strategy Session', 'price' => 500000, 'billing_type' => 'one_time'],
-                    ['name' => 'Full Brand Identity', 'price' => 2500000, 'billing_type' => 'one_time'],
-                ],
-            ],
-            [
-                'name' => 'Other (Custom Request)',
-                'slug' => 'custom-request',
-                'description' => 'Have something specific in mind? Let us know.',
-                'icon' => 'more',
-                'packages' => [
-                    ['name' => 'Custom Quote', 'price' => 0, 'billing_type' => 'one_time'],
+                    [
+                        'name' => 'Starter Package',
+                        'price' => 20000.00,
+                        'billing_type' => 'monthly',
+                        'features' => [
+                            'Social Media Management (1 platform)',
+                            '8 social media posts',
+                            'Basic graphic designs',
+                            'Monthly performance report',
+                        ],
+                    ],
+                    [
+                        'name' => 'Growth Package',
+                        'price' => 40000.00,
+                        'billing_type' => 'monthly',
+                        'features' => [
+                            'Social Media Management (up to 2 platforms)',
+                            '12 social media posts',
+                            '2 short-form edited videos',
+                            'Basic content calendar',
+                            'Monthly analytics report',
+                        ],
+                        'is_popular' => true,
+                    ],
+                    [
+                        'name' => 'Business Pro Package',
+                        'price' => 75000.00,
+                        'billing_type' => 'monthly',
+                        'features' => [
+                            'Social Media Management (up to 3 platforms)',
+                            '20 social media posts',
+                            '4 edited videos',
+                            'Premium graphic designs',
+                            'Community management',
+                            'Monthly strategy session',
+                            'Performance report',
+                        ],
+                    ],
                 ],
             ],
         ];
@@ -116,11 +198,11 @@ class ServiceSeeder extends Seeder
                 $serviceData
             );
 
+            // Clean up any packages that might be stale for this service
+            $service->packages()->delete();
+
             foreach ($packages as $packageData) {
-                $service->packages()->updateOrCreate(
-                    ['name' => $packageData['name']],
-                    $packageData
-                );
+                $service->packages()->create($packageData);
             }
         }
     }

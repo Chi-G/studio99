@@ -48,7 +48,7 @@ export default function Services() {
     },
     {
       id: 'SRV-004',
-      name: 'Video Production',
+      name: 'Video Editing',
       description: 'Promo videos, reels, and editing',
       category: 'Production',
       basePrice: '₦200,000',

@@ -42,9 +42,16 @@ export default function Contact({ auth }) {
 
   const submit = (e) => {
     e.preventDefault();
-    // Assuming there's no backend route for contact yet, just show a success message
-    toast.success('Your message has been sent successfully! We will get back to you shortly.');
-    reset();
+
+    post('/contact', {
+      onSuccess: () => {
+        toast.success('Your message has been sent successfully! We will get back to you shortly.');
+        reset();
+      },
+      onError: () => {
+        toast.error('Failed to send message. Please check the validation errors.');
+      }
+    });
   };
 
   useEffect(() => {
@@ -173,8 +180,7 @@ export default function Contact({ auth }) {
                 </div>
                 <div>
                   <h4 className="font-bold text-text-primary mb-1">Email Us</h4>
-                  <p className="text-text-secondary text-sm">hello@studio99digital.com</p>
-                  <p className="text-text-secondary text-sm">support@studio99digital.com</p>
+                  <p className="text-text-secondary text-sm">studio99digitalng@gmail.com</p>
                 </div>
               </div>
 
@@ -184,7 +190,7 @@ export default function Contact({ auth }) {
                 </div>
                 <div>
                   <h4 className="font-bold text-text-primary mb-1">Call Us</h4>
-                  <p className="text-text-secondary text-sm">+234 (0) 800 999 9999</p>
+                  <p className="text-text-secondary text-sm">+234 707 368 2318</p>
                   <p className="text-text-secondary text-sm">Mon-Fri from 9am to 6pm</p>
                 </div>
               </div>
@@ -196,9 +202,8 @@ export default function Contact({ auth }) {
                 <div>
                   <h4 className="font-bold text-text-primary mb-1">Visit Us</h4>
                   <p className="text-text-secondary text-sm leading-relaxed">
-                    123 Digital Avenue<br />
-                    Lekki Phase 1, Lagos<br />
-                    Nigeria
+                    24B Ayomide oluruin Ajose adeogun street,<br />
+                    Lagos Nigeria, 2223
                   </p>
                 </div>
               </div>
@@ -222,10 +227,13 @@ export default function Contact({ auth }) {
                   type="text"
                   value={data.name}
                   onChange={e => setData('name', e.target.value)}
-                  className="w-full bg-bg-base border border-bg-border text-text-primary text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3.5 transition-colors"
+                  className={`w-full bg-bg-base border ${errors.name ? 'border-brand-red focus:ring-brand-red focus:border-brand-red' : 'border-bg-border focus:ring-brand-red focus:border-brand-red'} text-text-primary text-sm rounded-xl block p-3.5 transition-colors`}
                   placeholder="John Doe"
                   required
                 />
+                {errors.name && (
+                  <p className="mt-1 text-xs text-brand-red font-medium">{errors.name}</p>
+                )}
               </div>
 
               <div>
@@ -235,10 +243,13 @@ export default function Contact({ auth }) {
                   type="email"
                   value={data.email}
                   onChange={e => setData('email', e.target.value)}
-                  className="w-full bg-bg-base border border-bg-border text-text-primary text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3.5 transition-colors"
+                  className={`w-full bg-bg-base border ${errors.email ? 'border-brand-red focus:ring-brand-red focus:border-brand-red' : 'border-bg-border focus:ring-brand-red focus:border-brand-red'} text-text-primary text-sm rounded-xl block p-3.5 transition-colors`}
                   placeholder="john@example.com"
                   required
                 />
+                {errors.email && (
+                  <p className="mt-1 text-xs text-brand-red font-medium">{errors.email}</p>
+                )}
               </div>
 
               <div>
@@ -248,10 +259,13 @@ export default function Contact({ auth }) {
                   type="text"
                   value={data.subject}
                   onChange={e => setData('subject', e.target.value)}
-                  className="w-full bg-bg-base border border-bg-border text-text-primary text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3.5 transition-colors"
+                  className={`w-full bg-bg-base border ${errors.subject ? 'border-brand-red focus:ring-brand-red focus:border-brand-red' : 'border-bg-border focus:ring-brand-red focus:border-brand-red'} text-text-primary text-sm rounded-xl block p-3.5 transition-colors`}
                   placeholder="How can we help?"
                   required
                 />
+                {errors.subject && (
+                  <p className="mt-1 text-xs text-brand-red font-medium">{errors.subject}</p>
+                )}
               </div>
 
               <div>
@@ -261,10 +275,13 @@ export default function Contact({ auth }) {
                   value={data.message}
                   onChange={e => setData('message', e.target.value)}
                   rows="4"
-                  className="w-full bg-bg-base border border-bg-border text-text-primary text-sm rounded-xl focus:ring-brand-red focus:border-brand-red block p-3.5 transition-colors resize-none"
+                  className={`w-full bg-bg-base border ${errors.message ? 'border-brand-red focus:ring-brand-red focus:border-brand-red' : 'border-bg-border focus:ring-brand-red focus:border-brand-red'} text-text-primary text-sm rounded-xl block p-3.5 transition-colors resize-none`}
                   placeholder="Tell us about your project..."
                   required
                 ></textarea>
+                {errors.message && (
+                  <p className="mt-1 text-xs text-brand-red font-medium">{errors.message}</p>
+                )}
               </div>
 
               <button

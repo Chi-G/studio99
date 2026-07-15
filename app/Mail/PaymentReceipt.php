@@ -17,7 +17,9 @@ class PaymentReceipt extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $invoice;
+
     public $payment;
+
     public $url;
 
     /**

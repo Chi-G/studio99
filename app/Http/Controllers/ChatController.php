@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Events\MessageSent;
-use App\Models\Message;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -21,6 +20,7 @@ class ChatController extends Controller
         }
 
         $messages = $project->messages()->with('user')->oldest()->get();
+
         return response()->json($messages);
     }
 

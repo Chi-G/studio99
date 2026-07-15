@@ -16,7 +16,7 @@ class ProjectUpdateController extends Controller
         }
 
         $request->validate([
-            'content' => 'required|string|max:1000'
+            'content' => 'required|string|max:1000',
         ]);
 
         ProjectUpdate::create([

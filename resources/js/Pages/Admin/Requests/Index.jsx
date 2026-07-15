@@ -1,7 +1,7 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
-import { 
+import {
   FileText,
   Clock,
   UserCheck,
@@ -67,7 +67,7 @@ export default function RequestsIndex() {
       reqDate: 'May 22, 2025',
       client: 'Studio X Conference',
       email: 'team@studiox.ng',
-      service: 'Event Video Production',
+      service: 'Event Video Editing',
       serviceDetail: 'Highlights + Reels',
       dateReceived: 'May 22, 2025\n9:30 AM',
       budget: '₦200,000 - ₦350,000',
@@ -134,17 +134,17 @@ export default function RequestsIndex() {
           <h1 className="text-3xl font-gilroy font-bold text-text-primary mb-2">Requests</h1>
           <p className="text-text-secondary text-sm">Manage all incoming service requests from clients.</p>
         </div>
-        
+
         <div className="flex flex-wrap items-center gap-3 w-full xl:w-auto mt-4 xl:mt-0">
           <div className="relative flex items-center w-full sm:w-auto">
             <Search className="absolute left-3 w-4 h-4 text-text-secondary" />
-            <input 
-              type="text" 
-              placeholder="Search requests, clients, services..." 
+            <input
+              type="text"
+              placeholder="Search requests, clients, services..."
               className="pl-9 pr-4 py-2.5 bg-bg-surface border border-bg-border rounded-xl text-sm w-full sm:w-[280px] focus:ring-1 focus:ring-brand-red/50 focus:border-brand-red/50 outline-none transition-all"
             />
           </div>
-          
+
           <button className="flex items-center gap-2 px-4 py-2.5 bg-bg-surface border border-bg-border rounded-xl text-sm font-medium text-text-primary hover:bg-bg-border transition-colors">
             <Filter className="w-4 h-4" />
             Filters
@@ -232,7 +232,7 @@ export default function RequestsIndex() {
 
       {/* Main Content Area */}
       <div className="bg-bg-surface border border-bg-border rounded-2xl flex flex-col overflow-hidden">
-        
+
         {/* Table Header / Toolbar */}
         <div className="p-4 border-b border-bg-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-6 overflow-x-auto custom-scrollbar pb-2 sm:pb-0">
@@ -242,7 +242,7 @@ export default function RequestsIndex() {
             <button className="text-sm font-medium text-text-secondary hover:text-text-primary pb-1 whitespace-nowrap border-b-2 border-transparent transition-colors">Completed</button>
             <button className="text-sm font-medium text-text-secondary hover:text-text-primary pb-1 whitespace-nowrap border-b-2 border-transparent transition-colors">Cancelled</button>
           </div>
-          
+
           <div className="flex items-center gap-3 shrink-0">
             <button className="flex items-center gap-2 text-sm font-medium text-text-secondary hover:text-text-primary transition-colors">
               Sort by: Latest <ChevronDown className="w-4 h-4" />
@@ -299,13 +299,12 @@ export default function RequestsIndex() {
                     <span className="text-sm font-medium text-text-primary">{req.budget}</span>
                   </td>
                   <td className="py-4 px-6">
-                    <span className={`px-2.5 py-1 text-[11px] font-bold rounded-full border ${
-                      req.status === 'Pending' ? 'bg-brand-red/10 text-brand-red border-brand-red/20' :
-                      req.status === 'Assigned' ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' :
-                      req.status === 'In Progress' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
-                      req.status === 'Completed' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
-                      'bg-zinc-500/10 text-text-secondary border-bg-border'
-                    }`}>
+                    <span className={`px-2.5 py-1 text-[11px] font-bold rounded-full border ${req.status === 'Pending' ? 'bg-brand-red/10 text-brand-red border-brand-red/20' :
+                        req.status === 'Assigned' ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' :
+                          req.status === 'In Progress' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
+                            req.status === 'Completed' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
+                              'bg-zinc-500/10 text-text-secondary border-bg-border'
+                      }`}>
                       {req.status}
                     </span>
                   </td>

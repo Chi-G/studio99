@@ -69,7 +69,7 @@ export default function Payments() {
       invoice: 'INV-2025-0522',
       client: 'Studio X Conference',
       industry: 'Events',
-      project: 'Event Video Production',
+      project: 'Event Video Editing',
       amount: '₦350,000',
       method: 'Card Payment',
       methodDetail: 'Mastercard •••• 5678',

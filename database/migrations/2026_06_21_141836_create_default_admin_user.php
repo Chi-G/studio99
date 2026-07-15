@@ -1,8 +1,8 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
 
 return new class extends Migration
 {
@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        \App\Models\User::updateOrCreate(
+        User::updateOrCreate(
             ['email' => 'admin@studio99.com'],
             [
                 'name' => 'Studio99 Admin',
-                'password' => \Illuminate\Support\Facades\Hash::make('Admin123!'),
+                'password' => Hash::make('Admin123!'),
                 'role' => 'admin',
                 'email_verified_at' => now(),
             ]
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        \App\Models\User::where('email', 'admin@studio99.com')->delete();
+        User::where('email', 'admin@studio99.com')->delete();
     }
 };
