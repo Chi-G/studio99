@@ -24,7 +24,6 @@ RUN install-php-extensions \
     gd \
     intl \
     pdo_pgsql \
-    redis \
     zip
 
 # Set working directory

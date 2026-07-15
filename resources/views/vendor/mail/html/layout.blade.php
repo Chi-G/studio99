@@ -38,7 +38,7 @@
 
         /* ---- Header ---- */
         .header {
-            padding: 24px;
+            padding: 24px 48px;
             border-bottom: 1px solid #f0e8e8;
             text-align: left;
         }
@@ -69,7 +69,7 @@
 
         /* ---- Body content ---- */
         .content {
-            padding: 32px 24px;
+            padding: 32px 48px;
             width: 100%;
             max-width: 600px;
             box-sizing: border-box;
@@ -118,7 +118,7 @@
         /* ---- Footer ---- */
         .footer {
             background-color: #600A0A;
-            padding: 32px 24px;
+            padding: 32px 48px;
             text-align: left;
             color: #ffffff;
             width: 100%;

@@ -16,7 +16,7 @@ import {
   CalendarDays
 } from 'lucide-react';
 
-export default function Dashboard({ auth, projects = [], projectRequests = [], invoices = [] }) {
+export default function Dashboard({ auth, projects = [], projectRequests = [], invoices = [], services = [] }) {
   const [isNewRequestOpen, setIsNewRequestOpen] = useState(false);
 
   // Normalize data (Inertia resource collections wrap arrays in a `data` property)
@@ -312,6 +312,7 @@ export default function Dashboard({ auth, projects = [], projectRequests = [], i
       <NewRequestModal 
         open={isNewRequestOpen} 
         onClose={() => setIsNewRequestOpen(false)} 
+        services={services}
       />
     </ClientLayout>
   );
