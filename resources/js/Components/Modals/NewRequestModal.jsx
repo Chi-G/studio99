@@ -26,8 +26,9 @@ import {
   ArrowLeft
 } from 'lucide-react';
 
-export function NewRequestModal({ open, onClose, onSubmitRequest, services = [] }) {
-  const { auth } = usePage().props;
+export function NewRequestModal({ open, onClose, onSubmitRequest, services: propServices }) {
+  const { auth, services: sharedServices = [] } = usePage().props;
+  const services = propServices || sharedServices;
 
   const [step, setStep] = useState(1);
   const totalSteps = 6;
@@ -700,7 +701,7 @@ export function NewRequestModal({ open, onClose, onSubmitRequest, services = [] 
                     type="checkbox"
                     id="consent"
                     checked={requestState.consent}
-                    onChange={(e) => handleBriefChange('consent', e.target.checked)}
+                    onChange={(e) => setRequestState(prev => ({ ...prev, consent: e.target.checked }))}
                     className="w-4 h-4 text-brand-red bg-bg-surface border-bg-border rounded focus:ring-brand-red focus:ring-offset-bg-base mt-0.5"
                   />
                   <label htmlFor="consent" className="text-xs text-text-secondary select-none">
